@@ -10,4 +10,12 @@
         <maven.compiler.release>24</maven.compiler.release>
         <exec.mainClass>com.mycompany.proyecto_final_smart_player.PROYECTO_FINAL_SMART_PLAYER</exec.mainClass>
     </properties>
+    <dependencies>
+    <dependency>
+        <groupId>javazoom</groupId>
+        <artifactId>jlayer</artifactId>
+        <version>1.0.1</version>
+      <type>jar</type>
+    </dependency>
+</dependencies>
 </project>
