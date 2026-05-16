@@ -7,8 +7,8 @@ package com.mycompany.proyecto_final_smart_player;
  */
 public class Nodo_Simple {
     
-    private MUSICA musica;
-    private Nodo_Simple siguiente;
+    public MUSICA musica;
+    public Nodo_Simple siguiente;
     
      public Nodo_Simple(MUSICA musica) {
         this.musica = musica;
