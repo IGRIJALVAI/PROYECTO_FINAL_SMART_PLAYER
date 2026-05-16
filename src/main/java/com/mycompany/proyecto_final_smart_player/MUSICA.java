@@ -109,7 +109,7 @@ public class MUSICA {
         this.reproducciones++;
     }
 
-    @Override
+    
     public String toString() {
         return nombre + " - " + artista;
     }
