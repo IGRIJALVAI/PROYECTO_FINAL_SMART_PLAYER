@@ -18,6 +18,9 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
     public RESPRODUCTORMP3() {
         initComponents();
     }
+    
+     MP3 mp3 = new MP3();
+     String rutaCancion = "";
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -31,15 +34,15 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
+        BTON_STOP = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        BTN_PLAY_MUSICA = new javax.swing.JButton();
         jSlider1 = new javax.swing.JSlider();
         jToggleButton1 = new javax.swing.JToggleButton();
         jToggleButton2 = new javax.swing.JToggleButton();
         jToggleButton3 = new javax.swing.JToggleButton();
-        jButton1 = new javax.swing.JButton();
+        BTN_BUSCAR_MUSICA = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -54,13 +57,23 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jButton2.setText("jButton2");
+        BTON_STOP.setText("STOP");
+        BTON_STOP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTON_STOPActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("jButton2");
 
         jButton4.setText("jButton2");
 
-        jButton5.setText("jButton2");
+        BTN_PLAY_MUSICA.setText("PLAY");
+        BTN_PLAY_MUSICA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_PLAY_MUSICAActionPerformed(evt);
+            }
+        });
 
         jToggleButton1.setText("jToggleButton1");
 
@@ -76,9 +89,9 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
                 .addGap(22, 22, 22)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(BTON_STOP, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(BTN_PLAY_MUSICA, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
@@ -97,9 +110,9 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BTON_STOP, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BTN_PLAY_MUSICA, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -107,7 +120,12 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
                 .addContainerGap(39, Short.MAX_VALUE))
         );
 
-        jButton1.setText("jButton1");
+        BTN_BUSCAR_MUSICA.setText("BUSCAR");
+        BTN_BUSCAR_MUSICA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_BUSCAR_MUSICAActionPerformed(evt);
+            }
+        });
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -145,7 +163,7 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1)
+                .addComponent(BTN_BUSCAR_MUSICA)
                 .addGap(29, 29, 29)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
@@ -168,7 +186,7 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(BTN_BUSCAR_MUSICA)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -186,6 +204,44 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void BTN_BUSCAR_MUSICAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_BUSCAR_MUSICAActionPerformed
+        // TODO add your handling code here:
+        
+        
+    javax.swing.JFileChooser buscar = new javax.swing.JFileChooser();
+
+    int opcion = buscar.showOpenDialog(this);
+
+    if (opcion == javax.swing.JFileChooser.APPROVE_OPTION) {
+        java.io.File archivo = buscar.getSelectedFile();
+
+        rutaCancion = archivo.getAbsolutePath();
+
+        System.out.println("Cancion seleccionada: " + rutaCancion);
+    }
+        
+        
+        
+    }//GEN-LAST:event_BTN_BUSCAR_MUSICAActionPerformed
+
+    private void BTN_PLAY_MUSICAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_PLAY_MUSICAActionPerformed
+        // TODO add your handling code here:
+        
+        if (rutaCancion.equals("")) {
+            System.out.println("seleccionar una cancion");
+        } else {
+            mp3.reproducir(rutaCancion);
+        }
+        
+    }//GEN-LAST:event_BTN_PLAY_MUSICAActionPerformed
+
+    private void BTON_STOPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTON_STOPActionPerformed
+        // TODO add your handling code here:
+        
+         mp3.detener();
+        
+    }//GEN-LAST:event_BTON_STOPActionPerformed
 
     /**
      * @param args the command line arguments
@@ -213,11 +269,11 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton BTN_BUSCAR_MUSICA;
+    private javax.swing.JButton BTN_PLAY_MUSICA;
+    private javax.swing.JButton BTON_STOP;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
