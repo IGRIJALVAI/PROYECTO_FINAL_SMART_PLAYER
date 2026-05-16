@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package com.mycompany.proyecto_final_smart_player;
 
 /**
@@ -10,17 +7,21 @@ package com.mycompany.proyecto_final_smart_player;
  */
 public class RESPRODUCTORMP3 extends javax.swing.JFrame {
     
+    
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(RESPRODUCTORMP3.class.getName());
 
     /**
      * Creates new form RESPRODUCTORMP3
      */
+    
+      MP3 mp3 = new MP3();
+     String rutaCancion = "";
+    
     public RESPRODUCTORMP3() {
         initComponents();
     }
     
-     MP3 mp3 = new MP3();
-     String rutaCancion = "";
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -209,17 +210,16 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         
-    javax.swing.JFileChooser buscar = new javax.swing.JFileChooser();
+            javax.swing.JFileChooser buscar = new javax.swing.JFileChooser();
+            int opcion = buscar.showOpenDialog(this);
 
-    int opcion = buscar.showOpenDialog(this);
+            if (opcion == javax.swing.JFileChooser.APPROVE_OPTION) {
+                java.io.File archivo = buscar.getSelectedFile();
 
-    if (opcion == javax.swing.JFileChooser.APPROVE_OPTION) {
-        java.io.File archivo = buscar.getSelectedFile();
+                rutaCancion = archivo.getAbsolutePath();
 
-        rutaCancion = archivo.getAbsolutePath();
-
-        System.out.println("Cancion seleccionada: " + rutaCancion);
-    }
+                javax.swing.JOptionPane.showMessageDialog(this, "Canción seleccionada: " + archivo.getName());
+            }
         
         
         
@@ -229,10 +229,11 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         if (rutaCancion.equals("")) {
-            System.out.println("seleccionar una cancion");
-        } else {
-            mp3.reproducir(rutaCancion);
-        }
+        javax.swing.JOptionPane.showMessageDialog(this, "Primero selecciona una canción");
+            } else {
+                mp3.reproducir(rutaCancion);
+                javax.swing.JOptionPane.showMessageDialog(this, "Reproduciendo música");
+            }
         
     }//GEN-LAST:event_BTN_PLAY_MUSICAActionPerformed
 
@@ -240,6 +241,7 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
         // TODO add your handling code here:
         
          mp3.detener();
+        javax.swing.JOptionPane.showMessageDialog(this, " detenida");
         
     }//GEN-LAST:event_BTON_STOPActionPerformed
 
@@ -287,4 +289,7 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
     private javax.swing.JToggleButton jToggleButton2;
     private javax.swing.JToggleButton jToggleButton3;
     // End of variables declaration//GEN-END:variables
+ 
+
+
 }
