@@ -1,6 +1,6 @@
 
 package com.mycompany.proyecto_final_smart_player;
-
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author grija
@@ -14,11 +14,18 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
      * Creates new form RESPRODUCTORMP3
      */
     
-      MP3 mp3 = new MP3();
+       MP3 mp3 = new MP3();
      String rutaCancion = "";
+     LISTA_SIMPLE listaMusica = new LISTA_SIMPLE();
     
     public RESPRODUCTORMP3() {
         initComponents();
+        
+    String columnas[] = {"Nombre", "Artista", "Album", "Genero", "Anio", "Duracion", "Tamano", "Ruta"};
+
+    DefaultTableModel modelo = new DefaultTableModel(columnas, 0);
+
+    tablaMusica.setModel(modelo);
     }
     
    
@@ -46,7 +53,7 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
         BTN_BUSCAR_MUSICA = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaMusica = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
 
@@ -130,7 +137,7 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaMusica.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -141,7 +148,7 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablaMusica);
 
         jLabel1.setText("jLabel1");
 
@@ -221,8 +228,34 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
                 javax.swing.JOptionPane.showMessageDialog(this, "Canción seleccionada: " + archivo.getName());
             }
         
-        
-        
+
+            if (opcion == javax.swing.JFileChooser.APPROVE_OPTION) {
+
+                java.io.File archivo = buscar.getSelectedFile();
+
+                rutaCancion = archivo.getAbsolutePath();
+
+                DATOS_MP3 datos = new DATOS_MP3();
+                MUSICA musica = datos.leerDatos(rutaCancion);
+
+                DefaultTableModel modelo = (DefaultTableModel) tablaMusica.getModel();
+
+                Object fila[] = new Object[8];
+
+                fila[0] = musica.getNombre();
+                fila[1] = musica.getArtista();
+                fila[2] = musica.getAlbum();
+                fila[3] = musica.getGenero();
+                fila[4] = musica.getAnio();
+                fila[5] = musica.getDuracion();
+                fila[6] = musica.getTamanioMB();
+                fila[7] = musica.getRuta();
+
+                modelo.addRow(fila);
+
+                javax.swing.JOptionPane.showMessageDialog(this, "Canción agregada a la tabla");
+            }
+
     }//GEN-LAST:event_BTN_BUSCAR_MUSICAActionPerformed
 
     private void BTN_PLAY_MUSICAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_PLAY_MUSICAActionPerformed
@@ -284,10 +317,10 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSlider jSlider1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JToggleButton jToggleButton2;
     private javax.swing.JToggleButton jToggleButton3;
+    private javax.swing.JTable tablaMusica;
     // End of variables declaration//GEN-END:variables
  
 
