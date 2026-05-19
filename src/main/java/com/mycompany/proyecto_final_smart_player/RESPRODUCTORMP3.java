@@ -17,6 +17,7 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
        MP3 mp3 = new MP3();
      String rutaCancion = "";
      LISTA_SIMPLE listaMusica = new LISTA_SIMPLE();
+     LISTA_DOBLE listaDoble = new LISTA_DOBLE();
     
     public RESPRODUCTORMP3() {
         initComponents();
@@ -75,6 +76,7 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
                     MUSICA musica = datos.leerDatos(ruta);
 
                     listaMusica.agregar(musica);
+                    listaDoble.agregar(musica);
 
                     agregarMusicaATabla(musica);
                 }
@@ -334,6 +336,7 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
             javax.swing.JOptionPane.showMessageDialog(this, "Seleccione una cancion de la tabla");
         } else {
             String ruta = tablaMusica.getValueAt(fila, 7).toString();
+            listaDoble.ponerActual(ruta);
             mp3.reproducir(ruta);
         }
         
