@@ -28,6 +28,61 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
     tablaMusica.setModel(modelo);
     }
     
+    
+    
+    public void agregarMusicaATabla(MUSICA musica) {
+
+        DefaultTableModel modelo = (DefaultTableModel) tablaMusica.getModel();
+
+        Object fila[] = new Object[8];
+
+        fila[0] = musica.getNombre();
+        fila[1] = musica.getArtista();
+        fila[2] = musica.getAlbum();
+        fila[3] = musica.getGenero();
+        fila[4] = musica.getAnio();
+        fila[5] = musica.getDuracion();
+        fila[6] = musica.getTamanioMB();
+        fila[7] = musica.getRuta();
+
+        modelo.addRow(fila);
+    }
+    
+    
+    
+    
+    public void cargarMusicaDeCarpeta(java.io.File carpeta) {
+
+    java.io.File archivos[] = carpeta.listFiles();
+
+    if (archivos != null) {
+
+        for (int i = 0; i < archivos.length; i++) {
+
+            if (archivos[i].isDirectory()) {
+
+                cargarMusicaDeCarpeta(archivos[i]);
+
+            } else {
+
+                String nombreArchivo = archivos[i].getName().toLowerCase();
+
+                if (nombreArchivo.endsWith(".mp3")) {
+
+                    String ruta = archivos[i].getAbsolutePath();
+
+                    DATOS_MP3 datos = new DATOS_MP3();
+                    MUSICA musica = datos.leerDatos(ruta);
+
+                    listaMusica.agregar(musica);
+
+                    agregarMusicaATabla(musica);
+                }
+            }
+        }
+    }
+}
+    
    
 
     /**
@@ -56,6 +111,7 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
         tablaMusica = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
+        BTN_CARGARCAPETA = new javax.swing.JButton();
 
         jMenu1.setText("jMenu1");
 
@@ -165,6 +221,13 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
+        BTN_CARGARCAPETA.setText("CARGAR CARPETA");
+        BTN_CARGARCAPETA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_CARGARCAPETAActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -172,9 +235,11 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(BTN_BUSCAR_MUSICA)
-                .addGap(29, 29, 29)
+                .addGap(18, 18, 18)
+                .addComponent(BTN_CARGARCAPETA)
+                .addGap(192, 192, 192)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
+                .addGap(18, 18, 18)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
@@ -196,7 +261,8 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BTN_BUSCAR_MUSICA)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel1)
+                    .addComponent(BTN_CARGARCAPETA))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(11, 11, 11)
@@ -261,12 +327,15 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
     private void BTN_PLAY_MUSICAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_PLAY_MUSICAActionPerformed
         // TODO add your handling code here:
         
-        if (rutaCancion.equals("")) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Primero selecciona una canción");
-            } else {
-                mp3.reproducir(rutaCancion);
-                javax.swing.JOptionPane.showMessageDialog(this, "Reproduciendo música");
-            }
+        
+        int fila = tablaMusica.getSelectedRow();
+
+        if (fila == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Seleccione una cancion de la tabla");
+        } else {
+            String ruta = tablaMusica.getValueAt(fila, 7).toString();
+            mp3.reproducir(ruta);
+        }
         
     }//GEN-LAST:event_BTN_PLAY_MUSICAActionPerformed
 
@@ -274,9 +343,32 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
         // TODO add your handling code here:
         
          mp3.detener();
-        javax.swing.JOptionPane.showMessageDialog(this, " detenida");
+       
         
     }//GEN-LAST:event_BTON_STOPActionPerformed
+
+    private void BTN_CARGARCAPETAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_CARGARCAPETAActionPerformed
+        // TODO add your handling code here:
+                                                      
+
+    javax.swing.JFileChooser buscar = new javax.swing.JFileChooser();
+    buscar.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
+
+    int opcion = buscar.showOpenDialog(this);
+
+    if (opcion == javax.swing.JFileChooser.APPROVE_OPTION) {
+
+        java.io.File carpeta = buscar.getSelectedFile();
+
+        DefaultTableModel modelo = (DefaultTableModel) tablaMusica.getModel();
+        modelo.setRowCount(0);
+
+        cargarMusicaDeCarpeta(carpeta);
+
+        javax.swing.JOptionPane.showMessageDialog(this, "Canciones cargadas correctamente");
+    }
+
+    }//GEN-LAST:event_BTN_CARGARCAPETAActionPerformed
 
     /**
      * @param args the command line arguments
@@ -305,6 +397,7 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BTN_BUSCAR_MUSICA;
+    private javax.swing.JButton BTN_CARGARCAPETA;
     private javax.swing.JButton BTN_PLAY_MUSICA;
     private javax.swing.JButton BTON_STOP;
     private javax.swing.JButton jButton3;

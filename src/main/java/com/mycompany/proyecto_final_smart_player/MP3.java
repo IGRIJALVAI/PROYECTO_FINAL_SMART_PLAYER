@@ -1,5 +1,6 @@
 package com.mycompany.proyecto_final_smart_player;
 
+import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import javazoom.jl.player.Player;
 
@@ -9,19 +10,25 @@ import javazoom.jl.player.Player;
  */
 public class MP3 {
     
-     Player reproductor;
+   Player reproductor;
 
     public void reproducir(String ruta) {
+
         try {
+            detener(); //PRIMERO LLAMANMOS A DETENER PARA QUE SE CIERRE CUALQUIER MUSICA Y SONAR LA OTRA
+            
+
             FileInputStream archivo = new FileInputStream(ruta);
-            reproductor = new Player(archivo);
+            BufferedInputStream buffer = new BufferedInputStream(archivo);
+
+            reproductor = new Player(buffer);
 
             Thread hilo = new Thread() {
                 public void run() {
                     try {
                         reproductor.play();
                     } catch (Exception e) {
-                        System.out.println("Error");
+                        System.out.println("Error al reproducir");
                     }
                 }
             };
@@ -29,14 +36,15 @@ public class MP3 {
             hilo.start();
 
         } catch (Exception e) {
-            System.out.println("No se encontro");
+            System.out.println("No se pudo reproducir la cancion");
         }
     }
 
-    public void detener() {
+    public void detener() { 
+
         if (reproductor != null) {
             reproductor.close();
-            System.out.println("Musica detenida");
+            reproductor = null;
         }
     }
     
