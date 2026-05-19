@@ -110,13 +110,13 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-                  <Component id="jButton4" min="-2" pref="65" max="-2" attributes="0"/>
+                  <Component id="BTN_ANTERIOR" min="-2" pref="65" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="BTON_STOP" min="-2" pref="65" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="BTN_PLAY_MUSICA" min="-2" pref="65" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="jButton3" min="-2" pref="65" max="-2" attributes="0"/>
+                  <Component id="BTN_SIGUIENTE" min="-2" pref="65" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                   <Component id="jSlider1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
@@ -134,9 +134,9 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jButton4" alignment="3" min="-2" pref="59" max="-2" attributes="0"/>
+                      <Component id="BTN_ANTERIOR" alignment="3" min="-2" pref="59" max="-2" attributes="0"/>
                       <Component id="BTON_STOP" alignment="3" min="-2" pref="59" max="-2" attributes="0"/>
-                      <Component id="jButton3" alignment="3" min="-2" pref="59" max="-2" attributes="0"/>
+                      <Component id="BTN_SIGUIENTE" alignment="3" min="-2" pref="59" max="-2" attributes="0"/>
                       <Component id="BTN_PLAY_MUSICA" alignment="3" min="-2" pref="59" max="-2" attributes="0"/>
                       <Component id="jSlider1" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jToggleButton2" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
@@ -157,15 +157,21 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BTON_STOPActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton3">
+        <Component class="javax.swing.JButton" name="BTN_SIGUIENTE">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jButton2"/>
+            <Property name="text" type="java.lang.String" value="SIGUIENTE"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BTN_SIGUIENTEActionPerformed"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton4">
+        <Component class="javax.swing.JButton" name="BTN_ANTERIOR">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jButton2"/>
+            <Property name="text" type="java.lang.String" value="ANTERIOR"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BTN_ANTERIORActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="BTN_PLAY_MUSICA">
           <Properties>
