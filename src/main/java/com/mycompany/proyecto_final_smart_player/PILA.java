@@ -39,6 +39,21 @@ public class PILA {
             aux = aux.siguiente;
         }
     }
+        public String obtenerHistorial() {
+        String texto = "";
+        NODOI_PILA aux = cima;
+
+        if (aux == null) {
+            return "No hay canciones en el historial";
+        }
+
+        while (aux != null) {
+            texto = texto + aux.musica.getNombre() + " - " + aux.musica.getArtista() + "\n";
+            aux = aux.siguiente;
+        }
+
+        return texto;
+    }
 
     public boolean estaVacia() {
         return cima == null;

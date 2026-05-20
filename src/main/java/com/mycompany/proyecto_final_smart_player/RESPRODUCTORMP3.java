@@ -18,6 +18,7 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
      String rutaCancion = "";
      LISTA_SIMPLE listaMusica = new LISTA_SIMPLE();
      LISTA_DOBLE listaDoble = new LISTA_DOBLE();
+     PILA historial = new PILA();
     
     public RESPRODUCTORMP3() {
         initComponents();
@@ -85,6 +86,22 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
     }
 }
     
+        public MUSICA obtenerMusicaDeTabla(int fila) {
+
+        String nombre = tablaMusica.getValueAt(fila, 0).toString();
+        String artista = tablaMusica.getValueAt(fila, 1).toString();
+        String album = tablaMusica.getValueAt(fila, 2).toString();
+        String genero = tablaMusica.getValueAt(fila, 3).toString();
+        int anio = Integer.parseInt(tablaMusica.getValueAt(fila, 4).toString());
+        String duracion = tablaMusica.getValueAt(fila, 5).toString();
+        double tamanio = Double.parseDouble(tablaMusica.getValueAt(fila, 6).toString());
+        String ruta = tablaMusica.getValueAt(fila, 7).toString();
+
+        MUSICA musica = new MUSICA(nombre, artista, album, genero, anio, duracion, tamanio, ruta);
+
+        return musica;
+    }
+
    
 
     /**
@@ -114,6 +131,7 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         BTN_CARGARCAPETA = new javax.swing.JButton();
+        BTN_HISTORIAL = new javax.swing.JButton();
 
         jMenu1.setText("jMenu1");
 
@@ -240,6 +258,13 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
             }
         });
 
+        BTN_HISTORIAL.setText("HISTORIAL");
+        BTN_HISTORIAL.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_HISTORIALActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -257,9 +282,11 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
                                 .addComponent(BTN_BUSCAR_MUSICA)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(BTN_CARGARCAPETA)
-                                .addGap(192, 192, 192)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
+                                .addComponent(BTN_HISTORIAL)
+                                .addGap(73, 73, 73)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(40, 40, 40)
                                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -275,7 +302,8 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
                     .addComponent(BTN_BUSCAR_MUSICA, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
-                    .addComponent(BTN_CARGARCAPETA))
+                    .addComponent(BTN_CARGARCAPETA)
+                    .addComponent(BTN_HISTORIAL))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(11, 11, 11)
@@ -348,6 +376,8 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
         } else {
             String ruta = tablaMusica.getValueAt(fila, 7).toString();
             listaDoble.ponerActual(ruta);
+               MUSICA musica = obtenerMusicaDeTabla(fila);
+             historial.apilar(musica);
             mp3.reproducir(ruta);
         }
         
@@ -409,6 +439,17 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
         
     }//GEN-LAST:event_BTN_ANTERIORActionPerformed
 
+    private void BTN_HISTORIALActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_HISTORIALActionPerformed
+        // TODO add your handling code here:
+        
+              javax.swing.JOptionPane.showMessageDialog(
+            this,
+            historial.obtenerHistorial(),
+            "Historial de reproducción",
+            javax.swing.JOptionPane.INFORMATION_MESSAGE
+    );
+    }//GEN-LAST:event_BTN_HISTORIALActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -438,6 +479,7 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
     private javax.swing.JButton BTN_ANTERIOR;
     private javax.swing.JButton BTN_BUSCAR_MUSICA;
     private javax.swing.JButton BTN_CARGARCAPETA;
+    private javax.swing.JButton BTN_HISTORIAL;
     private javax.swing.JButton BTN_PLAY_MUSICA;
     private javax.swing.JButton BTN_SIGUIENTE;
     private javax.swing.JButton BTON_STOP;
