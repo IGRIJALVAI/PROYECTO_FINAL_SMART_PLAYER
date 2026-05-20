@@ -133,7 +133,7 @@
                   <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                   <Component id="jSlider1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-                  <Component id="jToggleButton2" min="-2" pref="92" max="-2" attributes="0"/>
+                  <Component id="BTN_CIRULAR" min="-2" pref="92" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jToggleButton1" min="-2" pref="92" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -152,7 +152,7 @@
                       <Component id="BTN_SIGUIENTE" alignment="3" min="-2" pref="59" max="-2" attributes="0"/>
                       <Component id="BTN_PLAY_MUSICA" alignment="3" min="-2" pref="59" max="-2" attributes="0"/>
                       <Component id="jSlider1" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jToggleButton2" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
+                      <Component id="BTN_CIRULAR" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
                       <Component id="jToggleButton1" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
                       <Component id="jToggleButton3" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
                   </Group>
@@ -201,10 +201,13 @@
             <Property name="text" type="java.lang.String" value="jToggleButton1"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JToggleButton" name="jToggleButton2">
+        <Component class="javax.swing.JToggleButton" name="BTN_CIRULAR">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jToggleButton1"/>
+            <Property name="text" type="java.lang.String" value="CIRCULAR"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BTN_CIRULARActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JToggleButton" name="jToggleButton3">
           <Properties>

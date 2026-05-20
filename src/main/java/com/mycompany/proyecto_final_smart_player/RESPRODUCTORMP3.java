@@ -20,6 +20,7 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
      LISTA_DOBLE listaDoble = new LISTA_DOBLE();
      PILA historial = new PILA();
      COLA cola = new COLA();
+     LISTA_CIRCULAR listaCircular = new LISTA_CIRCULAR();
     
     public RESPRODUCTORMP3() {
         initComponents();
@@ -79,6 +80,7 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
 
                     listaMusica.agregar(musica);
                     listaDoble.agregar(musica);
+                    listaCircular.agregar(musica);
 
                     agregarMusicaATabla(musica);
                 }
@@ -123,7 +125,7 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
         BTN_PLAY_MUSICA = new javax.swing.JButton();
         jSlider1 = new javax.swing.JSlider();
         jToggleButton1 = new javax.swing.JToggleButton();
-        jToggleButton2 = new javax.swing.JToggleButton();
+        BTN_CIRULAR = new javax.swing.JToggleButton();
         jToggleButton3 = new javax.swing.JToggleButton();
         BTN_BUSCAR_MUSICA = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
@@ -175,7 +177,12 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
 
         jToggleButton1.setText("jToggleButton1");
 
-        jToggleButton2.setText("jToggleButton1");
+        BTN_CIRULAR.setText("CIRCULAR");
+        BTN_CIRULAR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_CIRULARActionPerformed(evt);
+            }
+        });
 
         jToggleButton3.setText("jToggleButton1");
 
@@ -195,7 +202,7 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
                 .addGap(40, 40, 40)
                 .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
-                .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(BTN_CIRULAR, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -212,7 +219,7 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
                     .addComponent(BTN_SIGUIENTE, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BTN_PLAY_MUSICA, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BTN_CIRULAR, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jToggleButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(39, Short.MAX_VALUE))
@@ -413,6 +420,7 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
         } else {
             String ruta = tablaMusica.getValueAt(fila, 7).toString();
             listaDoble.ponerActual(ruta);
+            listaCircular.ponerPorRuta(ruta);
                MUSICA musica = obtenerMusicaDeTabla(fila);
              historial.apilar(musica);
             mp3.reproducir(ruta);
@@ -534,6 +542,22 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
     }
     }//GEN-LAST:event_BNT_REPROCOLAActionPerformed
 
+    private void BTN_CIRULARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_CIRULARActionPerformed
+        // TODO add your handling code here:
+        
+    MUSICA musica = listaCircular.siguiente();
+
+    if (musica == null) {
+        javax.swing.JOptionPane.showMessageDialog(this, "No hay canciones cargadas");
+    } else {
+        historial.apilar(musica);
+        mp3.reproducir(musica.getRuta());
+
+        javax.swing.JOptionPane.showMessageDialog(this,
+                "Reproduciendo en modo circular:\n" + musica.getNombre());
+    }
+    }//GEN-LAST:event_BTN_CIRULARActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -564,6 +588,7 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
     private javax.swing.JButton BTN_ANTERIOR;
     private javax.swing.JButton BTN_BUSCAR_MUSICA;
     private javax.swing.JButton BTN_CARGARCAPETA;
+    private javax.swing.JToggleButton BTN_CIRULAR;
     private javax.swing.JButton BTN_COLA;
     private javax.swing.JButton BTN_HISTORIAL;
     private javax.swing.JButton BTN_PLAY_MUSICA;
@@ -579,7 +604,6 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSlider jSlider1;
     private javax.swing.JToggleButton jToggleButton1;
-    private javax.swing.JToggleButton jToggleButton2;
     private javax.swing.JToggleButton jToggleButton3;
     private javax.swing.JTable tablaMusica;
     // End of variables declaration//GEN-END:variables
