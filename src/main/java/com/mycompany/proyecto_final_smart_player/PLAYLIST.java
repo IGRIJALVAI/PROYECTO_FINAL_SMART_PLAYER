@@ -10,8 +10,8 @@ package com.mycompany.proyecto_final_smart_player;
  */
 public class PLAYLIST {
     
-       String nombre;
-    NODO_PLAY inicio;
+      public String nombre;
+     public NODO_PLAY inicio;
 
     public PLAYLIST(String nombre) {
         this.nombre = nombre;

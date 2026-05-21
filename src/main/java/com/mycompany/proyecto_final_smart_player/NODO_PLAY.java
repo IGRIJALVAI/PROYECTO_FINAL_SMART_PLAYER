@@ -10,8 +10,8 @@ package com.mycompany.proyecto_final_smart_player;
  */
 public class NODO_PLAY {
     
-      MUSICA musica;
-    NODO_PLAY siguiente;
+      public  MUSICA musica;
+   public NODO_PLAY siguiente;
 
     public NODO_PLAY(MUSICA musica) {
         this.musica = musica;

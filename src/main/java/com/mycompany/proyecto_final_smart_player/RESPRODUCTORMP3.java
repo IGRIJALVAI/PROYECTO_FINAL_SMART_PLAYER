@@ -142,6 +142,7 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
         btn_verCOLA = new javax.swing.JButton();
         BNT_REPROCOLA = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        BTN_ABRIPLAY = new javax.swing.JButton();
         BTN_CARGARCAPETA = new javax.swing.JButton();
         BTN_HISTORIAL = new javax.swing.JButton();
 
@@ -312,6 +313,13 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
 
         jLabel1.setText("jLabel1");
 
+        BTN_ABRIPLAY.setText("ABRIR");
+        BTN_ABRIPLAY.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_ABRIPLAYActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -320,26 +328,31 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(BTN_AGREGAR_CAN_PLAY)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(BTN_ELIMINAR_PLAY))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(COMBOX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                            .addComponent(BTN_CREARPLAY)
-                            .addGap(18, 18, 18)
-                            .addComponent(VER_CAN_PLAY)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btn_verCOLA)
-                            .addComponent(BNT_REPROCOLA)
-                            .addComponent(BTN_COLA)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(COMBOX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                    .addComponent(BTN_CREARPLAY)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(VER_CAN_PLAY)))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btn_verCOLA)
+                                    .addComponent(BNT_REPROCOLA)
+                                    .addComponent(BTN_COLA)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(BTN_ABRIPLAY))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -352,11 +365,13 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BTN_CREARPLAY)
                     .addComponent(VER_CAN_PLAY))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BTN_AGREGAR_CAN_PLAY)
-                    .addComponent(BTN_ELIMINAR_PLAY))
-                .addGap(34, 34, 34)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(BTN_ELIMINAR_PLAY)
+                    .addComponent(BTN_AGREGAR_CAN_PLAY))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(BTN_ABRIPLAY)
+                .addGap(1, 1, 1)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(BTN_COLA)
@@ -639,33 +654,41 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
 
     private void VER_CAN_PLAYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VER_CAN_PLAYActionPerformed
         // TODO add your handling code here:
-         String nombrePlaylist = javax.swing.JOptionPane.showInputDialog(this, "Ingrese el nombre de la playlist");
+                                                   
+
+            if (COMBOX.getSelectedItem() == null) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Seleccione una playlist");
+                return;
+            }
+
+            String nombrePlaylist = COMBOX.getSelectedItem().toString();
 
             PLAYLIST playlist = VariosPlaylist.buscarPlaylist(nombrePlaylist);
 
-        if (playlist == null) {
-            javax.swing.JOptionPane.showMessageDialog(this, "No existe esa playlist");
-        } else {
-            javax.swing.JOptionPane.showMessageDialog(
-                    this,
-                    playlist.mostrar(),
-                    "Canciones de " + playlist.getNombre(),
-                    javax.swing.JOptionPane.INFORMATION_MESSAGE
-            );
-        }
+            if (playlist == null) {
+                javax.swing.JOptionPane.showMessageDialog(this, "No existe esa playlist");
+            } else {
+                PPLAYLIST ventana = new PPLAYLIST(playlist);
+                ventana.setVisible(true);
+            }
     }//GEN-LAST:event_VER_CAN_PLAYActionPerformed
 
     private void BTN_AGREGAR_CAN_PLAYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_AGREGAR_CAN_PLAYActionPerformed
         // TODO add your handling code here:
         
-    int fila = tablaMusica.getSelectedRow();
+ int fila = tablaMusica.getSelectedRow();
 
     if (fila == -1) {
         javax.swing.JOptionPane.showMessageDialog(this, "Seleccione una canción de la tabla");
         return;
     }
 
-    String nombrePlaylist = javax.swing.JOptionPane.showInputDialog(this, "Ingrese el nombre de la playlist");
+    if (COMBOX.getSelectedItem() == null) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Seleccione una playlist");
+        return;
+    }
+
+    String nombrePlaylist = COMBOX.getSelectedItem().toString();
 
     PLAYLIST playlist = VariosPlaylist.buscarPlaylist(nombrePlaylist);
 
@@ -673,21 +696,59 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
         javax.swing.JOptionPane.showMessageDialog(this, "No existe esa playlist");
     } else {
         MUSICA musica = obtenerMusicaDeTabla(fila);
+
         playlist.agregar(musica);
 
-        javax.swing.JOptionPane.showMessageDialog(this, "Canción agregada a la playlist");
+        javax.swing.JOptionPane.showMessageDialog(this,
+                "Canción agregada a la playlist: " + nombrePlaylist);
     }
     }//GEN-LAST:event_BTN_AGREGAR_CAN_PLAYActionPerformed
 
     private void BTN_ELIMINAR_PLAYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_ELIMINAR_PLAYActionPerformed
         // TODO add your handling code here:
-          String nombrePlaylist = javax.swing.JOptionPane.showInputDialog(this, "Ingrese el nombre de la playlist a eliminar");
+              if (COMBOX.getSelectedItem() == null) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Seleccione una playlist");
+                return;
+            }
 
-    if (nombrePlaylist != null && !nombrePlaylist.equals("")) {
-        VariosPlaylist.eliminarPlaylist(nombrePlaylist);
-        javax.swing.JOptionPane.showMessageDialog(this, "Proceso realizado");
-    }
+            String nombrePlaylist = COMBOX.getSelectedItem().toString();
+
+            int respuesta = javax.swing.JOptionPane.showConfirmDialog(
+                    this,
+                    "¿Está seguro que desea eliminar la playlist: " + nombrePlaylist + "?",
+                    "Confirmar eliminación",
+                    javax.swing.JOptionPane.YES_NO_OPTION
+            );
+
+            if (respuesta == javax.swing.JOptionPane.YES_OPTION) {
+
+                VariosPlaylist.eliminarPlaylist(nombrePlaylist);
+
+                COMBOX.removeItem(nombrePlaylist);
+
+                javax.swing.JOptionPane.showMessageDialog(this, "Playlist eliminada correctamente");
+            }
+
     }//GEN-LAST:event_BTN_ELIMINAR_PLAYActionPerformed
+
+    private void BTN_ABRIPLAYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_ABRIPLAYActionPerformed
+        // TODO add your handling code here:
+           if (COMBOX.getSelectedItem() == null) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Seleccione una playlist");
+        return;
+    }
+
+    String nombrePlaylist = COMBOX.getSelectedItem().toString();
+
+    PLAYLIST playlist = VariosPlaylist.buscarPlaylist(nombrePlaylist);
+
+    if (playlist == null) {
+        javax.swing.JOptionPane.showMessageDialog(this, "No existe esa playlist");
+    } else {
+        PPLAYLIST ventana = new PPLAYLIST(playlist);
+        ventana.setVisible(true);
+    }
+    }//GEN-LAST:event_BTN_ABRIPLAYActionPerformed
 
     /**
      * @param args the command line arguments
@@ -716,6 +777,7 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BNT_REPROCOLA;
+    private javax.swing.JButton BTN_ABRIPLAY;
     private javax.swing.JButton BTN_AGREGAR_CAN_PLAY;
     private javax.swing.JButton BTN_ANTERIOR;
     private javax.swing.JButton BTN_BUSCAR_MUSICA;

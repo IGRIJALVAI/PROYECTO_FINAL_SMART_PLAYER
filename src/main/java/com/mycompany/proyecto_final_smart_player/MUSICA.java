@@ -8,15 +8,15 @@ package com.mycompany.proyecto_final_smart_player;
 public class MUSICA {
     
 
-    private String nombre;
-    private String artista;
-    private String album;
-    private String genero;
-    private int anio;
-    private String duracion;
-    private double tamanioMB;
-    private String ruta;
-    private int reproducciones;
+    public String nombre;
+    public String artista;
+    public String album;
+    public String genero;
+    public int anio;
+    public String duracion;
+    public double tamanioMB;
+    public String ruta;
+    public int reproducciones;
 
     public MUSICA() {
     }
