@@ -85,8 +85,8 @@ public class PPLAYLIST extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaPlay = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        BTN_STOP = new javax.swing.JButton();
+        BTN_PLLAY = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
@@ -110,9 +110,19 @@ public class PPLAYLIST extends javax.swing.JFrame {
 
         jButton1.setText("jButton1");
 
-        jButton2.setText("jButton2");
+        BTN_STOP.setText("STOP");
+        BTN_STOP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_STOPActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("jButton3");
+        BTN_PLLAY.setText("PLAY");
+        BTN_PLLAY.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_PLLAYActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("jButton4");
 
@@ -143,9 +153,9 @@ public class PPLAYLIST extends javax.swing.JFrame {
                 .addGap(42, 42, 42)
                 .addComponent(jButton1)
                 .addGap(66, 66, 66)
-                .addComponent(jButton2)
+                .addComponent(BTN_STOP)
                 .addGap(26, 26, 26)
-                .addComponent(jButton3)
+                .addComponent(BTN_PLLAY)
                 .addGap(18, 18, 18)
                 .addComponent(jButton4)
                 .addGap(144, 144, 144)
@@ -172,8 +182,8 @@ public class PPLAYLIST extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
+                    .addComponent(BTN_STOP)
+                    .addComponent(BTN_PLLAY)
                     .addComponent(jButton4)
                     .addComponent(jButton5)
                     .addComponent(jButton6)
@@ -183,6 +193,29 @@ public class PPLAYLIST extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void BTN_PLLAYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_PLLAYActionPerformed
+        // TODO add your handling code here:
+            int fila = tablaPlay.getSelectedRow();
+
+    if (fila == -1) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Seleccione una canción de la playlist");
+    } else {
+        String ruta = tablaPlay.getValueAt(fila, 7).toString();
+
+        mp3.reproducir(ruta);
+
+        javax.swing.JOptionPane.showMessageDialog(this, "Reproduciendo canción de la playlist");
+    }
+    
+        
+    }//GEN-LAST:event_BTN_PLLAYActionPerformed
+
+    private void BTN_STOPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_STOPActionPerformed
+        // TODO add your handling code here:
+         mp3.detener();
+        
+    }//GEN-LAST:event_BTN_STOPActionPerformed
 
     /**
      * @param args the command line arguments
@@ -210,9 +243,9 @@ public class PPLAYLIST extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BTN_PLLAY;
+    private javax.swing.JButton BTN_STOP;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
