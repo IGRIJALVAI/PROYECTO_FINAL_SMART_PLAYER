@@ -280,10 +280,10 @@
                                       <Component id="btn_verCOLA" min="-2" max="-2" attributes="0"/>
                                       <Component id="BNT_REPROCOLA" min="-2" max="-2" attributes="0"/>
                                       <Component id="BTN_COLA" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabel1" alignment="0" min="-2" pref="37" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <Component id="BTN_ABRIPLAY" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel1" alignment="0" min="-2" pref="37" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
@@ -312,9 +312,9 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="BTN_ABRIPLAY" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
                   <Component id="BTN_COLA" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="btn_verCOLA" min="-2" max="-2" attributes="0"/>

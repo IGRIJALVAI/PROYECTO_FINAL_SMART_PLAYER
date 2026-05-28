@@ -16,6 +16,7 @@ public class PPLAYLIST extends javax.swing.JFrame {
     
     MP3 mp3 = new MP3();
     PLAYLIST playlist;
+    boolean circularActivo = false;
 
 
     public PPLAYLIST() {
@@ -25,6 +26,7 @@ public class PPLAYLIST extends javax.swing.JFrame {
         initComponents();
 
         this.playlist = playlist;
+        LABEL_NAME.setText("Playlist: " + playlist.getNombre());
 
         setLocationRelativeTo(null);
 
@@ -84,14 +86,15 @@ public class PPLAYLIST extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaPlay = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        BTRN_ATRAS = new javax.swing.JButton();
         BTN_STOP = new javax.swing.JButton();
         BTN_PLLAY = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
+        BTN_SIGUIENTE = new javax.swing.JButton();
+        BTN_CIRULAR = new javax.swing.JButton();
+        BTN_ALEA = new javax.swing.JButton();
+        BTN_ELIMINAR = new javax.swing.JButton();
+        BTN_REGRESAR = new javax.swing.JButton();
+        LABEL_NAME = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -108,7 +111,12 @@ public class PPLAYLIST extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tablaPlay);
 
-        jButton1.setText("jButton1");
+        BTRN_ATRAS.setText("ATRAS");
+        BTRN_ATRAS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTRN_ATRASActionPerformed(evt);
+            }
+        });
 
         BTN_STOP.setText("STOP");
         BTN_STOP.addActionListener(new java.awt.event.ActionListener() {
@@ -124,71 +132,98 @@ public class PPLAYLIST extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setText("jButton4");
+        BTN_SIGUIENTE.setText("SIGUIENTE");
+        BTN_SIGUIENTE.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_SIGUIENTEActionPerformed(evt);
+            }
+        });
 
-        jButton5.setText("jButton5");
+        BTN_CIRULAR.setText("CIRCULAR");
+        BTN_CIRULAR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_CIRULARActionPerformed(evt);
+            }
+        });
 
-        jButton6.setText("jButton6");
+        BTN_ALEA.setText("ALEATORIO");
+        BTN_ALEA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_ALEAActionPerformed(evt);
+            }
+        });
 
-        jButton7.setText("jButton7");
+        BTN_ELIMINAR.setText("ELIMINAR");
+        BTN_ELIMINAR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_ELIMINARActionPerformed(evt);
+            }
+        });
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        BTN_REGRESAR.setText("REGRESAR");
+        BTN_REGRESAR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_REGRESARActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 157, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 410, Short.MAX_VALUE)
-        );
+        LABEL_NAME.setFont(new java.awt.Font("Siemens Slab SC Black", 0, 18)); // NOI18N
+        LABEL_NAME.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addComponent(jButton1)
-                .addGap(66, 66, 66)
-                .addComponent(BTN_STOP)
-                .addGap(26, 26, 26)
-                .addComponent(BTN_PLLAY)
-                .addGap(18, 18, 18)
-                .addComponent(jButton4)
-                .addGap(144, 144, 144)
-                .addComponent(jButton5)
-                .addGap(18, 18, 18)
-                .addComponent(jButton6)
-                .addGap(29, 29, 29)
-                .addComponent(jButton7)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(BTRN_ATRAS)
+                        .addGap(18, 18, 18)
+                        .addComponent(BTN_STOP)
+                        .addGap(26, 26, 26)
+                        .addComponent(BTN_PLLAY)
+                        .addGap(18, 18, 18)
+                        .addComponent(BTN_SIGUIENTE)
+                        .addGap(37, 37, 37)
+                        .addComponent(BTN_CIRULAR)
+                        .addGap(18, 18, 18)
+                        .addComponent(BTN_ALEA)
+                        .addGap(18, 18, 18)
+                        .addComponent(BTN_ELIMINAR))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 719, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(BTN_REGRESAR)
+                                .addGap(103, 103, 103)
+                                .addComponent(LABEL_NAME, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 737, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(60, 60, 60))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(BTN_REGRESAR)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addComponent(LABEL_NAME, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BTRN_ATRAS, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BTN_STOP)
                     .addComponent(BTN_PLLAY)
-                    .addComponent(jButton4)
-                    .addComponent(jButton5)
-                    .addComponent(jButton6)
-                    .addComponent(jButton7))
-                .addContainerGap(57, Short.MAX_VALUE))
+                    .addComponent(BTN_SIGUIENTE)
+                    .addComponent(BTN_CIRULAR)
+                    .addComponent(BTN_ALEA)
+                    .addComponent(BTN_ELIMINAR))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -196,18 +231,17 @@ public class PPLAYLIST extends javax.swing.JFrame {
 
     private void BTN_PLLAYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_PLLAYActionPerformed
         // TODO add your handling code here:
-            int fila = tablaPlay.getSelectedRow();
+        
+        
+                int fila = tablaPlay.getSelectedRow();
 
-    if (fila == -1) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Seleccione una canción de la playlist");
-    } else {
-        String ruta = tablaPlay.getValueAt(fila, 7).toString();
+          if (fila == -1) {
+              javax.swing.JOptionPane.showMessageDialog(this, "Seleccione una canción de la playlist");
+          } else {
+              String ruta = tablaPlay.getValueAt(fila, 7).toString();
+              mp3.reproducir(ruta);
+          }
 
-        mp3.reproducir(ruta);
-
-        javax.swing.JOptionPane.showMessageDialog(this, "Reproduciendo canción de la playlist");
-    }
-    
         
     }//GEN-LAST:event_BTN_PLLAYActionPerformed
 
@@ -216,6 +250,146 @@ public class PPLAYLIST extends javax.swing.JFrame {
          mp3.detener();
         
     }//GEN-LAST:event_BTN_STOPActionPerformed
+
+    private void BTN_SIGUIENTEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_SIGUIENTEActionPerformed
+        // TODO add your handling code here:
+     
+        int fila = tablaPlay.getSelectedRow();
+        int totalFilas = tablaPlay.getRowCount();
+
+        if (totalFilas == 0) {
+            javax.swing.JOptionPane.showMessageDialog(this, "La playlist está vacía");
+            return;
+        }
+
+        if (fila == -1) {
+            fila = 0;
+        } else {
+            fila = fila + 1;
+        }
+
+        if (fila >= totalFilas) {
+
+            if (circularActivo == true) {
+                fila = 0;
+            } else {
+                mp3.detener();
+                javax.swing.JOptionPane.showMessageDialog(this, "Fin de la playlist");
+                return;
+            }
+        }
+
+        tablaPlay.setRowSelectionInterval(fila, fila);
+
+        String ruta = tablaPlay.getValueAt(fila, 7).toString();
+
+        mp3.reproducir(ruta);
+
+        
+        
+    }//GEN-LAST:event_BTN_SIGUIENTEActionPerformed
+
+    private void BTRN_ATRASActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTRN_ATRASActionPerformed
+        // TODO add your handling code here:
+       int fila = tablaPlay.getSelectedRow();
+    int totalFilas = tablaPlay.getRowCount();
+
+    if (totalFilas == 0) {
+        javax.swing.JOptionPane.showMessageDialog(this, "La playlist está vacía");
+        return;
+    }
+
+    if (fila == -1) {
+        fila = 0;
+    } else {
+        fila = fila - 1;
+    }
+
+    if (fila < 0) {
+
+        if (circularActivo == true) {
+            fila = totalFilas - 1;
+        } else {
+            mp3.detener();
+            javax.swing.JOptionPane.showMessageDialog(this, "Inicio de la playlist");
+            return;
+        }
+    }
+
+    tablaPlay.setRowSelectionInterval(fila, fila);
+
+    String ruta = tablaPlay.getValueAt(fila, 7).toString();
+
+    mp3.reproducir(ruta);
+    }//GEN-LAST:event_BTRN_ATRASActionPerformed
+
+    private void BTN_CIRULARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_CIRULARActionPerformed
+        // TODO add your handling code here:
+        
+
+                if (circularActivo == false) {
+                    circularActivo = true;
+                    BTN_CIRULAR.setText("Circular ON");
+                    javax.swing.JOptionPane.showMessageDialog(this, "Modo circular activado");
+                } else {
+                    circularActivo = false;
+                    BTN_CIRULAR.setText("Circular OFF");
+                    javax.swing.JOptionPane.showMessageDialog(this, "Modo circular desactivado");
+                }
+    }//GEN-LAST:event_BTN_CIRULARActionPerformed
+
+    private void BTN_REGRESARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_REGRESARActionPerformed
+        // TODO add your handling code here:
+        mp3.detener();
+          this.dispose();
+
+    }//GEN-LAST:event_BTN_REGRESARActionPerformed
+
+    private void BTN_ELIMINARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_ELIMINARActionPerformed
+        // TODO add your handling code here:
+          int fila = tablaPlay.getSelectedRow();
+
+    if (fila == -1) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Seleccione una canción para eliminar");
+        return;
+    }
+
+    String nombreCancion = tablaPlay.getValueAt(fila, 0).toString();
+
+    int respuesta = javax.swing.JOptionPane.showConfirmDialog(
+            this,
+            "¿Está seguro que desea eliminar esta canción de la playlist?\n" + nombreCancion,
+            "Confirmar eliminación",
+            javax.swing.JOptionPane.YES_NO_OPTION
+    );
+
+    if (respuesta == javax.swing.JOptionPane.YES_OPTION) {
+
+        playlist.eliminar(nombreCancion);
+
+        cargarPlaylist();
+
+        javax.swing.JOptionPane.showMessageDialog(this, "Canción eliminada de la playlist");
+    }
+    }//GEN-LAST:event_BTN_ELIMINARActionPerformed
+
+    private void BTN_ALEAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_ALEAActionPerformed
+        // TODO add your handling code here:
+         int totalFilas = tablaPlay.getRowCount();
+
+    if (totalFilas == 0) {
+        javax.swing.JOptionPane.showMessageDialog(this, "La playlist está vacía");
+        return;
+    }
+
+    int fila = (int) (Math.random() * totalFilas);
+
+    tablaPlay.setRowSelectionInterval(fila, fila);
+
+    String ruta = tablaPlay.getValueAt(fila, 7).toString();
+
+    mp3.reproducir(ruta);
+    }//GEN-LAST:event_BTN_ALEAActionPerformed
 
     /**
      * @param args the command line arguments
@@ -243,14 +417,15 @@ public class PPLAYLIST extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BTN_ALEA;
+    private javax.swing.JButton BTN_CIRULAR;
+    private javax.swing.JButton BTN_ELIMINAR;
     private javax.swing.JButton BTN_PLLAY;
+    private javax.swing.JButton BTN_REGRESAR;
+    private javax.swing.JButton BTN_SIGUIENTE;
     private javax.swing.JButton BTN_STOP;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton BTRN_ATRAS;
+    private javax.swing.JLabel LABEL_NAME;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaPlay;
     // End of variables declaration//GEN-END:variables
