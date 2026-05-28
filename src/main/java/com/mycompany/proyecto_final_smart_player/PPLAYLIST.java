@@ -160,19 +160,24 @@ public class PPLAYLIST extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        LABEL_NAME = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaPlay = new javax.swing.JTable();
+        BTN_REGRESAR = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
         BTRN_ATRAS = new javax.swing.JButton();
-        BTN_STOP = new javax.swing.JButton();
         BTN_PLLAY = new javax.swing.JButton();
         BTN_SIGUIENTE = new javax.swing.JButton();
+        BTN_STOP = new javax.swing.JButton();
         BTN_CIRULAR = new javax.swing.JButton();
         BTN_ALEA = new javax.swing.JButton();
         BTN_ELIMINAR = new javax.swing.JButton();
-        BTN_REGRESAR = new javax.swing.JButton();
-        LABEL_NAME = new javax.swing.JLabel();
+
+        LABEL_NAME.setFont(new java.awt.Font("Siemens Slab SC Black", 0, 18)); // NOI18N
+        LABEL_NAME.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(0, 0, 0));
 
         tablaPlay.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -187,10 +192,34 @@ public class PPLAYLIST extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tablaPlay);
 
-        BTRN_ATRAS.setText("ATRAS");
+        BTN_REGRESAR.setText("REGRESAR");
+        BTN_REGRESAR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_REGRESARActionPerformed(evt);
+            }
+        });
+
+        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        BTRN_ATRAS.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ANTERIORRR.png"))); // NOI18N
         BTRN_ATRAS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BTRN_ATRASActionPerformed(evt);
+            }
+        });
+
+        BTN_PLLAY.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/PLLAY.png"))); // NOI18N
+        BTN_PLLAY.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_PLLAYActionPerformed(evt);
+            }
+        });
+
+        BTN_SIGUIENTE.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/SIGUIENTEEEE.png"))); // NOI18N
+        BTN_SIGUIENTE.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_SIGUIENTEActionPerformed(evt);
             }
         });
 
@@ -198,20 +227,6 @@ public class PPLAYLIST extends javax.swing.JFrame {
         BTN_STOP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BTN_STOPActionPerformed(evt);
-            }
-        });
-
-        BTN_PLLAY.setText("PLAY");
-        BTN_PLLAY.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BTN_PLLAYActionPerformed(evt);
-            }
-        });
-
-        BTN_SIGUIENTE.setText("SIGUIENTE");
-        BTN_SIGUIENTE.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BTN_SIGUIENTEActionPerformed(evt);
             }
         });
 
@@ -236,15 +251,45 @@ public class PPLAYLIST extends javax.swing.JFrame {
             }
         });
 
-        BTN_REGRESAR.setText("REGRESAR");
-        BTN_REGRESAR.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BTN_REGRESARActionPerformed(evt);
-            }
-        });
-
-        LABEL_NAME.setFont(new java.awt.Font("Siemens Slab SC Black", 0, 18)); // NOI18N
-        LABEL_NAME.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(BTRN_ATRAS, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(BTN_PLLAY, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(BTN_SIGUIENTE, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 103, Short.MAX_VALUE)
+                .addComponent(BTN_STOP)
+                .addGap(18, 18, 18)
+                .addComponent(BTN_CIRULAR)
+                .addGap(18, 18, 18)
+                .addComponent(BTN_ALEA)
+                .addGap(27, 27, 27)
+                .addComponent(BTN_ELIMINAR)
+                .addGap(27, 27, 27))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(BTN_SIGUIENTE, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(BTN_PLLAY, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(8, 8, 8)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(BTN_STOP)
+                                .addComponent(BTN_CIRULAR)
+                                .addComponent(BTN_ALEA)
+                                .addComponent(BTN_ELIMINAR)))
+                        .addComponent(BTRN_ATRAS, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(21, 21, 21))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -252,52 +297,26 @@ public class PPLAYLIST extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 719, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(41, 41, 41)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(BTRN_ATRAS)
-                        .addGap(18, 18, 18)
-                        .addComponent(BTN_PLLAY)
-                        .addGap(18, 18, 18)
-                        .addComponent(BTN_SIGUIENTE)
-                        .addGap(79, 79, 79)
-                        .addComponent(BTN_STOP)
-                        .addGap(18, 18, 18)
-                        .addComponent(BTN_CIRULAR)
-                        .addGap(18, 18, 18)
-                        .addComponent(BTN_ALEA)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(BTN_ELIMINAR))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(BTN_REGRESAR)
-                        .addGap(103, 103, 103)
-                        .addComponent(LABEL_NAME, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 719, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(29, Short.MAX_VALUE))
+                        .addGap(15, 15, 15)
+                        .addComponent(BTN_REGRESAR)))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(BTN_REGRESAR)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(5, 5, 5)
-                        .addComponent(LABEL_NAME, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(BTN_REGRESAR)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BTRN_ATRAS, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BTN_STOP)
-                    .addComponent(BTN_SIGUIENTE)
-                    .addComponent(BTN_CIRULAR)
-                    .addComponent(BTN_ALEA)
-                    .addComponent(BTN_ELIMINAR)
-                    .addComponent(BTN_PLLAY))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -500,6 +519,7 @@ public class PPLAYLIST extends javax.swing.JFrame {
     private javax.swing.JButton BTN_STOP;
     private javax.swing.JButton BTRN_ATRAS;
     private javax.swing.JLabel LABEL_NAME;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaPlay;
     // End of variables declaration//GEN-END:variables
