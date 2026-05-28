@@ -1,6 +1,12 @@
 package com.mycompany.proyecto_final_smart_player;
 
+import java.awt.Color;
+import java.awt.Component;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 /**
  *
@@ -24,6 +30,8 @@ public class PPLAYLIST extends javax.swing.JFrame {
     }
     public PPLAYLIST(PLAYLIST playlist) {
         initComponents();
+        
+        getContentPane().setBackground(new Color(18, 18, 18));
 
         this.playlist = playlist;
         LABEL_NAME.setText("Playlist: " + playlist.getNombre());
@@ -37,7 +45,11 @@ public class PPLAYLIST extends javax.swing.JFrame {
         tablaPlay.setModel(modelo);
 
         cargarPlaylist();
+        estiloTablaSpotify();
     }
+    
+    
+   
 
     public void cargarPlaylist() {
 
@@ -70,7 +82,71 @@ public class PPLAYLIST extends javax.swing.JFrame {
     }
 }
      
+    private void estiloTablaSpotify() {
 
+    tablaPlay.setBackground(new Color(0, 0, 0));
+    tablaPlay.setForeground(Color.WHITE);
+    tablaPlay.setGridColor(new Color(35, 35, 35));
+
+    
+    tablaPlay.setSelectionBackground(new Color(180, 0, 0)); // cuadno se oprime se pone rojo
+
+    tablaPlay.setRowHeight(35);
+    tablaPlay.setShowGrid(true);
+    tablaPlay.setOpaque(true);
+    tablaPlay.setFillsViewportHeight(true);
+
+    jScrollPane1.getViewport().setBackground(new Color(0, 0, 0));
+    jScrollPane1.setBackground(new Color(0, 0, 0));
+    jScrollPane1.setBorder(null);
+
+    JTableHeader header = tablaPlay.getTableHeader();
+    header.setBackground(new Color(15, 15, 15));
+    header.setForeground(Color.WHITE);
+    header.setOpaque(true);
+
+    header.setDefaultRenderer(new DefaultTableCellRenderer() {
+        @Override
+        public Component getTableCellRendererComponent(
+                JTable table, Object value, boolean isSelected,
+                boolean hasFocus, int row, int column) {
+
+            JLabel label = (JLabel) super.getTableCellRendererComponent(
+                    table, value, isSelected, hasFocus, row, column);
+
+            label.setBackground(new Color(15, 15, 15));
+            label.setForeground(Color.RED);
+            label.setHorizontalAlignment(JLabel.CENTER);
+            label.setOpaque(true);
+
+            return label;
+        }
+    });
+
+    DefaultTableCellRenderer render = new DefaultTableCellRenderer() {
+        @Override
+        public Component getTableCellRendererComponent(
+                JTable table, Object value, boolean isSelected,
+                boolean hasFocus, int row, int column) {
+
+            Component c = super.getTableCellRendererComponent(
+                    table, value, isSelected, hasFocus, row, column);
+
+            if (isSelected) {
+                c.setBackground(new Color(180, 0, 0)); // Rojo 
+                c.setForeground(Color.WHITE);
+            } else {
+                c.setBackground(new Color(0, 0, 0));   // fondo negro
+                c.setForeground(Color.WHITE);
+            }
+
+            return c;
+        }
+    };
+     for (int i = 0; i < tablaPlay.getColumnCount(); i++) {
+        tablaPlay.getColumnModel().getColumn(i).setCellRenderer(render);
+    }
+}
     
     
     
@@ -180,28 +256,26 @@ public class PPLAYLIST extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(BTRN_ATRAS)
                         .addGap(18, 18, 18)
-                        .addComponent(BTN_STOP)
-                        .addGap(26, 26, 26)
                         .addComponent(BTN_PLLAY)
                         .addGap(18, 18, 18)
                         .addComponent(BTN_SIGUIENTE)
-                        .addGap(37, 37, 37)
+                        .addGap(79, 79, 79)
+                        .addComponent(BTN_STOP)
+                        .addGap(18, 18, 18)
                         .addComponent(BTN_CIRULAR)
                         .addGap(18, 18, 18)
                         .addComponent(BTN_ALEA)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(BTN_ELIMINAR))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 719, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(BTN_REGRESAR)
-                                .addGap(103, 103, 103)
-                                .addComponent(LABEL_NAME, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(BTN_REGRESAR)
+                        .addGap(103, 103, 103)
+                        .addComponent(LABEL_NAME, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 719, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -214,15 +288,15 @@ public class PPLAYLIST extends javax.swing.JFrame {
                         .addComponent(LABEL_NAME, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BTRN_ATRAS, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BTN_STOP)
-                    .addComponent(BTN_PLLAY)
                     .addComponent(BTN_SIGUIENTE)
                     .addComponent(BTN_CIRULAR)
                     .addComponent(BTN_ALEA)
-                    .addComponent(BTN_ELIMINAR))
+                    .addComponent(BTN_ELIMINAR)
+                    .addComponent(BTN_PLLAY))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
