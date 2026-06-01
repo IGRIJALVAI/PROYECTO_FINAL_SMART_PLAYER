@@ -1,8 +1,9 @@
 package com.mycompany.proyecto_final_smart_player;
 
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import javazoom.jl.player.Player;
+import java.io.File;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 /**
  *
@@ -10,42 +11,45 @@ import javazoom.jl.player.Player;
  */
 public class MP3 {
     
-   Player reproductor;
+     MediaPlayer reproductor;
+
+    public MP3() {
+        new JFXPanel();
+    }
 
     public void reproducir(String ruta) {
-
         try {
-            detener(); //PRIMERO LLAMANMOS A DETENER PARA QUE SE CIERRE CUALQUIER MUSICA Y SONAR LA OTRA
-            
+            detener();
 
-            FileInputStream archivo = new FileInputStream(ruta);
-            BufferedInputStream buffer = new BufferedInputStream(archivo);
+            File archivo = new File(ruta);
+            Media media = new Media(archivo.toURI().toString());
 
-            reproductor = new Player(buffer);
-
-            Thread hilo = new Thread() {
-                public void run() {
-                    try {
-                        reproductor.play();
-                    } catch (Exception e) {
-                        System.out.println("Error al reproducir");
-                    }
-                }
-            };
-
-            hilo.start();
+            reproductor = new MediaPlayer(media);
+            reproductor.play();
 
         } catch (Exception e) {
             System.out.println("No se pudo reproducir la cancion");
+            System.out.println(e.getMessage());
         }
     }
 
-    public void detener() { 
-
+    public void pausar() {
         if (reproductor != null) {
-            reproductor.close();
+            reproductor.pause();
+        }
+    }
+
+    public void continuar() {
+        if (reproductor != null) {
+            reproductor.play();
+        }
+    }
+
+    public void detener() {
+        if (reproductor != null) {
+            reproductor.stop();
+            reproductor.dispose();
             reproductor = null;
         }
-    }
-    
+    }   
 }

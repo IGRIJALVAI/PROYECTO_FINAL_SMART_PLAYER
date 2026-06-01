@@ -7,6 +7,9 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import com.formdev.flatlaf.FlatDarkLaf;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 /**
  *
  * @author grija
@@ -20,7 +23,7 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
      * Creates new form RESPRODUCTORMP3
      */
     
-       MP3 mp3 = new MP3();
+     MP3 mp3 = new MP3();
      String rutaCancion = "";
      LISTA_SIMPLE listaMusica = new LISTA_SIMPLE();
      LISTA_DOBLE listaDoble = new LISTA_DOBLE();
@@ -32,6 +35,7 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
     
     public RESPRODUCTORMP3() {
         initComponents();
+        
         getContentPane().setBackground(new Color(18, 18, 18));
         
         
@@ -259,6 +263,7 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
 
         jToggleButton1.setText("jToggleButton1");
 
+        BTN_CIRULAR.setBackground(new java.awt.Color(0, 0, 0));
         BTN_CIRULAR.setText("CIRCULAR");
         BTN_CIRULAR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -270,6 +275,7 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
 
         BTN_PLAY_MUSICA.setBackground(new java.awt.Color(153, 153, 153));
         BTN_PLAY_MUSICA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/PLLAY.png"))); // NOI18N
+        BTN_PLAY_MUSICA.setBorder(null);
         BTN_PLAY_MUSICA.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BTN_PLAY_MUSICAActionPerformed(evt);
@@ -870,7 +876,7 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[]) throws UnsupportedLookAndFeelException {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -889,7 +895,10 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+       UIManager.setLookAndFeel(new FlatDarkLaf());
         java.awt.EventQueue.invokeLater(() -> new RESPRODUCTORMP3().setVisible(true));
+        
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

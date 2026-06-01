@@ -211,6 +211,7 @@ public class PPLAYLIST extends javax.swing.JFrame {
         });
 
         BTN_PLLAY.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/PLLAY.png"))); // NOI18N
+        BTN_PLLAY.setBorder(null);
         BTN_PLLAY.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BTN_PLLAYActionPerformed(evt);
