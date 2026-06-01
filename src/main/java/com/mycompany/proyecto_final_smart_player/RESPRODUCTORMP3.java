@@ -22,7 +22,7 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
     /**
      * Creates new form RESPRODUCTORMP3
      */
-    
+    ARBOL_ABB arbolABB = new ARBOL_ABB();
      MP3 mp3 = new MP3();
      String rutaCancion = "";
      LISTA_SIMPLE listaMusica = new LISTA_SIMPLE();
@@ -163,11 +163,11 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
                     DATOS_MP3 datos = new DATOS_MP3();
                     MUSICA musica = datos.leerDatos(ruta);
 
+                    arbolABB.AgregarNodo(musica);
+
                     listaMusica.agregar(musica);
                     listaDoble.agregar(musica);
                     listaCircular.agregar(musica);
-
-                    agregarMusicaATabla(musica);
                 }
             }
         }
@@ -248,6 +248,7 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
         });
 
         BTN_SIGUIENTE.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/SIGUIENTEEEE.png"))); // NOI18N
+        BTN_SIGUIENTE.setBorder(null);
         BTN_SIGUIENTE.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BTN_SIGUIENTEActionPerformed(evt);
@@ -255,6 +256,7 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
         });
 
         BTN_ANTERIOR.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ANTERIORRR.png"))); // NOI18N
+        BTN_ANTERIOR.setBorder(null);
         BTN_ANTERIOR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BTN_ANTERIORActionPerformed(evt);
@@ -336,6 +338,7 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
         jPanel2.setForeground(new java.awt.Color(255, 255, 255));
 
         BTN_CREARPLAY.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/creaar.png"))); // NOI18N
+        BTN_CREARPLAY.setBorder(null);
         BTN_CREARPLAY.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BTN_CREARPLAYActionPerformed(evt);
@@ -348,6 +351,7 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
 
         BTN_AGREGAR_CAN_PLAY.setBackground(new java.awt.Color(0, 0, 0));
         BTN_AGREGAR_CAN_PLAY.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/agregar.png"))); // NOI18N
+        BTN_AGREGAR_CAN_PLAY.setBorder(null);
         BTN_AGREGAR_CAN_PLAY.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BTN_AGREGAR_CAN_PLAYActionPerformed(evt);
@@ -428,6 +432,7 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
 
         BTN_BUSCAR_MUSICA.setBackground(new java.awt.Color(0, 0, 0));
         BTN_BUSCAR_MUSICA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buiscar (1).png"))); // NOI18N
+        BTN_BUSCAR_MUSICA.setBorder(null);
         BTN_BUSCAR_MUSICA.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BTN_BUSCAR_MUSICAActionPerformed(evt);
@@ -641,7 +646,7 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
         // TODO add your handling code here:
                                                       
 
-    javax.swing.JFileChooser buscar = new javax.swing.JFileChooser();
+      javax.swing.JFileChooser buscar = new javax.swing.JFileChooser();
     buscar.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
 
     int opcion = buscar.showOpenDialog(this);
@@ -650,14 +655,16 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
 
         java.io.File carpeta = buscar.getSelectedFile();
 
-        DefaultTableModel modelo = (DefaultTableModel) tablaMusica.getModel();
-        modelo.setRowCount(0);
-
         cargarMusicaDeCarpeta(carpeta);
 
-        javax.swing.JOptionPane.showMessageDialog(this, "Canciones cargadas correctamente");
-    }
+        DefaultTableModel modelo = (DefaultTableModel) tablaMusica.getModel();
 
+        modelo.setRowCount(0);
+
+        arbolABB.llenarTablaInorden(arbolABB.getRaiz(), modelo);
+
+        javax.swing.JOptionPane.showMessageDialog(this, "Canciones cargadas desde el arbol ABB");
+    }
     }//GEN-LAST:event_BTN_CARGARCAPETAActionPerformed
 
     private void BTN_SIGUIENTEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_SIGUIENTEActionPerformed
