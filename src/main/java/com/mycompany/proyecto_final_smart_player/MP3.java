@@ -11,7 +11,10 @@ import javafx.scene.media.MediaPlayer;
  */
 public class MP3 {
     
-     MediaPlayer reproductor;
+   
+    MediaPlayer reproductor;
+    boolean pausado = false;
+    boolean sonando = false;
 
     public MP3() {
         new JFXPanel();
@@ -27,6 +30,9 @@ public class MP3 {
             reproductor = new MediaPlayer(media);
             reproductor.play();
 
+            sonando = true;
+            pausado = false;
+
         } catch (Exception e) {
             System.out.println("No se pudo reproducir la cancion");
             System.out.println(e.getMessage());
@@ -34,14 +40,28 @@ public class MP3 {
     }
 
     public void pausar() {
-        if (reproductor != null) {
+        if (reproductor != null && sonando == true) {
             reproductor.pause();
+            pausado = true;
+            sonando = false;
         }
     }
 
     public void continuar() {
-        if (reproductor != null) {
+        if (reproductor != null && pausado == true) {
             reproductor.play();
+            pausado = false;
+            sonando = true;
+        }
+    }
+
+    public void playPausa() {
+        if (reproductor != null) {
+            if (sonando == true) {
+                pausar();
+            } else {
+                continuar();
+            }
         }
     }
 
@@ -51,5 +71,16 @@ public class MP3 {
             reproductor.dispose();
             reproductor = null;
         }
-    }   
+
+        sonando = false;
+        pausado = false;
+    }
+
+    public boolean estaSonando() {
+        return sonando;
+    }
+
+    public boolean estaPausado() {
+        return pausado;
+    }
 }
