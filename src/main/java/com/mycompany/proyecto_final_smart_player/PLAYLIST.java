@@ -9,9 +9,8 @@ package com.mycompany.proyecto_final_smart_player;
  * @author grija
  */
 public class PLAYLIST {
-    
-      public String nombre;
-     public NODO_PLAY inicio;
+      String nombre;
+    NODO_PLAY inicio;
 
     public PLAYLIST(String nombre) {
         this.nombre = nombre;
@@ -38,6 +37,23 @@ public class PLAYLIST {
         }
     }
 
+    public String mostrar() {
+        String texto = "";
+
+        if (inicio == null) {
+            return "La playlist esta vacia";
+        }
+
+        NODO_PLAY aux = inicio;
+
+        while (aux != null) {
+            texto = texto + aux.musica.getNombre() + " - " + aux.musica.getArtista() + "\n";
+            aux = aux.siguiente;
+        }
+
+        return texto;
+    }
+
     public void eliminar(String nombreCancion) {
         if (inicio == null) {
             return;
@@ -60,29 +76,13 @@ public class PLAYLIST {
         }
     }
 
-    public String mostrar() {
-        String texto = "";
-
-        if (inicio == null) {
-            return "La playlist está vacía";
-        }
-
-        NODO_PLAY aux = inicio;
-
-        while (aux != null) {
-            texto = texto + aux.musica.getNombre() + " - " + aux.musica.getArtista() + "\n";
-            aux = aux.siguiente;
-        }
-
-        return texto;
+    public NODO_PLAY getInicio() {
+        return inicio;
     }
 
-    public MUSICA obtenerprimera() {
-        if (inicio == null) {
-            return null;
-        }
-
-        return inicio.musica;
+    public void setInicio(NODO_PLAY inicio) {
+        this.inicio = inicio;
     }
+    
     
 }
