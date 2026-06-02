@@ -8,16 +8,17 @@ package com.mycompany.proyecto_final_smart_player;
  *
  * @author grija
  */
-public class NODO_ABB {
-  
+public class NODO_AVL {
     MUSICA musica;
-    NODO_ABB hijoIzquierdo;
-    NODO_ABB hijoDerecho;
+    NODO_AVL hijoIzquierdo;
+    NODO_AVL hijoDerecho;
+    int altura;
 
-    public NODO_ABB(MUSICA musica) {
+    public NODO_AVL(MUSICA musica) {
         this.musica = musica;
         this.hijoIzquierdo = null;
         this.hijoDerecho = null;
+        this.altura = 1;
     }
 
     public MUSICA getMusica() {
@@ -28,20 +29,29 @@ public class NODO_ABB {
         this.musica = musica;
     }
 
-    public NODO_ABB getHijoIzquierdo() {
+    public NODO_AVL getHijoIzquierdo() {
         return hijoIzquierdo;
     }
 
-    public void setHijoIzquierdo(NODO_ABB hijoIzquierdo) {
+    public void setHijoIzquierdo(NODO_AVL hijoIzquierdo) {
         this.hijoIzquierdo = hijoIzquierdo;
     }
 
-    public NODO_ABB getHijoDerecho() {
+    public NODO_AVL getHijoDerecho() {
         return hijoDerecho;
     }
 
-    public void setHijoDerecho(NODO_ABB hijoDerecho) {
+    public void setHijoDerecho(NODO_AVL hijoDerecho) {
         this.hijoDerecho = hijoDerecho;
     }
+
+    public int getAltura() {
+        return altura;
+    }
+
+    public void setAltura(int altura) {
+        this.altura = altura;
+    }
+    
     
 }

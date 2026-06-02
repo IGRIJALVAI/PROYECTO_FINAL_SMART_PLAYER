@@ -23,6 +23,7 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
      * Creates new form RESPRODUCTORMP3
      */
      ARBOL_ABB arbolABB = new ARBOL_ABB();
+     ARBOL_AVL arbolAVL = new ARBOL_AVL();
      MP3 mp3 = new MP3();
      String rutaCancion = "";
      LISTA_SIMPLE listaMusica = new LISTA_SIMPLE();
@@ -31,6 +32,10 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
      COLA cola = new COLA();
      LISTA_CIRCULAR listaCircular = new LISTA_CIRCULAR();
      VARIAS_PLAYS VariosPlaylist = new VARIAS_PLAYS();
+     long tiempoCargaABB = 0;
+     long tiempoCargaAVL = 0;
+     int totalCancionesCargadas = 0;
+     
      
     
     public RESPRODUCTORMP3() {
@@ -142,7 +147,7 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
     
     public void cargarMusicaDeCarpeta(java.io.File carpeta) {
 
-    java.io.File archivos[] = carpeta.listFiles();
+  java.io.File archivos[] = carpeta.listFiles();
 
     if (archivos != null) {
 
@@ -163,11 +168,23 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
                     DATOS_MP3 datos = new DATOS_MP3();
                     MUSICA musica = datos.leerDatos(ruta);
 
+                    long inicioABB = System.nanoTime();
                     arbolABB.AgregarNodo(musica);
+                    long finABB = System.nanoTime();
+
+                    tiempoCargaABB = tiempoCargaABB + (finABB - inicioABB);
+
+                    long inicioAVL = System.nanoTime();
+                    arbolAVL.AgregarNodo(musica);
+                    long finAVL = System.nanoTime();
+
+                    tiempoCargaAVL = tiempoCargaAVL + (finAVL - inicioAVL);
 
                     listaMusica.agregar(musica);
                     listaDoble.agregar(musica);
                     listaCircular.agregar(musica);
+
+                    totalCancionesCargadas++;
                 }
             }
         }
@@ -656,9 +673,8 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
 
     private void BTN_CARGARCAPETAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_CARGARCAPETAActionPerformed
         // TODO add your handling code here:
-                                                      
-
-      javax.swing.JFileChooser buscar = new javax.swing.JFileChooser();
+        
+     javax.swing.JFileChooser buscar = new javax.swing.JFileChooser();
     buscar.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
 
     int opcion = buscar.showOpenDialog(this);
@@ -666,6 +682,13 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
     if (opcion == javax.swing.JFileChooser.APPROVE_OPTION) {
 
         java.io.File carpeta = buscar.getSelectedFile();
+
+        tiempoCargaABB = 0;
+        tiempoCargaAVL = 0;
+        totalCancionesCargadas = 0;
+
+        arbolABB = new ARBOL_ABB();
+        arbolAVL = new ARBOL_AVL();
 
         cargarMusicaDeCarpeta(carpeta);
 
@@ -675,7 +698,15 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
 
         arbolABB.llenarTablaInorden(arbolABB.getRaiz(), modelo);
 
-        javax.swing.JOptionPane.showMessageDialog(this, "Canciones cargadas desde el arbol ABB");
+        double tiempoABBms = tiempoCargaABB / 1000000.0;
+        double tiempoAVLms = tiempoCargaAVL / 1000000.0;
+
+        javax.swing.JOptionPane.showMessageDialog(this,
+                "Carga finalizada"
+                + "\nCanciones cargadas: " + totalCancionesCargadas
+                + "\nTiempo carga ABB: " + tiempoABBms + " ms"
+                + "\nTiempo carga AVL: " + tiempoAVLms + " ms"
+        );
     }
     }//GEN-LAST:event_BTN_CARGARCAPETAActionPerformed
 
