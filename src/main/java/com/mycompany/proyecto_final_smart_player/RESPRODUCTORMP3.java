@@ -636,29 +636,35 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         
-          int fila = tablaMusica.getSelectedRow();
+           int fila = tablaMusica.getSelectedRow();
 
     if (fila == -1) {
         javax.swing.JOptionPane.showMessageDialog(this, "Seleccione una cancion de la tabla");
         return;
     }
 
-    String ruta = tablaMusica.getValueAt(fila, 7).toString();
+    String rutaSeleccionada = tablaMusica.getValueAt(fila, 7).toString();
 
-    if (mp3.reproductor == null) {
+    if (mp3.getRutaActual().equals("")) {
 
-        mp3.reproducir(ruta);
-        BTN_PLAY_MUSICA.setText("");
+        mp3.reproducir(rutaSeleccionada);
+        BTN_PLAY_MUSICA.setText("Pausa");
 
-    } else {
+    } else if (mp3.getRutaActual().equals(rutaSeleccionada)) {
 
         mp3.playPausa();
 
         if (mp3.estaSonando()) {
-            BTN_PLAY_MUSICA.setText("");
+            BTN_PLAY_MUSICA.setText("Pausa");
         } else {
-            BTN_PLAY_MUSICA.setText("");
+            BTN_PLAY_MUSICA.setText("Play");
         }
+
+    } else {
+
+        mp3.reproducir(rutaSeleccionada);
+        BTN_PLAY_MUSICA.setText("Pausa");
+    
     }
         
     }//GEN-LAST:event_BTN_PLAY_MUSICAActionPerformed

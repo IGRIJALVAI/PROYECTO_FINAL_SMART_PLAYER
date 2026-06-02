@@ -15,6 +15,7 @@ public class MP3 {
     MediaPlayer reproductor;
     boolean pausado = false;
     boolean sonando = false;
+    String rutaActual = "";
 
     public MP3() {
         new JFXPanel();
@@ -22,21 +23,22 @@ public class MP3 {
 
     public void reproducir(String ruta) {
         try {
-            detener();
+        detener();
 
-            File archivo = new File(ruta);
-            Media media = new Media(archivo.toURI().toString());
+        File archivo = new File(ruta);
+        Media media = new Media(archivo.toURI().toString());
 
-            reproductor = new MediaPlayer(media);
-            reproductor.play();
+        reproductor = new MediaPlayer(media);
+        reproductor.play();
 
-            sonando = true;
-            pausado = false;
+        rutaActual = ruta;
+        sonando = true;
+        pausado = false;
 
-        } catch (Exception e) {
-            System.out.println("No se pudo reproducir la cancion");
-            System.out.println(e.getMessage());
-        }
+    } catch (Exception e) {
+        System.out.println("No se pudo reproducir la cancion");
+        System.out.println(e.getMessage());
+    }
     }
 
     public void pausar() {
@@ -72,6 +74,8 @@ public class MP3 {
             reproductor = null;
         }
 
+        
+        rutaActual = "";
         sonando = false;
         pausado = false;
     }
@@ -83,4 +87,8 @@ public class MP3 {
     public boolean estaPausado() {
         return pausado;
     }
+    
+    public String getRutaActual() {
+    return rutaActual;
+}
 }
