@@ -134,5 +134,16 @@ public class ARBOL_ABB {
         llenarTablaInorden(r.hijoDerecho, modelo);
     }
 }
+    public void llenarListaDobleInorden(NODO_ABB r, LISTA_DOBLE lista) {
+
+    if (r != null) {
+
+        llenarListaDobleInorden(r.hijoIzquierdo, lista);
+
+        lista.agregar(r.musica);
+
+        llenarListaDobleInorden(r.hijoDerecho, lista);
+    }
+}
     
 }

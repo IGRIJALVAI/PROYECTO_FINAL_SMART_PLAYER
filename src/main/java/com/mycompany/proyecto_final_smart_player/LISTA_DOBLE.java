@@ -79,5 +79,19 @@ public class LISTA_DOBLE {
             aux = aux.siguiente;
         }
     }
+    public void ponerActualPorRuta(String ruta) {
+
+    Nodo_Doble aux = inicio;
+
+    while (aux != null) {
+
+        if (aux.musica.getRuta().equals(ruta)) {
+            actual = aux;
+            return;
+        }
+
+        aux = aux.siguiente;
+    }
+}
     
 }
