@@ -42,6 +42,7 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
     PANEL_BIBLIOTECA panelBiblioteca;
     PANEL_BUISCAR panelBuscar;
     PANEL_ESTADISTICA panelEstadisticas;
+    PANEL_PLAYLIST panelPlay;
     
     
     public RESPRODUCTORMP3() {
@@ -53,10 +54,12 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
         panelBiblioteca = new PANEL_BIBLIOTECA(this);
         panelBuscar = new PANEL_BUISCAR(this);
         panelEstadisticas = new PANEL_ESTADISTICA(this);
+        panelPlay = new PANEL_PLAYLIST(this);
 
         PANEL_PRINCIPAL.add(panelBiblioteca, "biblioteca");
         PANEL_PRINCIPAL.add(panelBuscar, "buscar");
         PANEL_PRINCIPAL.add(panelEstadisticas, "estadisticas");
+        PANEL_PRINCIPAL.add(panelPlay, "playlist");
 
         card.show(PANEL_PRINCIPAL, "biblioteca");
 
@@ -235,6 +238,7 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
 
     private void BTN_ABRIPLAYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_ABRIPLAYActionPerformed
         // TODO add your handling code here:
+        card.show(PANEL_PRINCIPAL, "playlist");
         
         
     }//GEN-LAST:event_BTN_ABRIPLAYActionPerformed

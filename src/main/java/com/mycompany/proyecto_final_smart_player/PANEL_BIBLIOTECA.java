@@ -220,6 +220,8 @@ public MUSICA obtenerMusicaDeTabla(int fila) {
         BTN_CARGARCARPETA = new javax.swing.JButton();
         BTN_CREAR_PLAY = new javax.swing.JButton();
         BTN_AGREGSAR = new javax.swing.JButton();
+        cmbPlaylistsBiblioteca = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(0, 0, 0));
 
@@ -289,6 +291,8 @@ public MUSICA obtenerMusicaDeTabla(int fila) {
             }
         });
 
+        jLabel1.setText("PLATLIST :");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -307,14 +311,18 @@ public MUSICA obtenerMusicaDeTabla(int fila) {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(39, 39, 39)
                         .addComponent(BTN_CARGARCARPETA)
-                        .addGap(585, 585, 585)
+                        .addGap(481, 481, 481)
                         .addComponent(BTN_CREAR_PLAY)
-                        .addGap(47, 47, 47)
-                        .addComponent(BTN_AGREGSAR))
+                        .addGap(18, 18, 18)
+                        .addComponent(BTN_AGREGSAR)
+                        .addGap(33, 33, 33)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cmbPlaylistsBiblioteca, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(14, 14, 14)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 994, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(61, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -323,7 +331,9 @@ public MUSICA obtenerMusicaDeTabla(int fila) {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BTN_CARGARCARPETA)
                     .addComponent(BTN_CREAR_PLAY)
-                    .addComponent(BTN_AGREGSAR))
+                    .addComponent(BTN_AGREGSAR)
+                    .addComponent(cmbPlaylistsBiblioteca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 544, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
@@ -476,21 +486,67 @@ public MUSICA obtenerMusicaDeTabla(int fila) {
 
     private void BTN_AGREGSARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_AGREGSARActionPerformed
         // TODO add your handling code here:
+        
+   
+    int fila = tablaMusica.getSelectedRow();
+
+    if (fila == -1) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Seleccione una cancion de la tabla");
+        return;
+    }
+
+    if (cmbPlaylistsBiblioteca.getSelectedItem() == null) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Seleccione una playlist");
+        return;
+    }
+
+    String nombrePlaylist = cmbPlaylistsBiblioteca.getSelectedItem().toString();
+
+    PLAYLIST playlist = principal.VariosPlaylist.buscarPlaylist(nombrePlaylist);
+
+    if (playlist == null) {
+        javax.swing.JOptionPane.showMessageDialog(this, "No existe esa playlist");
+        return;
+    }
+
+    MUSICA musica = obtenerMusicaDeTabla(fila);
+
+    playlist.agregar(musica);
+
+    if (principal.panelPlay != null) {
+        principal.panelPlay.actualizarComboPlaylists();
+        principal.panelPlay.mostrarPlaylist(nombrePlaylist);
+    }
+
+    javax.swing.JOptionPane.showMessageDialog(this,
+            "Cancion agregada a la playlist: " + nombrePlaylist);
        
     }//GEN-LAST:event_BTN_AGREGSARActionPerformed
 
     private void BTN_CREAR_PLAYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_CREAR_PLAYActionPerformed
         // TODO add your handling code here:
-         String nombre = javax.swing.JOptionPane.showInputDialog(this, "Ingrese el nombre de la playlist");
+        String nombre = javax.swing.JOptionPane.showInputDialog(this, "Ingrese el nombre de la playlist");
 
-        if (nombre != null && !nombre.equals("")) {
+    if (nombre == null || nombre.equals("")) {
+        return;
+    }
 
-             principal.VariosPlaylist.crearPlaylist(nombre);
+    PLAYLIST existe = principal.VariosPlaylist.buscarPlaylist(nombre);
 
-            
+    if (existe != null) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Ya existe una playlist con ese nombre");
+        return;
+    }
 
-            javax.swing.JOptionPane.showMessageDialog(this, "Playlist creada correctamente");
-        }
+    principal.VariosPlaylist.crearPlaylist(nombre);
+
+    cmbPlaylistsBiblioteca.addItem(nombre);
+
+    if (principal.panelPlay != null) {
+        principal.panelPlay.actualizarComboPlaylists();
+    }
+
+    javax.swing.JOptionPane.showMessageDialog(this, "Playlist creada correctamente");
     }//GEN-LAST:event_BTN_CREAR_PLAYActionPerformed
 
 
@@ -501,7 +557,9 @@ public MUSICA obtenerMusicaDeTabla(int fila) {
     private javax.swing.JButton BTN_CREAR_PLAY;
     private javax.swing.JButton BTN_PLAY;
     private javax.swing.JButton BTN_SIGUIENTE;
+    private javax.swing.JComboBox<String> cmbPlaylistsBiblioteca;
     private javax.swing.JButton jButton4;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaMusica;
     // End of variables declaration//GEN-END:variables
