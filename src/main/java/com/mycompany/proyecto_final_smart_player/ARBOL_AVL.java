@@ -176,4 +176,61 @@ public class ARBOL_AVL {
     public NODO_AVL getRaiz() {
         return raiz;
     }
+    
+    public String recorridoInOrden() {
+    return InOrdenTexto(raiz);
+}
+
+public String recorridoPreOrden() {
+    return PreOrdenTexto(raiz);
+}
+
+public String recorridoPostOrden() {
+    return PostOrdenTexto(raiz);
+}
+
+public String InOrdenTexto(NODO_AVL r) {
+    String texto = "";
+
+    if (r != null) {
+        texto = texto + InOrdenTexto(r.hijoIzquierdo);
+        texto = texto + r.musica.getNombre() + " - " + r.musica.getArtista() + "\n";
+        texto = texto + InOrdenTexto(r.hijoDerecho);
+    }
+
+    return texto;
+}
+
+public String PreOrdenTexto(NODO_AVL r) {
+    String texto = "";
+
+    if (r != null) {
+        texto = texto + r.musica.getNombre() + " - " + r.musica.getArtista() + "\n";
+        texto = texto + PreOrdenTexto(r.hijoIzquierdo);
+        texto = texto + PreOrdenTexto(r.hijoDerecho);
+    }
+
+    return texto;
+}
+
+public String PostOrdenTexto(NODO_AVL r) {
+    String texto = "";
+
+    if (r != null) {
+        texto = texto + PostOrdenTexto(r.hijoIzquierdo);
+        texto = texto + PostOrdenTexto(r.hijoDerecho);
+        texto = texto + r.musica.getNombre() + " - " + r.musica.getArtista() + "\n";
+    }
+
+    return texto;
+}
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
