@@ -14,6 +14,7 @@ public class PANEL_BUISCAR extends javax.swing.JPanel {
      * Creates new form PANEL_BUISCAR
      */
     RESPRODUCTORMP3 principal;
+    
     public PANEL_BUISCAR() {
         initComponents();
     }

@@ -195,11 +195,13 @@ public MUSICA obtenerMusicaDeTabla(int fila) {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaMusica = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        BTN_PLAY = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         BTN_CARGARCARPETA = new javax.swing.JButton();
+        BTN_CREAR_PLAY = new javax.swing.JButton();
+        BTN_AGREGSAR = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(0, 0, 0));
 
@@ -220,18 +222,52 @@ public MUSICA obtenerMusicaDeTabla(int fila) {
             tablaMusica.getColumnModel().getColumn(3).setResizable(false);
         }
 
-        jButton1.setText("jButton1");
+        BTN_PLAY.setText("play");
+        BTN_PLAY.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_PLAYActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("jButton2");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("jButton3");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("jButton4");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         BTN_CARGARCARPETA.setText("CARGAR");
         BTN_CARGARCARPETA.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BTN_CARGARCARPETAActionPerformed(evt);
+            }
+        });
+
+        BTN_CREAR_PLAY.setText("CERAR PLAY");
+        BTN_CREAR_PLAY.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_CREAR_PLAYActionPerformed(evt);
+            }
+        });
+
+        BTN_AGREGSAR.setText("jButton5");
+        BTN_AGREGSAR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_AGREGSARActionPerformed(evt);
             }
         });
 
@@ -245,17 +281,20 @@ public MUSICA obtenerMusicaDeTabla(int fila) {
                         .addGap(194, 194, 194)
                         .addComponent(jButton2)
                         .addGap(46, 46, 46)
-                        .addComponent(jButton1)
+                        .addComponent(BTN_PLAY)
                         .addGap(46, 46, 46)
                         .addComponent(jButton3)
                         .addGap(152, 152, 152)
                         .addComponent(jButton4))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(16, 16, 16)
-                        .addComponent(BTN_CARGARCARPETA)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(BTN_CARGARCARPETA)
+                            .addComponent(BTN_CREAR_PLAY)
+                            .addComponent(BTN_AGREGSAR))
                         .addGap(35, 35, 35)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 855, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -263,10 +302,15 @@ public MUSICA obtenerMusicaDeTabla(int fila) {
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BTN_CARGARCARPETA))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(BTN_CARGARCARPETA)
+                        .addGap(46, 46, 46)
+                        .addComponent(BTN_CREAR_PLAY)
+                        .addGap(27, 27, 27)
+                        .addComponent(BTN_AGREGSAR)))
                 .addGap(48, 48, 48)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(BTN_PLAY)
                     .addComponent(jButton2)
                     .addComponent(jButton3)
                     .addComponent(jButton4))
@@ -336,10 +380,93 @@ public MUSICA obtenerMusicaDeTabla(int fila) {
     
     }//GEN-LAST:event_BTN_CARGARCARPETAActionPerformed
 
+    private void BTN_PLAYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_PLAYActionPerformed
+        // TODO add your handling code here:
+        int fila = tablaMusica.getSelectedRow();
+
+        if (fila == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Seleccione una cancion de la tabla");
+            return;
+        }
+
+        String rutaSeleccionada = tablaMusica.getValueAt(fila, 7).toString();
+
+        if (principal.mp3.getRutaActual().equals("")) {
+
+            principal.mp3.reproducir(rutaSeleccionada);
+            BTN_PLAY.setText("Pausa");
+
+        } else if (principal.mp3.getRutaActual().equals(rutaSeleccionada)) {
+
+            principal.mp3.playPausa();
+
+            if (principal.mp3.estaSonando()) {
+                BTN_PLAY.setText("Pausa");
+            } else {
+                BTN_PLAY.setText("Play");
+            }
+
+        } else {
+
+            principal.mp3.reproducir(rutaSeleccionada);
+            BTN_PLAY.setText("Pausa");
+
+        }
+    }//GEN-LAST:event_BTN_PLAYActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+         MUSICA musica =  principal.listaDoble.anterior();
+
+        if (musica != null) {
+             principal.mp3.reproducir(musica.getRuta());
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "No hay canción anterior");
+        }
+
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+         MUSICA musica = principal.listaDoble.siguiente();
+
+        if (musica != null) {
+            principal.mp3.reproducir(musica.getRuta());
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "No hay canción siguiente");
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+          principal.mp3.detener();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void BTN_AGREGSARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_AGREGSARActionPerformed
+        // TODO add your handling code here:
+       
+    }//GEN-LAST:event_BTN_AGREGSARActionPerformed
+
+    private void BTN_CREAR_PLAYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_CREAR_PLAYActionPerformed
+        // TODO add your handling code here:
+         String nombre = javax.swing.JOptionPane.showInputDialog(this, "Ingrese el nombre de la playlist");
+
+        if (nombre != null && !nombre.equals("")) {
+
+             principal.VariosPlaylist.crearPlaylist(nombre);
+
+            
+
+            javax.swing.JOptionPane.showMessageDialog(this, "Playlist creada correctamente");
+        }
+    }//GEN-LAST:event_BTN_CREAR_PLAYActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BTN_AGREGSAR;
     private javax.swing.JButton BTN_CARGARCARPETA;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton BTN_CREAR_PLAY;
+    private javax.swing.JButton BTN_PLAY;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
