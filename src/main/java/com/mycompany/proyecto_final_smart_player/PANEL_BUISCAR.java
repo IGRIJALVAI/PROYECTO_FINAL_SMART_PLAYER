@@ -41,35 +41,20 @@ public class PANEL_BUISCAR extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         TXT_BUSCARCAN = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
         COMBOX = new javax.swing.JComboBox<>();
         BTN_ARBOLES = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         TXT_RESULTADO = new javax.swing.JTextArea();
         BTN_MOSTARRECORERIDOS = new javax.swing.JButton();
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
-
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        TXT_RECORRRIDOSSS = new javax.swing.JTextArea();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         BTN_ARBOLES.setText("VS");
         BTN_ARBOLES.addActionListener(new java.awt.event.ActionListener() {
@@ -88,59 +73,95 @@ public class PANEL_BUISCAR extends javax.swing.JPanel {
             }
         });
 
+        jButton2.setText("jButton2");
+
+        jButton3.setText("jButton3");
+
+        TXT_RECORRRIDOSSS.setColumns(20);
+        TXT_RECORRRIDOSSS.setRows(5);
+        jScrollPane5.setViewportView(TXT_RECORRRIDOSSS);
+
+        jLabel1.setText("BUSQUEDA");
+
+        jLabel2.setText("CANCION");
+
+        jLabel3.setText("ARTISTA");
+
+        jLabel4.setText("GENERO");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(68, 68, 68)
+                .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(BTN_ARBOLES, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
-                        .addComponent(BTN_MOSTARRECORERIDOS, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(BTN_ARBOLES, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(35, 35, 35)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
+                            .addComponent(TXT_BUSCARCAN))
+                        .addGap(69, 69, 69)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(TXT_BUSCARCAN, javax.swing.GroupLayout.PREFERRED_SIZE, 517, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(COMBOX, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(105, Short.MAX_VALUE))
+                                .addComponent(BTN_MOSTARRECORERIDOS, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(65, 65, 65)
+                                .addComponent(COMBOX, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(43, 43, 43))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(TXT_BUSCARCAN, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(COMBOX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(67, 67, 67)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(BTN_ARBOLES, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
-                    .addComponent(BTN_MOSTARRECORERIDOS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(29, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(TXT_BUSCARCAN, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(BTN_ARBOLES, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(32, 32, 32)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3))
+                                .addGap(37, 37, 37)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel4)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 476, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(BTN_MOSTARRECORERIDOS, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(COMBOX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(15, 15, 15)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane5)))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void BTN_ARBOLESActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_ARBOLESActionPerformed
         // TODO add your handling code here:
-        String nombre = TXT_BUSCARCAN.getText();
+       String nombre = TXT_BUSCARCAN.getText().trim();
 
     if (nombre.equals("")) {
         javax.swing.JOptionPane.showMessageDialog(this, "Ingrese el nombre de una cancion");
@@ -151,39 +172,46 @@ public class PANEL_BUISCAR extends javax.swing.JPanel {
     MUSICA resultadoABB = principal.arbolABB.buscarNodo(nombre);
     long finABB = System.nanoTime();
 
-    long tiempoABB = finABB - inicioABB;
-
     long inicioAVL = System.nanoTime();
     MUSICA resultadoAVL = principal.arbolAVL.buscarNodo(nombre);
     long finAVL = System.nanoTime();
 
+    long tiempoABB = finABB - inicioABB;
     long tiempoAVL = finAVL - inicioAVL;
 
     if (resultadoABB != null) {
 
         TXT_RESULTADO.setText(
-                "CANCION ENCONTRADA"
+                "CANCION ENCONTRADA EXACTA"
                 + "\n\nNombre: " + resultadoABB.getNombre()
                 + "\nArtista: " + resultadoABB.getArtista()
                 + "\nAlbum: " + resultadoABB.getAlbum()
                 + "\nGenero: " + resultadoABB.getGenero()
                 + "\nAño: " + resultadoABB.getAnio()
                 + "\nDuracion: " + resultadoABB.getDuracion()
-                + "\nTamaño: " + resultadoABB.getTamanioMB()
                 + "\nRuta: " + resultadoABB.getRuta()
-                + "\n\nTIEMPOS DE BUSQUEDA"
-                + "\nABB: " + tiempoABB + " ns"
-                + "\nAVL: " + tiempoAVL + " ns"
+                + "\n\nTiempo ABB: " + tiempoABB + " ns"
+                + "\nTiempo AVL: " + tiempoAVL + " ns"
         );
 
     } else {
 
-        TXT_RESULTADO.setText(
-                "No se encontro la cancion"
-                + "\n\nTIEMPOS DE BUSQUEDA"
-                + "\nABB: " + tiempoABB + " ns"
-                + "\nAVL: " + tiempoAVL + " ns"
-        );
+        String parecidos = principal.arbolABB.buscarParecido(nombre);
+
+        if (parecidos.equals("")) {
+            TXT_RESULTADO.setText(
+                    "No se encontro la cancion"
+                    + "\n\nTiempo ABB: " + tiempoABB + " ns"
+                    + "\nTiempo AVL: " + tiempoAVL + " ns"
+            );
+        } else {
+            TXT_RESULTADO.setText(
+                    "No se encontro exacta, pero hay coincidencias:\n\n"
+                    + parecidos
+                    + "\nTiempo ABB: " + tiempoABB + " ns"
+                    + "\nTiempo AVL: " + tiempoAVL + " ns"
+            );
+        }
     }
     }//GEN-LAST:event_BTN_ARBOLESActionPerformed
 
@@ -217,15 +245,11 @@ public class PANEL_BUISCAR extends javax.swing.JPanel {
     }
 
     if (texto.equals("")) {
-        TXT_RESULTADO.setText("El arbol esta vacio");
+        TXT_RECORRRIDOSSS.setText("El arbol esta vacio");
     } else {
-        TXT_RESULTADO.setText("RECORRIDO: " + opcion + "\n\n" + texto);
+        TXT_RECORRRIDOSSS.setText("RECORRIDO: " + opcion + "\n\n" + texto);
     }
     }//GEN-LAST:event_BTN_MOSTARRECORERIDOSActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -233,10 +257,15 @@ public class PANEL_BUISCAR extends javax.swing.JPanel {
     private javax.swing.JButton BTN_MOSTARRECORERIDOS;
     private javax.swing.JComboBox<String> COMBOX;
     private javax.swing.JTextField TXT_BUSCARCAN;
+    private javax.swing.JTextArea TXT_RECORRRIDOSSS;
     private javax.swing.JTextArea TXT_RESULTADO;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jScrollPane5;
     // End of variables declaration//GEN-END:variables
 }

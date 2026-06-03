@@ -90,22 +90,30 @@ public class ARBOL_ABB {
 
     public MUSICA buscarNodo(String nombre) {
 
-        NODO_ABB aux = raiz;
+         if (nombre == null) {
+        return null;
+    }
 
-        while (aux != null && !aux.musica.getNombre().equalsIgnoreCase(nombre)) {
+    nombre = nombre.trim();
 
-            if (nombre.compareToIgnoreCase(aux.musica.getNombre()) < 0) {
-                aux = aux.hijoIzquierdo;
-            } else {
-                aux = aux.hijoDerecho;
-            }
-        }
+    NODO_ABB aux = raiz;
 
-        if (aux == null) {
-            return null;
-        } else {
+    while (aux != null) {
+
+        String nombreNodo = aux.musica.getNombre().trim();
+
+        if (nombre.equalsIgnoreCase(nombreNodo)) {
             return aux.musica;
         }
+
+        if (nombre.compareToIgnoreCase(nombreNodo) < 0) {
+            aux = aux.hijoIzquierdo;
+        } else {
+            aux = aux.hijoDerecho;
+        }
+    }
+
+    return null;
     }
 
     public NODO_ABB getRaiz() {
@@ -192,6 +200,30 @@ public String PostOrdenTexto(NODO_ABB r) {
     }
 
     return texto;
+}
+
+public String buscarParecido(String texto) {
+    return buscarParecidoRec(raiz, texto.toLowerCase());
+}
+
+public String buscarParecidoRec(NODO_ABB r, String texto) {
+
+    String resultado = "";
+
+    if (r != null) {
+
+        resultado = resultado + buscarParecidoRec(r.hijoIzquierdo, texto);
+
+        if (r.musica.getNombre().toLowerCase().contains(texto)) {
+            resultado = resultado
+                    + r.musica.getNombre() + " - "
+                    + r.musica.getArtista() + "\n";
+        }
+
+        resultado = resultado + buscarParecidoRec(r.hijoDerecho, texto);
+    }
+
+    return resultado;
 }
     
     
