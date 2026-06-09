@@ -20,8 +20,38 @@ public class PANEL_ESTADISTICA extends javax.swing.JPanel {
     public PANEL_ESTADISTICA(RESPRODUCTORMP3 principal) {
     initComponents();
     this.principal = principal;
+    TXT_ACTU.setEditable(false);
 }
 
+    
+    public void actualizarEstadisticas() {
+
+    double tiempoABBms = principal.tiempoCargaABB / 1000000.0;
+    double tiempoAVLms = principal.tiempoCargaAVL / 1000000.0;
+
+    TXT_ACTU.setText(
+            "ESTADISTICAS DEL REPRODUCTOR\n"
+            + "-----------------------------------\n\n"
+            + "Total de canciones cargadas: " + principal.totalCancionesCargadas + "\n\n"
+            + "TIEMPOS DE CARGA\n"
+            + "Tiempo ABB: " + tiempoABBms + " ms\n"
+            + "Tiempo AVL: " + tiempoAVLms + " ms\n\n"
+            + "PLAYLISTS\n"
+            + "Playlists creadas: " + principal.VariosPlaylist.contador + "\n\n"
+            + "ESTRUCTURAS IMPLEMENTADAS\n"
+            + "ABB\n"
+            + "AVL\n"
+            + "Tabla Hash\n"
+            + "Lista Simple\n"
+            + "Lista Doble\n"
+            + "Lista Circular\n"
+            + "Pila\n"
+            + "Cola\n"
+    );
+}
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -31,19 +61,85 @@ public class PANEL_ESTADISTICA extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        BTN_ACTUALIZAR = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        TXT_ACTU = new javax.swing.JTextArea();
+        jLabel1 = new javax.swing.JLabel();
+
+        BTN_ACTUALIZAR.setText("ACTUALIZAR");
+        BTN_ACTUALIZAR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_ACTUALIZARActionPerformed(evt);
+            }
+        });
+
+        TXT_ACTU.setColumns(20);
+        TXT_ACTU.setRows(5);
+        jScrollPane1.setViewportView(TXT_ACTU);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel1.setText("ESTADISTICAS");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(49, 49, 49)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(BTN_ACTUALIZAR)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(587, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(BTN_ACTUALIZAR)
+                .addGap(62, 62, 62)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(113, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void BTN_ACTUALIZARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_ACTUALIZARActionPerformed
+        // TODO add your handling code here:
+         double tiempoABBms = principal.tiempoCargaABB / 1000000.0;
+    double tiempoAVLms = principal.tiempoCargaAVL / 1000000.0;
+
+    TXT_ACTU.setText(
+            "ESTADISTICAS DEL REPRODUCTOR\n"
+            + "-----------------------------------\n\n"
+            + "Total de canciones cargadas: " + principal.totalCancionesCargadas + "\n\n"
+            + "TIEMPOS DE CARGA\n"
+            + "Tiempo ABB: " + tiempoABBms + " ms\n"
+            + "Tiempo AVL: " + tiempoAVLms + " ms\n\n"
+            + "ESTRUCTURAS IMPLEMENTADAS\n"
+            + "ABB: Arbol Binario de Busqueda\n"
+            + "AVL: Arbol balanceado\n"
+            + "Tabla Hash: Busqueda por artista y genero\n"
+            + "Lista Simple: Biblioteca general\n"
+            + "Lista Doble: Anterior y siguiente\n"
+            + "Lista Circular: Modo circular\n"
+            + "Pila: Historial\n"
+            + "Cola: Cola de reproduccion\n\n"
+            + "PLAYLISTS\n"
+            + "Playlists creadas: " + principal.VariosPlaylist.contador + "\n"
+    );
+    }//GEN-LAST:event_BTN_ACTUALIZARActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BTN_ACTUALIZAR;
+    private javax.swing.JTextArea TXT_ACTU;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

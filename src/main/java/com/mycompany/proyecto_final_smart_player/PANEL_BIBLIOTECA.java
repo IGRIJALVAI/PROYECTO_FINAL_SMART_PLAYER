@@ -352,65 +352,74 @@ public MUSICA obtenerMusicaDeTabla(int fila) {
     private void BTN_CARGARCARPETAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_CARGARCARPETAActionPerformed
         // TODO add your handling code here:
         javax.swing.JFileChooser buscar = new javax.swing.JFileChooser();
-    buscar.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
+buscar.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
 
-    int opcion = buscar.showOpenDialog(this);
+int opcion = buscar.showOpenDialog(this);
 
-    if (opcion == javax.swing.JFileChooser.APPROVE_OPTION) {
+if (opcion == javax.swing.JFileChooser.APPROVE_OPTION) {
 
-        java.io.File carpeta = buscar.getSelectedFile();
+    java.io.File carpeta = buscar.getSelectedFile();
 
-        int respuesta = javax.swing.JOptionPane.showConfirmDialog(
-                this,
-                "¿Desea limpiar la biblioteca actual antes de cargar la nueva carpeta?",
-                "Cargar carpeta",
-                javax.swing.JOptionPane.YES_NO_OPTION
-        );
+    int respuesta = javax.swing.JOptionPane.showConfirmDialog(
+            this,
+            "¿Desea limpiar la biblioteca actual antes de cargar la nueva carpeta?",
+            "Cargar carpeta",
+            javax.swing.JOptionPane.YES_NO_OPTION
+    );
 
-        if (respuesta == javax.swing.JOptionPane.YES_OPTION) {
+    if (respuesta == javax.swing.JOptionPane.YES_OPTION) {
 
-            principal.arbolABB = new ARBOL_ABB();
-            principal.arbolAVL = new ARBOL_AVL();
-            
-            principal.hashArtista = new TABLA_HASH(1000);
-            principal.hashGenero = new TABLA_HASH(500);
+        principal.arbolABB = new ARBOL_ABB();
+        principal.arbolAVL = new ARBOL_AVL();
+        principal.hashArtista = new TABLA_HASH(10000);
+        principal.hashGenero = new TABLA_HASH(2000);
 
-            principal.listaMusica = new LISTA_SIMPLE();
-            principal.listaDoble = new LISTA_DOBLE();
-            principal.listaCircular = new LISTA_CIRCULAR();
+        principal.listaMusica = new LISTA_SIMPLE();
+        principal.listaDoble = new LISTA_DOBLE();
+        principal.listaCircular = new LISTA_CIRCULAR();
 
-            principal.tiempoCargaABB = 0;
-            principal.tiempoCargaAVL = 0;
-            principal.totalCancionesCargadas = 0;
-
-            DefaultTableModel modelo = (DefaultTableModel) tablaMusica.getModel();
-            modelo.setRowCount(0);
-
-        } else {
-
-            principal.tiempoCargaABB = 0;
-            principal.tiempoCargaAVL = 0;
-            principal.totalCancionesCargadas = 0;
-        }
+        principal.tiempoCargaABB = 0;
+        principal.tiempoCargaAVL = 0;
+        principal.totalCancionesCargadas = 0;
 
         DefaultTableModel modelo = (DefaultTableModel) tablaMusica.getModel();
-
         modelo.setRowCount(0);
-        principal.arbolABB.llenarTablaInorden(principal.arbolABB.getRaiz(), modelo);
-        principal.listaDoble = new LISTA_DOBLE();
-        principal.arbolABB.llenarListaDobleInorden(principal.arbolABB.getRaiz(), principal.listaDoble);
 
-        double tiempoABBms = principal.tiempoCargaABB / 1000000.0;
-        double tiempoAVLms = principal.tiempoCargaAVL / 1000000.0;
+    } else if (respuesta == javax.swing.JOptionPane.NO_OPTION) {
 
-        javax.swing.JOptionPane.showMessageDialog(this,
-                "Carga finalizada"
-                + "\nCanciones nuevas cargadas: " + principal.totalCancionesCargadas
-                + "\nTiempo carga ABB: " + tiempoABBms + " ms"
-                + "\nTiempo carga AVL: " + tiempoAVLms + " ms"
-        );
+        principal.tiempoCargaABB = 0;
+        principal.tiempoCargaAVL = 0;
+        principal.totalCancionesCargadas = 0;
+
+    } else {
+        return;
     }
+
     
+    cargarMusicaDeCarpeta(carpeta);
+
+    DefaultTableModel modelo = (DefaultTableModel) tablaMusica.getModel();
+
+    modelo.setRowCount(0);
+
+    principal.arbolABB.llenarTablaInorden(principal.arbolABB.getRaiz(), modelo);
+
+    principal.listaDoble = new LISTA_DOBLE();
+    principal.arbolABB.llenarListaDobleInorden(
+            principal.arbolABB.getRaiz(),
+            principal.listaDoble
+    );
+
+    double tiempoABBms = principal.tiempoCargaABB / 1000000.0;
+    double tiempoAVLms = principal.tiempoCargaAVL / 1000000.0;
+
+    javax.swing.JOptionPane.showMessageDialog(this,
+            "Carga finalizada"
+            + "\nCanciones nuevas cargadas: " + principal.totalCancionesCargadas
+            + "\nTiempo carga ABB: " + tiempoABBms + " ms"
+            + "\nTiempo carga AVL: " + tiempoAVLms + " ms"
+    );
+    }
     }//GEN-LAST:event_BTN_CARGARCARPETAActionPerformed
 
     private void BTN_PLAYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_PLAYActionPerformed
