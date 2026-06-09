@@ -47,8 +47,8 @@ public class PANEL_BUISCAR extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         TXT_RESULTADO = new javax.swing.JTextArea();
         BTN_MOSTARRECORERIDOS = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        BTN_ARTISTA = new javax.swing.JButton();
+        BTN_GENERO = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
         TXT_RECORRRIDOSSS = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
@@ -73,9 +73,19 @@ public class PANEL_BUISCAR extends javax.swing.JPanel {
             }
         });
 
-        jButton2.setText("jButton2");
+        BTN_ARTISTA.setText("jButton2");
+        BTN_ARTISTA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_ARTISTAActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("jButton3");
+        BTN_GENERO.setText("jButton3");
+        BTN_GENERO.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_GENEROActionPerformed(evt);
+            }
+        });
 
         TXT_RECORRRIDOSSS.setColumns(20);
         TXT_RECORRRIDOSSS.setRows(5);
@@ -103,9 +113,9 @@ public class PANEL_BUISCAR extends javax.swing.JPanel {
                             .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(BTN_ARTISTA, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(BTN_ARBOLES, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(BTN_GENERO, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(35, 35, 35)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
@@ -138,11 +148,11 @@ public class PANEL_BUISCAR extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(32, 32, 32)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(BTN_ARTISTA, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel3))
                                 .addGap(37, 37, 37)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(BTN_GENERO, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel4)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
@@ -153,7 +163,6 @@ public class PANEL_BUISCAR extends javax.swing.JPanel {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(COMBOX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(15, 15, 15)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane5)))
                 .addContainerGap(53, Short.MAX_VALUE))
         );
@@ -251,16 +260,60 @@ public class PANEL_BUISCAR extends javax.swing.JPanel {
     }
     }//GEN-LAST:event_BTN_MOSTARRECORERIDOSActionPerformed
 
+    private void BTN_ARTISTAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_ARTISTAActionPerformed
+        // TODO add your handling code here:
+            String texto = TXT_BUSCARCAN.getText();
+
+    if (texto.trim().equals("")) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Ingrese un artista para buscar");
+        return;
+    }
+
+    long inicio = System.nanoTime();
+    String resultado = principal.hashArtista.buscarParecido(texto);
+    long fin = System.nanoTime();
+
+    long tiempo = fin - inicio;
+
+    TXT_RESULTADO.setText(
+            "BUSQUEDA POR ARTISTA\n\n"
+            + resultado
+            + "\nTiempo tabla hash: " + tiempo + " ns"
+    );
+    }//GEN-LAST:event_BTN_ARTISTAActionPerformed
+
+    private void BTN_GENEROActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_GENEROActionPerformed
+        // TODO add your handling code here:
+         String texto = TXT_BUSCARCAN.getText();
+
+    if (texto.trim().equals("")) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Ingrese un genero para buscar");
+        return;
+    }
+
+    long inicio = System.nanoTime();
+    String resultado = principal.hashGenero.buscarParecido(texto);
+    long fin = System.nanoTime();
+
+    long tiempo = fin - inicio;
+
+    TXT_RESULTADO.setText(
+            "BUSQUEDA POR GENERO\n\n"
+            + resultado
+            + "\nTiempo tabla hash: " + tiempo + " ns"
+    );
+    }//GEN-LAST:event_BTN_GENEROActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BTN_ARBOLES;
+    private javax.swing.JButton BTN_ARTISTA;
+    private javax.swing.JButton BTN_GENERO;
     private javax.swing.JButton BTN_MOSTARRECORERIDOS;
     private javax.swing.JComboBox<String> COMBOX;
     private javax.swing.JTextField TXT_BUSCARCAN;
     private javax.swing.JTextArea TXT_RECORRRIDOSSS;
     private javax.swing.JTextArea TXT_RESULTADO;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

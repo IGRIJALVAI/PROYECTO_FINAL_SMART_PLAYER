@@ -137,6 +137,9 @@ public class PANEL_BIBLIOTECA extends javax.swing.JPanel {
                     long finAVL = System.nanoTime();
 
                     principal.tiempoCargaAVL = principal.tiempoCargaAVL + (finAVL - inicioAVL);
+                    
+                    principal.hashArtista.insertar(musica.getArtista(), musica);
+                    principal.hashGenero.insertar(musica.getGenero(), musica);
 
                     principal.listaMusica.agregar(musica);
                     principal.listaCircular.agregar(musica);
@@ -368,6 +371,9 @@ public MUSICA obtenerMusicaDeTabla(int fila) {
 
             principal.arbolABB = new ARBOL_ABB();
             principal.arbolAVL = new ARBOL_AVL();
+            
+            principal.hashArtista = new TABLA_HASH(1000);
+            principal.hashGenero = new TABLA_HASH(500);
 
             principal.listaMusica = new LISTA_SIMPLE();
             principal.listaDoble = new LISTA_DOBLE();
@@ -387,12 +393,9 @@ public MUSICA obtenerMusicaDeTabla(int fila) {
             principal.totalCancionesCargadas = 0;
         }
 
-        cargarMusicaDeCarpeta(carpeta);
-
         DefaultTableModel modelo = (DefaultTableModel) tablaMusica.getModel();
 
         modelo.setRowCount(0);
-
         principal.arbolABB.llenarTablaInorden(principal.arbolABB.getRaiz(), modelo);
         principal.listaDoble = new LISTA_DOBLE();
         principal.arbolABB.llenarListaDobleInorden(principal.arbolABB.getRaiz(), principal.listaDoble);

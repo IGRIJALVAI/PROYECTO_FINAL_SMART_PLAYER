@@ -33,10 +33,15 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
      COLA cola = new COLA();
      LISTA_CIRCULAR listaCircular = new LISTA_CIRCULAR();
      VARIAS_PLAYS VariosPlaylist = new VARIAS_PLAYS();
+     
      long tiempoCargaABB = 0;
      long tiempoCargaAVL = 0;
      int totalCancionesCargadas = 0;
+     
      CardLayout card;
+     
+     TABLA_HASH hashArtista = new TABLA_HASH(1000);
+     TABLA_HASH hashGenero = new TABLA_HASH(500);
     
 
     PANEL_BIBLIOTECA panelBiblioteca;
