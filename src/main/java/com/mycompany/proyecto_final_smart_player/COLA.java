@@ -64,4 +64,43 @@ public class COLA {
         return texto;
     }
     
+    public void limpiar() {
+    inicio = null;
+    fin = null;
+   }
+    public void eliminarPorRuta(String ruta) {
+
+    if (inicio == null) {
+        return;
+    }
+
+    if (inicio.musica.getRuta().equals(ruta)) {
+        inicio = inicio.siguiente;
+
+        if (inicio == null) {
+            fin = null;
+        }
+
+        return;
+    }
+
+    nodo_coola aux = inicio;
+
+    while (aux.siguiente != null) {
+
+        if (aux.siguiente.musica.getRuta().equals(ruta)) {
+
+            aux.siguiente = aux.siguiente.siguiente;
+
+            if (aux.siguiente == null) {
+                fin = aux;
+            }
+
+            return;
+        }
+
+        aux = aux.siguiente;
+    }
+}
+    
 }

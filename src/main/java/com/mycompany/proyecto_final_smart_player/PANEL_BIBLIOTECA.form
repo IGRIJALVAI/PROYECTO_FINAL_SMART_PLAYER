@@ -31,7 +31,9 @@
                       <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
                       <Component id="BTN_SIGUIENTE" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="157" max="-2" attributes="0"/>
-                      <Component id="jButton4" min="-2" max="-2" attributes="0"/>
+                      <Component id="BTN_DETENER" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
+                      <Component id="BTN_AGREAGRCOLA" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
@@ -72,7 +74,8 @@
                   <Component id="BTN_ATRAS" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="BTN_PLAY" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="BTN_SIGUIENTE" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButton4" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="BTN_DETENER" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="BTN_AGREAGRCOLA" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="14" max="32767" attributes="0"/>
           </Group>
@@ -152,12 +155,12 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BTN_SIGUIENTEActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton4">
+    <Component class="javax.swing.JButton" name="BTN_DETENER">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jButton4"/>
+        <Property name="text" type="java.lang.String" value="DETENER"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton4ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BTN_DETENERActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="BTN_CARGARCARPETA">
@@ -198,6 +201,14 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="PLATLIST :"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="BTN_AGREAGRCOLA">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="COLA"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BTN_AGREAGRCOLAActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

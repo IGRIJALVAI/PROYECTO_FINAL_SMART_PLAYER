@@ -197,7 +197,23 @@ public class PANEL_PLAYLIST extends javax.swing.JPanel {
 
     BTN_PLAY.setText("Pausa");
 }
+public MUSICA buscarCancionEnBiblioteca(String nombre, String artista) {
 
+    Nodo_Simple aux = principal.listaMusica.inicio;
+
+    while (aux != null) {
+
+        if (aux.musica.getNombre().equalsIgnoreCase(nombre)
+                && aux.musica.getArtista().equalsIgnoreCase(artista)) {
+
+            return aux.musica;
+        }
+
+        aux = aux.siguiente;
+    }
+
+    return null;
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -217,6 +233,8 @@ public class PANEL_PLAYLIST extends javax.swing.JPanel {
         BTN_ALETARIO = new javax.swing.JButton();
         BTN_ELIMINAR = new javax.swing.JButton();
         cmbPlaylists = new javax.swing.JComboBox<>();
+        BTN_GUARDAR = new javax.swing.JButton();
+        BTN_CARGAR = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(0, 0, 0));
 
@@ -284,12 +302,30 @@ public class PANEL_PLAYLIST extends javax.swing.JPanel {
 
         cmbPlaylists.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        BTN_GUARDAR.setText("GUARDAR");
+        BTN_GUARDAR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_GUARDARActionPerformed(evt);
+            }
+        });
+
+        BTN_CARGAR.setText("CARGAR");
+        BTN_CARGAR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_CARGARActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(46, 46, 46)
+                .addComponent(BTN_GUARDAR)
+                .addGap(18, 18, 18)
+                .addComponent(BTN_CARGAR)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(cmbPlaylists, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(102, 102, 102))
             .addGroup(layout.createSequentialGroup()
@@ -318,7 +354,10 @@ public class PANEL_PLAYLIST extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(29, 29, 29)
-                .addComponent(cmbPlaylists, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmbPlaylists, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BTN_GUARDAR)
+                    .addComponent(BTN_CARGAR))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -330,7 +369,7 @@ public class PANEL_PLAYLIST extends javax.swing.JPanel {
                     .addComponent(BTN_STOP)
                     .addComponent(BTN_ALETARIO)
                     .addComponent(BTN_ELIMINAR))
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -498,12 +537,202 @@ public class PANEL_PLAYLIST extends javax.swing.JPanel {
          BTN_PLAY.setText("Play");
     }//GEN-LAST:event_BTN_STOPActionPerformed
 
+    private void BTN_GUARDARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_GUARDARActionPerformed
+        // TODO add your handling code here:
+        if (cmbPlaylists.getSelectedItem() == null) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Seleccione una playlist");
+        return;
+    }
+
+    String nombrePlaylist = cmbPlaylists.getSelectedItem().toString();
+
+    PLAYLIST playlist = principal.VariosPlaylist.buscarPlaylist(nombrePlaylist);
+
+    if (playlist == null) {
+        javax.swing.JOptionPane.showMessageDialog(this, "No se encontro la playlist");
+        return;
+    }
+
+    javax.swing.JFileChooser guardar = new javax.swing.JFileChooser();
+    guardar.setDialogTitle("Guardar playlist");
+
+    guardar.setSelectedFile(new java.io.File(nombrePlaylist + ".txt"));
+
+    int opcion = guardar.showSaveDialog(this);
+
+    if (opcion == javax.swing.JFileChooser.APPROVE_OPTION) {
+
+        java.io.File archivo = guardar.getSelectedFile();
+
+        try {
+            java.io.FileWriter escritor = new java.io.FileWriter(archivo);
+
+            escritor.write("PLAYLIST: " + playlist.getNombre() + "\n");
+            escritor.write("-----------------------------------------\n");
+
+            NODO_PLAY aux = playlist.inicio;
+
+            while (aux != null) {
+                escritor.write("Nombre: " + aux.musica.getNombre() + "\n");
+                escritor.write("Artista: " + aux.musica.getArtista() + "\n");
+                escritor.write("Album: " + aux.musica.getAlbum() + "\n");
+                escritor.write("Genero: " + aux.musica.getGenero() + "\n");
+                escritor.write("Año: " + aux.musica.getAnio() + "\n");
+                escritor.write("Duracion: " + aux.musica.getDuracion() + "\n");
+                escritor.write("Tamaño: " + aux.musica.getTamanioMB() + "\n");
+                escritor.write("Ruta: " + aux.musica.getRuta() + "\n");
+                escritor.write("-----------------------------------------\n");
+
+                aux = aux.siguiente;
+            }
+
+            escritor.close();
+
+            javax.swing.JOptionPane.showMessageDialog(this, "Playlist guardada correctamente");
+
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al guardar la playlist");
+            System.out.println(e.getMessage());
+        }
+    }
+        
+        
+    }//GEN-LAST:event_BTN_GUARDARActionPerformed
+
+    private void BTN_CARGARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_CARGARActionPerformed
+        // TODO add your handling code here:
+            javax.swing.JFileChooser abrir = new javax.swing.JFileChooser();
+    abrir.setDialogTitle("Cargar playlist");
+
+    int opcion = abrir.showOpenDialog(this);
+
+    if (opcion == javax.swing.JFileChooser.APPROVE_OPTION) {
+
+        java.io.File archivo = abrir.getSelectedFile();
+
+        try {
+            java.io.BufferedReader lector = new java.io.BufferedReader(
+                    new java.io.FileReader(archivo)
+            );
+
+            String nombrePlaylist = archivo.getName().replace(".txt", "");
+
+            PLAYLIST nueva = principal.VariosPlaylist.buscarPlaylist(nombrePlaylist);
+
+            if (nueva == null) {
+                principal.VariosPlaylist.crearPlaylist(nombrePlaylist);
+                nueva = principal.VariosPlaylist.buscarPlaylist(nombrePlaylist);
+            }
+
+            String nombre = "";
+            String artista = "";
+            String album = "";
+            String genero = "";
+            int anio = 0;
+            String duracion = "";
+            double tamanio = 0;
+            String ruta = "";
+
+            String linea;
+
+            while ((linea = lector.readLine()) != null) {
+
+                if (linea.startsWith("Nombre: ")) {
+                    nombre = linea.replace("Nombre: ", "");
+                }
+
+                if (linea.startsWith("Artista: ")) {
+                    artista = linea.replace("Artista: ", "");
+                }
+
+                if (linea.startsWith("Album: ")) {
+                    album = linea.replace("Album: ", "");
+                }
+
+                if (linea.startsWith("Genero: ")) {
+                    genero = linea.replace("Genero: ", "");
+                }
+
+                if (linea.startsWith("Año: ")) {
+                    try {
+                        anio = Integer.parseInt(linea.replace("Año: ", ""));
+                    } catch (Exception e) {
+                        anio = 0;
+                    }
+                }
+
+                if (linea.startsWith("Duracion: ")) {
+                    duracion = linea.replace("Duracion: ", "");
+                }
+
+                if (linea.startsWith("Tamaño: ")) {
+                    try {
+                        tamanio = Double.parseDouble(linea.replace("Tamaño: ", ""));
+                    } catch (Exception e) {
+                        tamanio = 0;
+                    }
+                }
+
+                if (linea.startsWith("Ruta: ")) {
+    ruta = linea.replace("Ruta: ", "");
+
+    MUSICA musicaEncontrada = buscarCancionEnBiblioteca(nombre, artista);
+
+    if (musicaEncontrada != null) {
+
+        nueva.agregar(musicaEncontrada);
+
+    } else {
+
+        MUSICA musica = new MUSICA(
+                nombre,
+                artista,
+                album,
+                genero,
+                anio,
+                duracion,
+                tamanio,
+                ruta
+        );
+
+        nueva.agregar(musica);
+    }
+
+    nombre = "";
+    artista = "";
+    album = "";
+    genero = "";
+    anio = 0;
+    duracion = "";
+    tamanio = 0;
+    ruta = "";
+        }
+       
+            }
+
+            lector.close();
+
+            actualizarComboPlaylists();
+            cmbPlaylists.setSelectedItem(nombrePlaylist);
+            mostrarPlaylist(nombrePlaylist);
+
+            javax.swing.JOptionPane.showMessageDialog(this, "Playlist cargada correctamente");
+
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al cargar la playlist");
+            System.out.println(e.getMessage());
+        }
+    }
+    }//GEN-LAST:event_BTN_CARGARActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BTN_ALETARIO;
     private javax.swing.JButton BTN_ATRAS;
+    private javax.swing.JButton BTN_CARGAR;
     private javax.swing.JButton BTN_CIRUCLAR;
     private javax.swing.JButton BTN_ELIMINAR;
+    private javax.swing.JButton BTN_GUARDAR;
     private javax.swing.JButton BTN_PLAY;
     private javax.swing.JButton BTN_SIGUIENTE;
     private javax.swing.JButton BTN_STOP;

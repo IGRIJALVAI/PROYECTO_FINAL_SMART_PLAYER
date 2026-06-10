@@ -29,25 +29,150 @@ public class PANEL_ESTADISTICA extends javax.swing.JPanel {
     double tiempoABBms = principal.tiempoCargaABB / 1000000.0;
     double tiempoAVLms = principal.tiempoCargaAVL / 1000000.0;
 
+    String artistaMasRepetido = obtenerArtistaMasRepetido();
+    String generoMasRepetido = obtenerGeneroMasRepetido();
+
     TXT_ACTU.setText(
             "ESTADISTICAS DEL REPRODUCTOR\n"
-            + "-----------------------------------\n\n"
+            + "------------------------------------------\n\n"
+            + "CANCIONES\n"
             + "Total de canciones cargadas: " + principal.totalCancionesCargadas + "\n\n"
+
             + "TIEMPOS DE CARGA\n"
             + "Tiempo ABB: " + tiempoABBms + " ms\n"
             + "Tiempo AVL: " + tiempoAVLms + " ms\n\n"
+
+            + "DATOS MAS REPETIDOS\n"
+            + "Artista mas repetido: " + artistaMasRepetido + "\n"
+            + "Genero mas repetido: " + generoMasRepetido + "\n\n"
+
             + "PLAYLISTS\n"
-            + "Playlists creadas: " + principal.VariosPlaylist.contador + "\n\n"
+            + "Playlists creadas: " + principal.VariosPlaylist.contador + "\n"
+            + obtenerDatosPlaylists() + "\n"
+
             + "ESTRUCTURAS IMPLEMENTADAS\n"
-            + "ABB\n"
-            + "AVL\n"
-            + "Tabla Hash\n"
-            + "Lista Simple\n"
-            + "Lista Doble\n"
-            + "Lista Circular\n"
-            + "Pila\n"
-            + "Cola\n"
+            + "ABB: Organiza canciones por nombre\n"
+            + "AVL: Organiza canciones de forma balanceada\n"
+            + "Tabla Hash: Busqueda rapida por cancion, artista y genero\n"
+            + "Lista Simple: Biblioteca general\n"
+            + "Lista Doble: Anterior y siguiente\n"
+            + "Lista Circular: Reproduccion circular\n"
+            + "Pila: Historial de canciones reproducidas\n"
+            + "Cola: Cola de reproduccion\n"
     );
+}
+    public String obtenerArtistaMasRepetido() {
+
+    if (principal.listaMusica.inicio == null) {
+        return "No hay canciones cargadas";
+    }
+
+    String artistaMayor = "";
+    int mayor = 0;
+
+    Nodo_Simple aux1 = principal.listaMusica.inicio;
+
+    while (aux1 != null) {
+
+        String artistaActual = aux1.musica.getArtista();
+        int contador = 0;
+
+        Nodo_Simple aux2 = principal.listaMusica.inicio;
+
+        while (aux2 != null) {
+            if (aux2.musica.getArtista().equalsIgnoreCase(artistaActual)) {
+                contador++;
+            }
+
+            aux2 = aux2.siguiente;
+        }
+
+        if (contador > mayor) {
+            mayor = contador;
+            artistaMayor = artistaActual;
+        }
+
+        aux1 = aux1.siguiente;
+    }
+
+    return artistaMayor + " (" + mayor + " canciones)";
+}
+    
+    
+    public String obtenerGeneroMasRepetido() {
+
+    if (principal.listaMusica.inicio == null) {
+        return "No hay canciones cargadas";
+    }
+
+    String generoMayor = "";
+    int mayor = 0;
+
+    Nodo_Simple aux1 = principal.listaMusica.inicio;
+
+    while (aux1 != null) {
+
+        String generoActual = aux1.musica.getGenero();
+        int contador = 0;
+
+        Nodo_Simple aux2 = principal.listaMusica.inicio;
+
+        while (aux2 != null) {
+            if (aux2.musica.getGenero().equalsIgnoreCase(generoActual)) {
+                contador++;
+            }
+
+            aux2 = aux2.siguiente;
+        }
+
+        if (contador > mayor) {
+            mayor = contador;
+            generoMayor = generoActual;
+        }
+
+        aux1 = aux1.siguiente;
+    }
+
+    return generoMayor + " (" + mayor + " canciones)";
+}
+    
+    
+    
+    
+    public String obtenerDatosPlaylists() {
+
+    String texto = "";
+
+    if (principal.VariosPlaylist.contador == 0) {
+        return "No hay playlists creadas\n";
+    }
+
+    for (int i = 0; i < principal.VariosPlaylist.contador; i++) {
+
+        PLAYLIST playlist = principal.VariosPlaylist.playlists[i];
+
+        int cantidad = contarCancionesPlaylist(playlist);
+
+        texto = texto
+                + "Playlist: " + playlist.getNombre()
+                + " - Canciones: " + cantidad + "\n";
+    }
+
+    return texto;
+}
+    
+    public int contarCancionesPlaylist(PLAYLIST playlist) {
+
+    int contador = 0;
+
+    NODO_PLAY aux = playlist.inicio;
+
+    while (aux != null) {
+        contador++;
+        aux = aux.siguiente;
+    }
+
+    return contador;
 }
     
     
@@ -65,6 +190,8 @@ public class PANEL_ESTADISTICA extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         TXT_ACTU = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
+        BTN_VER_ABB = new javax.swing.JButton();
+        BTN_VER_AVL = new javax.swing.JButton();
 
         BTN_ACTUALIZAR.setText("ACTUALIZAR");
         BTN_ACTUALIZAR.addActionListener(new java.awt.event.ActionListener() {
@@ -80,64 +207,84 @@ public class PANEL_ESTADISTICA extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("ESTADISTICAS");
 
+        BTN_VER_ABB.setText("ABB");
+        BTN_VER_ABB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_VER_ABBActionPerformed(evt);
+            }
+        });
+
+        BTN_VER_AVL.setText("AVL");
+        BTN_VER_AVL.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_VER_AVLActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(BTN_ACTUALIZAR))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(134, 134, 134)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 189, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(BTN_ACTUALIZAR)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(587, Short.MAX_VALUE))
+                    .addComponent(BTN_VER_AVL)
+                    .addComponent(BTN_VER_ABB))
+                .addGap(322, 322, 322))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(BTN_ACTUALIZAR)
-                .addGap(62, 62, 62)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(105, 105, 105)
+                        .addComponent(BTN_VER_ABB)
+                        .addGap(20, 20, 20))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(BTN_ACTUALIZAR)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BTN_VER_AVL))
                 .addContainerGap(113, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void BTN_ACTUALIZARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_ACTUALIZARActionPerformed
         // TODO add your handling code here:
-         double tiempoABBms = principal.tiempoCargaABB / 1000000.0;
-    double tiempoAVLms = principal.tiempoCargaAVL / 1000000.0;
-
-    TXT_ACTU.setText(
-            "ESTADISTICAS DEL REPRODUCTOR\n"
-            + "-----------------------------------\n\n"
-            + "Total de canciones cargadas: " + principal.totalCancionesCargadas + "\n\n"
-            + "TIEMPOS DE CARGA\n"
-            + "Tiempo ABB: " + tiempoABBms + " ms\n"
-            + "Tiempo AVL: " + tiempoAVLms + " ms\n\n"
-            + "ESTRUCTURAS IMPLEMENTADAS\n"
-            + "ABB: Arbol Binario de Busqueda\n"
-            + "AVL: Arbol balanceado\n"
-            + "Tabla Hash: Busqueda por artista y genero\n"
-            + "Lista Simple: Biblioteca general\n"
-            + "Lista Doble: Anterior y siguiente\n"
-            + "Lista Circular: Modo circular\n"
-            + "Pila: Historial\n"
-            + "Cola: Cola de reproduccion\n\n"
-            + "PLAYLISTS\n"
-            + "Playlists creadas: " + principal.VariosPlaylist.contador + "\n"
-    );
+          actualizarEstadisticas();
     }//GEN-LAST:event_BTN_ACTUALIZARActionPerformed
+
+    private void BTN_VER_ABBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_VER_ABBActionPerformed
+        // TODO add your handling code here:
+        
+         VISOR_JGRAPHX visor = new VISOR_JGRAPHX();
+         visor.mostrarABB(principal.arbolABB.getRaiz());
+        
+    }//GEN-LAST:event_BTN_VER_ABBActionPerformed
+
+    private void BTN_VER_AVLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_VER_AVLActionPerformed
+        // TODO add your handling code here:
+         VISOR_JGRAPHX visor = new VISOR_JGRAPHX();
+         visor.mostrarAVL(principal.arbolAVL.getRaiz());
+    }//GEN-LAST:event_BTN_VER_AVLActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BTN_ACTUALIZAR;
+    private javax.swing.JButton BTN_VER_ABB;
+    private javax.swing.JButton BTN_VER_AVL;
     private javax.swing.JTextArea TXT_ACTU;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;

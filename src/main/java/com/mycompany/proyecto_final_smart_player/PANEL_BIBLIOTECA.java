@@ -219,12 +219,13 @@ public MUSICA obtenerMusicaDeTabla(int fila) {
         BTN_PLAY = new javax.swing.JButton();
         BTN_ATRAS = new javax.swing.JButton();
         BTN_SIGUIENTE = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        BTN_DETENER = new javax.swing.JButton();
         BTN_CARGARCARPETA = new javax.swing.JButton();
         BTN_CREAR_PLAY = new javax.swing.JButton();
         BTN_AGREGSAR = new javax.swing.JButton();
         cmbPlaylistsBiblioteca = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
+        BTN_AGREAGRCOLA = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(0, 0, 0));
 
@@ -266,10 +267,10 @@ public MUSICA obtenerMusicaDeTabla(int fila) {
             }
         });
 
-        jButton4.setText("jButton4");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        BTN_DETENER.setText("DETENER");
+        BTN_DETENER.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                BTN_DETENERActionPerformed(evt);
             }
         });
 
@@ -296,6 +297,13 @@ public MUSICA obtenerMusicaDeTabla(int fila) {
 
         jLabel1.setText("PLATLIST :");
 
+        BTN_AGREAGRCOLA.setText("COLA");
+        BTN_AGREAGRCOLA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_AGREAGRCOLAActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -310,7 +318,9 @@ public MUSICA obtenerMusicaDeTabla(int fila) {
                         .addGap(49, 49, 49)
                         .addComponent(BTN_SIGUIENTE)
                         .addGap(157, 157, 157)
-                        .addComponent(jButton4))
+                        .addComponent(BTN_DETENER)
+                        .addGap(49, 49, 49)
+                        .addComponent(BTN_AGREAGRCOLA))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(39, 39, 39)
                         .addComponent(BTN_CARGARCARPETA)
@@ -344,7 +354,8 @@ public MUSICA obtenerMusicaDeTabla(int fila) {
                     .addComponent(BTN_ATRAS)
                     .addComponent(BTN_PLAY)
                     .addComponent(BTN_SIGUIENTE)
-                    .addComponent(jButton4))
+                    .addComponent(BTN_DETENER)
+                    .addComponent(BTN_AGREAGRCOLA))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -491,10 +502,10 @@ if (opcion == javax.swing.JFileChooser.APPROVE_OPTION) {
     }
     }//GEN-LAST:event_BTN_SIGUIENTEActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void BTN_DETENERActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_DETENERActionPerformed
         // TODO add your handling code here:
           principal.mp3.detener();
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_BTN_DETENERActionPerformed
 
     private void BTN_AGREGSARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_AGREGSARActionPerformed
         // TODO add your handling code here:
@@ -561,16 +572,39 @@ if (opcion == javax.swing.JFileChooser.APPROVE_OPTION) {
     javax.swing.JOptionPane.showMessageDialog(this, "Playlist creada correctamente");
     }//GEN-LAST:event_BTN_CREAR_PLAYActionPerformed
 
+    private void BTN_AGREAGRCOLAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_AGREAGRCOLAActionPerformed
+        // TODO add your handling code here:
+        
+       int fila = tablaMusica.getSelectedRow();
+
+    if (fila == -1) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Seleccione una cancion para agregar a la cola");
+        return;
+    }
+
+    MUSICA musica = obtenerMusicaDeTabla(fila);
+
+    principal.cola.arriba(musica);
+
+    if (principal.panelCola != null) {
+        principal.panelCola.actualizarTablaCola();
+    }
+
+    javax.swing.JOptionPane.showMessageDialog(this, "Cancion agregada a la cola");
+    
+    }//GEN-LAST:event_BTN_AGREAGRCOLAActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BTN_AGREAGRCOLA;
     private javax.swing.JButton BTN_AGREGSAR;
     private javax.swing.JButton BTN_ATRAS;
     private javax.swing.JButton BTN_CARGARCARPETA;
     private javax.swing.JButton BTN_CREAR_PLAY;
+    private javax.swing.JButton BTN_DETENER;
     private javax.swing.JButton BTN_PLAY;
     private javax.swing.JButton BTN_SIGUIENTE;
     private javax.swing.JComboBox<String> cmbPlaylistsBiblioteca;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaMusica;
