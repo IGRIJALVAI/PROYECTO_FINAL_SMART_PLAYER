@@ -149,6 +149,9 @@ public class PANEL_COLA extends javax.swing.JPanel {
         BTN_LIMPAIRT = new javax.swing.JButton();
         BTN_OPLAY = new javax.swing.JButton();
         BTN_LIMINAR = new javax.swing.JButton();
+        LBL_PORTADA = new javax.swing.JLabel();
+
+        setBackground(new java.awt.Color(0, 0, 0));
 
         TABLACOLA.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -184,6 +187,8 @@ public class PANEL_COLA extends javax.swing.JPanel {
             }
         });
 
+        LBL_PORTADA.setBackground(new java.awt.Color(0, 0, 0));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -196,21 +201,27 @@ public class PANEL_COLA extends javax.swing.JPanel {
                         .addGap(37, 37, 37)
                         .addComponent(BTN_LIMINAR)
                         .addGap(18, 18, 18)
-                        .addComponent(BTN_LIMPAIRT))
+                        .addComponent(BTN_LIMPAIRT)
+                        .addGap(217, 217, 217)
+                        .addComponent(LBL_PORTADA, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 844, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(121, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 498, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BTN_LIMPAIRT)
-                    .addComponent(BTN_OPLAY)
-                    .addComponent(BTN_LIMINAR))
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(BTN_LIMPAIRT)
+                            .addComponent(BTN_OPLAY)
+                            .addComponent(BTN_LIMINAR))
+                        .addGap(0, 127, Short.MAX_VALUE))
+                    .addComponent(LBL_PORTADA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -219,6 +230,7 @@ public class PANEL_COLA extends javax.swing.JPanel {
         
        
        MUSICA musica = principal.cola.abajo();
+       
 
     if (musica == null) {
         javax.swing.JOptionPane.showMessageDialog(this, "La cola esta vacia");
@@ -226,6 +238,8 @@ public class PANEL_COLA extends javax.swing.JPanel {
     }
 
     principal.mp3.reproducir(musica.getRuta());
+   PORTADA_MP3 portada = new PORTADA_MP3();
+   portada.mostrarPortada(musica.getRuta(), LBL_PORTADA);
 
     principal.historial.apilar(musica);
 
@@ -263,6 +277,7 @@ public class PANEL_COLA extends javax.swing.JPanel {
     private javax.swing.JButton BTN_LIMINAR;
     private javax.swing.JButton BTN_LIMPAIRT;
     private javax.swing.JButton BTN_OPLAY;
+    private javax.swing.JLabel LBL_PORTADA;
     private javax.swing.JTable TABLACOLA;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables

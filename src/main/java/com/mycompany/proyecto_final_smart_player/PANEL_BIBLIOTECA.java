@@ -226,9 +226,13 @@ public MUSICA obtenerMusicaDeTabla(int fila) {
         cmbPlaylistsBiblioteca = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         BTN_AGREAGRCOLA = new javax.swing.JButton();
+        LBL_PORTADA = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(0, 0, 0));
 
+        tablaMusica.setBackground(new java.awt.Color(0, 0, 0));
         tablaMusica.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -274,28 +278,38 @@ public MUSICA obtenerMusicaDeTabla(int fila) {
             }
         });
 
-        BTN_CARGARCARPETA.setText("CARGAR");
+        BTN_CARGARCARPETA.setBackground(new java.awt.Color(0, 0, 0));
+        BTN_CARGARCARPETA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cargarcarpeta.png"))); // NOI18N
+        BTN_CARGARCARPETA.setBorderPainted(false);
         BTN_CARGARCARPETA.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BTN_CARGARCARPETAActionPerformed(evt);
             }
         });
 
-        BTN_CREAR_PLAY.setText("CERAR PLAY");
+        BTN_CREAR_PLAY.setBackground(new java.awt.Color(0, 0, 0));
+        BTN_CREAR_PLAY.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/crearplay.png"))); // NOI18N
+        BTN_CREAR_PLAY.setBorderPainted(false);
         BTN_CREAR_PLAY.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BTN_CREAR_PLAYActionPerformed(evt);
             }
         });
 
-        BTN_AGREGSAR.setText("jButton5");
+        BTN_AGREGSAR.setBackground(new java.awt.Color(0, 0, 0));
+        BTN_AGREGSAR.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/agregaraaaaaa.png"))); // NOI18N
+        BTN_AGREGSAR.setBorderPainted(false);
         BTN_AGREGSAR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BTN_AGREGSARActionPerformed(evt);
             }
         });
 
-        jLabel1.setText("PLATLIST :");
+        cmbPlaylistsBiblioteca.setBackground(new java.awt.Color(0, 0, 0));
+
+        jLabel1.setFont(new java.awt.Font("Siemens Sans SC Black", 0, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(153, 0, 0));
+        jLabel1.setText("PLAYLIST:");
 
         BTN_AGREAGRCOLA.setText("COLA");
         BTN_AGREAGRCOLA.addActionListener(new java.awt.event.ActionListener() {
@@ -304,59 +318,84 @@ public MUSICA obtenerMusicaDeTabla(int fila) {
             }
         });
 
+        LBL_PORTADA.setBackground(new java.awt.Color(0, 0, 0));
+
+        jLabel2.setText("jLabel2");
+
+        jLabel3.setText("jLabel3");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(45, 45, 45)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(194, 194, 194)
+                        .addComponent(BTN_CARGARCARPETA)
+                        .addGap(292, 292, 292)
+                        .addComponent(BTN_CREAR_PLAY)
+                        .addGap(32, 32, 32)
+                        .addComponent(BTN_AGREGSAR)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(cmbPlaylistsBiblioteca, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1033, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(LBL_PORTADA, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(66, 66, 66)
                         .addComponent(BTN_ATRAS)
                         .addGap(45, 45, 45)
                         .addComponent(BTN_PLAY)
                         .addGap(49, 49, 49)
                         .addComponent(BTN_SIGUIENTE)
-                        .addGap(157, 157, 157)
+                        .addGap(78, 78, 78)
                         .addComponent(BTN_DETENER)
-                        .addGap(49, 49, 49)
-                        .addComponent(BTN_AGREAGRCOLA))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addComponent(BTN_CARGARCARPETA)
-                        .addGap(481, 481, 481)
-                        .addComponent(BTN_CREAR_PLAY)
-                        .addGap(18, 18, 18)
-                        .addComponent(BTN_AGREGSAR)
-                        .addGap(33, 33, 33)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cmbPlaylistsBiblioteca, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 994, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(19, Short.MAX_VALUE))
+                        .addGap(44, 44, 44)
+                        .addComponent(BTN_AGREAGRCOLA)))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BTN_CARGARCARPETA)
-                    .addComponent(BTN_CREAR_PLAY)
-                    .addComponent(BTN_AGREGSAR)
-                    .addComponent(cmbPlaylistsBiblioteca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(BTN_AGREGSAR)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel1)
+                                    .addComponent(cmbPlaylistsBiblioteca, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(BTN_CARGARCARPETA, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(BTN_CREAR_PLAY, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 544, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BTN_ATRAS)
-                    .addComponent(BTN_PLAY)
-                    .addComponent(BTN_SIGUIENTE)
-                    .addComponent(BTN_DETENER)
-                    .addComponent(BTN_AGREAGRCOLA))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(LBL_PORTADA, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(81, 81, 81)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(BTN_AGREAGRCOLA)
+                                .addComponent(BTN_ATRAS)
+                                .addComponent(BTN_PLAY)
+                                .addComponent(BTN_SIGUIENTE)
+                                .addComponent(BTN_DETENER)))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE))))
+                .addContainerGap(98, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -452,6 +491,10 @@ if (opcion == javax.swing.JFileChooser.APPROVE_OPTION) {
     if (principal.mp3.getRutaActual().equals("")) {
 
         principal.mp3.reproducir(rutaSeleccionada);
+
+        PORTADA_MP3 portada = new PORTADA_MP3();
+        portada.mostrarPortada(rutaSeleccionada, LBL_PORTADA);
+
         BTN_PLAY.setText("Pausa");
 
     } else if (principal.mp3.getRutaActual().equals(rutaSeleccionada)) {
@@ -467,6 +510,10 @@ if (opcion == javax.swing.JFileChooser.APPROVE_OPTION) {
     } else {
 
         principal.mp3.reproducir(rutaSeleccionada);
+
+        PORTADA_MP3 portada = new PORTADA_MP3();
+        portada.mostrarPortada(rutaSeleccionada, LBL_PORTADA);
+
         BTN_PLAY.setText("Pausa");
     }
     }//GEN-LAST:event_BTN_PLAYActionPerformed
@@ -604,8 +651,11 @@ if (opcion == javax.swing.JFileChooser.APPROVE_OPTION) {
     private javax.swing.JButton BTN_DETENER;
     private javax.swing.JButton BTN_PLAY;
     private javax.swing.JButton BTN_SIGUIENTE;
+    private javax.swing.JLabel LBL_PORTADA;
     private javax.swing.JComboBox<String> cmbPlaylistsBiblioteca;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaMusica;
     // End of variables declaration//GEN-END:variables

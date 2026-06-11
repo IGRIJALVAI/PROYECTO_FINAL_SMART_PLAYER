@@ -25,6 +25,7 @@ public class PANEL_PLAYLIST extends javax.swing.JPanel {
     PLAYLIST playlist;
     boolean circularActivo = false;
     int indiceActual = -1;
+    boolean actualizandoCombo = false;
     
     
   
@@ -45,6 +46,13 @@ public class PANEL_PLAYLIST extends javax.swing.JPanel {
 
     cargarPlaylist();
     estiloTablaSpotify();
+    COMBOXENCRIP.removeAllItems();
+    COMBOXENCRIP.addItem("CESAR");
+    COMBOXENCRIP.addItem("XOR");
+    COMBOXENCRIP.addItem("INVERTIDO");
+    COMBOXENCRIP.addItem("BASE64");
+
+    actualizarComboPlaylists();
   
     }
     public void recibirPlaylist(PLAYLIST playlist) {
@@ -83,7 +91,18 @@ public class PANEL_PLAYLIST extends javax.swing.JPanel {
         aux = aux.siguiente;
     }
 }
-     
+     public void actualizarPortada(String ruta) {
+
+    javax.swing.SwingUtilities.invokeLater(new Runnable() {
+        public void run() {
+            PORTADA_MP3 portada = new PORTADA_MP3();
+            portada.mostrarPortada(ruta, LBL_PORTADA);
+
+            LBL_PORTADA.revalidate();
+            LBL_PORTADA.repaint();
+        }
+    });
+}
     private void estiloTablaSpotify() {
 
     tablaPlay.setBackground(new Color(0, 0, 0));
@@ -152,11 +171,15 @@ public class PANEL_PLAYLIST extends javax.swing.JPanel {
     
     public void actualizarComboPlaylists() {
 
+    actualizandoCombo = true;
+
     cmbPlaylists.removeAllItems();
 
     for (int i = 0; i < principal.VariosPlaylist.contador; i++) {
         cmbPlaylists.addItem(principal.VariosPlaylist.playlists[i].getNombre());
     }
+
+    actualizandoCombo = false;
 }
     public void mostrarPlaylist(String nombrePlaylist) {
 
@@ -167,8 +190,6 @@ public class PANEL_PLAYLIST extends javax.swing.JPanel {
     }
 
     this.playlist = playlistEncontrada;
-
-    cmbPlaylists.setSelectedItem(nombrePlaylist);
 
     cargarPlaylist();
 }
@@ -194,6 +215,7 @@ public class PANEL_PLAYLIST extends javax.swing.JPanel {
     String ruta = tablaPlay.getValueAt(fila, 7).toString();
 
     principal.mp3.reproducir(ruta);
+    actualizarPortada(ruta);
 
     BTN_PLAY.setText("Pausa");
 }
@@ -235,6 +257,10 @@ public MUSICA buscarCancionEnBiblioteca(String nombre, String artista) {
         cmbPlaylists = new javax.swing.JComboBox<>();
         BTN_GUARDAR = new javax.swing.JButton();
         BTN_CARGAR = new javax.swing.JButton();
+        BTN_ENCRIPATR = new javax.swing.JButton();
+        BTN_DESEMCRIPTAR = new javax.swing.JButton();
+        COMBOXENCRIP = new javax.swing.JComboBox<>();
+        LBL_PORTADA = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(0, 0, 0));
 
@@ -300,9 +326,14 @@ public MUSICA buscarCancionEnBiblioteca(String nombre, String artista) {
             }
         });
 
-        cmbPlaylists.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbPlaylists.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbPlaylistsActionPerformed(evt);
+            }
+        });
 
-        BTN_GUARDAR.setText("GUARDAR");
+        BTN_GUARDAR.setBackground(new java.awt.Color(0, 0, 0));
+        BTN_GUARDAR.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/guardar.png"))); // NOI18N
         BTN_GUARDAR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BTN_GUARDARActionPerformed(evt);
@@ -316,22 +347,40 @@ public MUSICA buscarCancionEnBiblioteca(String nombre, String artista) {
             }
         });
 
+        BTN_ENCRIPATR.setText("ENCRIPTAR");
+        BTN_ENCRIPATR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_ENCRIPATRActionPerformed(evt);
+            }
+        });
+
+        BTN_DESEMCRIPTAR.setText("DESENCRIPTAR");
+        BTN_DESEMCRIPTAR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_DESEMCRIPTARActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(46, 46, 46)
-                .addComponent(BTN_GUARDAR)
-                .addGap(18, 18, 18)
-                .addComponent(BTN_CARGAR)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(cmbPlaylists, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(102, 102, 102))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(36, 36, 36)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(88, 88, 88)
+                        .addComponent(BTN_GUARDAR, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28)
+                        .addComponent(BTN_CARGAR)
+                        .addGap(31, 31, 31)
+                        .addComponent(BTN_ENCRIPATR)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(COMBOXENCRIP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(BTN_DESEMCRIPTAR)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cmbPlaylists, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(BTN_ATRAS)
                         .addGap(31, 31, 31)
                         .addComponent(BTN_PLAY)
@@ -344,11 +393,11 @@ public MUSICA buscarCancionEnBiblioteca(String nombre, String artista) {
                         .addGap(18, 18, 18)
                         .addComponent(BTN_ALETARIO)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(BTN_ELIMINAR))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 987, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(19, Short.MAX_VALUE))
+                        .addComponent(BTN_ELIMINAR)
+                        .addGap(44, 44, 44)
+                        .addComponent(LBL_PORTADA, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 987, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -356,20 +405,27 @@ public MUSICA buscarCancionEnBiblioteca(String nombre, String artista) {
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbPlaylists, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BTN_GUARDAR)
-                    .addComponent(BTN_CARGAR))
+                    .addComponent(BTN_GUARDAR, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BTN_CARGAR)
+                    .addComponent(BTN_ENCRIPATR)
+                    .addComponent(BTN_DESEMCRIPTAR)
+                    .addComponent(COMBOXENCRIP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BTN_ATRAS)
-                    .addComponent(BTN_PLAY)
-                    .addComponent(BTN_SIGUIENTE)
-                    .addComponent(BTN_CIRUCLAR)
-                    .addComponent(BTN_STOP)
-                    .addComponent(BTN_ALETARIO)
-                    .addComponent(BTN_ELIMINAR))
-                .addContainerGap(49, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(BTN_ATRAS)
+                            .addComponent(BTN_PLAY)
+                            .addComponent(BTN_SIGUIENTE)
+                            .addComponent(BTN_CIRUCLAR)
+                            .addComponent(BTN_STOP)
+                            .addComponent(BTN_ALETARIO)
+                            .addComponent(BTN_ELIMINAR))
+                        .addGap(0, 82, Short.MAX_VALUE))
+                    .addComponent(LBL_PORTADA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -385,12 +441,13 @@ public MUSICA buscarCancionEnBiblioteca(String nombre, String artista) {
     String rutaSeleccionada = tablaPlay.getValueAt(fila, 7).toString();
 
     if (principal.mp3.getRutaActual().equals("")) {
-
+       
         reproducirFila(fila);
 
     } else if (principal.mp3.getRutaActual().equals(rutaSeleccionada)) {
 
         principal.mp3.playPausa();
+         actualizarPortada(rutaSeleccionada);
 
         if (principal.mp3.estaSonando()) {
             BTN_PLAY.setText("Pausa");
@@ -725,17 +782,250 @@ public MUSICA buscarCancionEnBiblioteca(String nombre, String artista) {
     }
     }//GEN-LAST:event_BTN_CARGARActionPerformed
 
+    private void BTN_ENCRIPATRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_ENCRIPATRActionPerformed
+        // TODO add your handling code here:
+        if (cmbPlaylists.getSelectedItem() == null) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Seleccione una playlist");
+        return;
+    }
+
+    String nombrePlaylist = cmbPlaylists.getSelectedItem().toString();
+
+    PLAYLIST playlist = principal.VariosPlaylist.buscarPlaylist(nombrePlaylist);
+
+    if (playlist == null) {
+        javax.swing.JOptionPane.showMessageDialog(this, "No se encontro la playlist");
+        return;
+    }
+
+    javax.swing.JFileChooser guardar = new javax.swing.JFileChooser();
+    guardar.setDialogTitle("Guardar playlist encriptada");
+    guardar.setSelectedFile(new java.io.File(nombrePlaylist + "_encriptada.txt"));
+
+    int opcion = guardar.showSaveDialog(this);
+
+    if (opcion == javax.swing.JFileChooser.APPROVE_OPTION) {
+
+        java.io.File archivo = guardar.getSelectedFile();
+
+        try {
+
+            String texto = "";
+
+            texto = texto + "PLAYLIST: " + playlist.getNombre() + "\n";
+            texto = texto + "-----------------------------------------\n";
+
+            NODO_PLAY aux = playlist.inicio;
+
+            while (aux != null) {
+
+                texto = texto + "Nombre: " + aux.musica.getNombre() + "\n";
+                texto = texto + "Artista: " + aux.musica.getArtista() + "\n";
+                texto = texto + "Album: " + aux.musica.getAlbum() + "\n";
+                texto = texto + "Genero: " + aux.musica.getGenero() + "\n";
+                texto = texto + "Año: " + aux.musica.getAnio() + "\n";
+                texto = texto + "Duracion: " + aux.musica.getDuracion() + "\n";
+                texto = texto + "Tamaño: " + aux.musica.getTamanioMB() + "\n";
+                texto = texto + "Ruta: " + aux.musica.getRuta() + "\n";
+                texto = texto + "-----------------------------------------\n";
+
+                aux = aux.siguiente;
+            }
+
+            ENCRIPTADOR encriptador = new ENCRIPTADOR();
+
+        String metodo = COMBOXENCRIP.getSelectedItem().toString();
+
+        String textoEncriptado = encriptador.encriptarPorMetodo(texto, metodo);
+
+        java.io.FileWriter escritor = new java.io.FileWriter(archivo);
+        escritor.write(textoEncriptado);
+        escritor.close();
+
+        javax.swing.JOptionPane.showMessageDialog(this,
+                "Playlist encriptada correctamente con metodo: " + metodo);
+
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al guardar la playlist encriptada");
+            System.out.println(e.getMessage());
+        }
+    }
+    }//GEN-LAST:event_BTN_ENCRIPATRActionPerformed
+
+    private void BTN_DESEMCRIPTARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_DESEMCRIPTARActionPerformed
+        // TODO add your handling code here:
+        javax.swing.JFileChooser abrir = new javax.swing.JFileChooser();
+    abrir.setDialogTitle("Cargar playlist encriptada");
+
+    int opcion = abrir.showOpenDialog(this);
+
+    if (opcion == javax.swing.JFileChooser.APPROVE_OPTION) {
+
+        java.io.File archivo = abrir.getSelectedFile();
+
+        try {
+
+            java.io.BufferedReader lectorArchivo = new java.io.BufferedReader(
+                    new java.io.FileReader(archivo)
+            );
+
+            String textoEncriptado = "";
+            String lineaArchivo;
+
+            while ((lineaArchivo = lectorArchivo.readLine()) != null) {
+                textoEncriptado = textoEncriptado + lineaArchivo + "\n";
+            }
+
+            lectorArchivo.close();
+
+            ENCRIPTADOR encriptador = new ENCRIPTADOR();
+
+            String textoNormal = encriptador.desencriptarAutomatico(textoEncriptado);
+
+            if (textoNormal.equals("")) {
+                javax.swing.JOptionPane.showMessageDialog(this, "No se pudo desencriptar el archivo");
+                return;
+            }
+
+            java.io.BufferedReader lector = new java.io.BufferedReader(
+                    new java.io.StringReader(textoNormal)
+            );
+
+            String nombrePlaylist = archivo.getName()
+                    .replace("_encriptada.txt", "")
+                    .replace(".txt", "");
+
+            PLAYLIST nueva = principal.VariosPlaylist.buscarPlaylist(nombrePlaylist);
+
+            if (nueva == null) {
+                principal.VariosPlaylist.crearPlaylist(nombrePlaylist);
+                nueva = principal.VariosPlaylist.buscarPlaylist(nombrePlaylist);
+            }
+
+            String nombre = "";
+            String artista = "";
+            String album = "";
+            String genero = "";
+            int anio = 0;
+            String duracion = "";
+            double tamanio = 0;
+            String ruta = "";
+
+            String linea;
+
+            while ((linea = lector.readLine()) != null) {
+
+                if (linea.startsWith("Nombre: ")) {
+                    nombre = linea.replace("Nombre: ", "");
+                }
+
+                if (linea.startsWith("Artista: ")) {
+                    artista = linea.replace("Artista: ", "");
+                }
+
+                if (linea.startsWith("Album: ")) {
+                    album = linea.replace("Album: ", "");
+                }
+
+                if (linea.startsWith("Genero: ")) {
+                    genero = linea.replace("Genero: ", "");
+                }
+
+                if (linea.startsWith("Año: ")) {
+                    try {
+                        anio = Integer.parseInt(linea.replace("Año: ", ""));
+                    } catch (Exception e) {
+                        anio = 0;
+                    }
+                }
+
+                if (linea.startsWith("Duracion: ")) {
+                    duracion = linea.replace("Duracion: ", "");
+                }
+
+                if (linea.startsWith("Tamaño: ")) {
+                    try {
+                        tamanio = Double.parseDouble(linea.replace("Tamaño: ", ""));
+                    } catch (Exception e) {
+                        tamanio = 0;
+                    }
+                }
+
+                if (linea.startsWith("Ruta: ")) {
+                    ruta = linea.replace("Ruta: ", "");
+
+                    MUSICA musicaEncontrada = buscarCancionEnBiblioteca(nombre, artista);
+
+                    if (musicaEncontrada != null) {
+                        nueva.agregar(musicaEncontrada);
+                    } else {
+                        MUSICA musica = new MUSICA(
+                                nombre,
+                                artista,
+                                album,
+                                genero,
+                                anio,
+                                duracion,
+                                tamanio,
+                                ruta
+                        );
+
+                        nueva.agregar(musica);
+                    }
+
+                    nombre = "";
+                    artista = "";
+                    album = "";
+                    genero = "";
+                    anio = 0;
+                    duracion = "";
+                    tamanio = 0;
+                    ruta = "";
+                }
+            }
+
+            lector.close();
+
+            actualizarComboPlaylists();
+            cmbPlaylists.setSelectedItem(nombrePlaylist);
+            mostrarPlaylist(nombrePlaylist);
+
+            javax.swing.JOptionPane.showMessageDialog(this, "Playlist encriptada cargada correctamente");
+
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al cargar la playlist encriptada");
+            System.out.println(e.getMessage());
+        }
+    }
+    }//GEN-LAST:event_BTN_DESEMCRIPTARActionPerformed
+
+    private void cmbPlaylistsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbPlaylistsActionPerformed
+        // TODO add your handling code here:
+         if (actualizandoCombo == true) {
+        return;
+    }
+
+    if (cmbPlaylists.getSelectedItem() != null) {
+        String nombrePlaylist = cmbPlaylists.getSelectedItem().toString();
+        mostrarPlaylist(nombrePlaylist);
+    }
+    }//GEN-LAST:event_cmbPlaylistsActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BTN_ALETARIO;
     private javax.swing.JButton BTN_ATRAS;
     private javax.swing.JButton BTN_CARGAR;
     private javax.swing.JButton BTN_CIRUCLAR;
+    private javax.swing.JButton BTN_DESEMCRIPTAR;
     private javax.swing.JButton BTN_ELIMINAR;
+    private javax.swing.JButton BTN_ENCRIPATR;
     private javax.swing.JButton BTN_GUARDAR;
     private javax.swing.JButton BTN_PLAY;
     private javax.swing.JButton BTN_SIGUIENTE;
     private javax.swing.JButton BTN_STOP;
+    private javax.swing.JComboBox<String> COMBOXENCRIP;
+    private javax.swing.JLabel LBL_PORTADA;
     private javax.swing.JComboBox<String> cmbPlaylists;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaPlay;

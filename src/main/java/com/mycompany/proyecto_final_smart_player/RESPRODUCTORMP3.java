@@ -27,6 +27,7 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
      COLA cola = new COLA();
      LISTA_CIRCULAR listaCircular = new LISTA_CIRCULAR();
      VARIAS_PLAYS VariosPlaylist = new VARIAS_PLAYS();
+     PORTADA_MP3 portadaMP3 = new PORTADA_MP3();
      
      long tiempoCargaABB = 0;
      long tiempoCargaAVL = 0;
@@ -69,8 +70,7 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
         getContentPane().setBackground(new Color(18, 18, 18));
 
     }
-
-    
+        
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -84,13 +84,13 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jPanel2 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
         BTN_ABRIPLAY = new javax.swing.JButton();
         BTN_BUSCAR_MUSICA = new javax.swing.JButton();
         BTN_HISTORIAL = new javax.swing.JButton();
         BTN_BIBLIOTECA = new javax.swing.JButton();
         BTN_PANELESTADIOCO = new javax.swing.JButton();
         BTN_COLA = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
         PANEL_PRINCIPAL = new javax.swing.JPanel();
 
@@ -105,19 +105,17 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
         jPanel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         jPanel2.setForeground(new java.awt.Color(255, 255, 255));
 
-        jLabel2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(180, 0, 0));
-        jLabel2.setText("PLAYLIST");
-
-        BTN_ABRIPLAY.setText("ABRIR");
+        BTN_ABRIPLAY.setBackground(new java.awt.Color(0, 0, 0));
+        BTN_ABRIPLAY.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/playlist.png"))); // NOI18N
+        BTN_ABRIPLAY.setBorder(null);
         BTN_ABRIPLAY.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BTN_ABRIPLAYActionPerformed(evt);
             }
         });
 
-        BTN_BUSCAR_MUSICA.setBackground(new java.awt.Color(51, 51, 51));
-        BTN_BUSCAR_MUSICA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buiscar (1).png"))); // NOI18N
+        BTN_BUSCAR_MUSICA.setBackground(new java.awt.Color(0, 0, 0));
+        BTN_BUSCAR_MUSICA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buiscar.png"))); // NOI18N
         BTN_BUSCAR_MUSICA.setBorder(null);
         BTN_BUSCAR_MUSICA.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -127,7 +125,7 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
 
         BTN_HISTORIAL.setBackground(new java.awt.Color(0, 0, 0));
         BTN_HISTORIAL.setForeground(new java.awt.Color(255, 255, 255));
-        BTN_HISTORIAL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/historias (5).png"))); // NOI18N
+        BTN_HISTORIAL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/historial.png"))); // NOI18N
         BTN_HISTORIAL.setBorderPainted(false);
         BTN_HISTORIAL.setContentAreaFilled(false);
         BTN_HISTORIAL.setFocusPainted(false);
@@ -138,26 +136,34 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
             }
         });
 
-        BTN_BIBLIOTECA.setText("BIBLIOTECA");
+        BTN_BIBLIOTECA.setBackground(new java.awt.Color(0, 0, 0));
+        BTN_BIBLIOTECA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/biblioteca.png"))); // NOI18N
+        BTN_BIBLIOTECA.setBorder(null);
         BTN_BIBLIOTECA.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BTN_BIBLIOTECAActionPerformed(evt);
             }
         });
 
-        BTN_PANELESTADIOCO.setText("Estadisticas");
+        BTN_PANELESTADIOCO.setBackground(new java.awt.Color(0, 0, 0));
+        BTN_PANELESTADIOCO.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/estadistica.png"))); // NOI18N
+        BTN_PANELESTADIOCO.setBorder(null);
         BTN_PANELESTADIOCO.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BTN_PANELESTADIOCOActionPerformed(evt);
             }
         });
 
-        BTN_COLA.setText("COLAS");
+        BTN_COLA.setBackground(new java.awt.Color(0, 0, 0));
+        BTN_COLA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/colas.png"))); // NOI18N
+        BTN_COLA.setBorder(null);
         BTN_COLA.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BTN_COLAActionPerformed(evt);
             }
         });
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bbb.jpg"))); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -166,45 +172,43 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(BTN_BIBLIOTECA, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(BTN_HISTORIAL))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(BTN_BIBLIOTECA, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(BTN_HISTORIAL, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(BTN_BUSCAR_MUSICA, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(BTN_ABRIPLAY, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(BTN_COLA, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(BTN_PANELESTADIOCO, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(53, 53, 53)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(40, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(BTN_COLA, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(BTN_PANELESTADIOCO, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(BTN_ABRIPLAY, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE))))
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addComponent(BTN_BUSCAR_MUSICA, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(71, Short.MAX_VALUE)
-                .addComponent(BTN_BIBLIOTECA, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(BTN_BIBLIOTECA, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addComponent(BTN_BUSCAR_MUSICA)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(BTN_HISTORIAL)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(BTN_BUSCAR_MUSICA, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel2)
+                .addComponent(BTN_ABRIPLAY, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(BTN_ABRIPLAY, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(BTN_PANELESTADIOCO, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(BTN_PANELESTADIOCO)
                 .addGap(18, 18, 18)
-                .addComponent(BTN_COLA, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(230, 230, 230))
+                .addComponent(BTN_COLA)
+                .addContainerGap(235, Short.MAX_VALUE))
         );
 
         PANEL_PRINCIPAL.setBackground(new java.awt.Color(0, 0, 0));
@@ -214,7 +218,7 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
         PANEL_PRINCIPAL.setLayout(PANEL_PRINCIPALLayout);
         PANEL_PRINCIPALLayout.setHorizontalGroup(
             PANEL_PRINCIPALLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1021, Short.MAX_VALUE)
+            .addGap(0, 1074, Short.MAX_VALUE)
         );
         PANEL_PRINCIPALLayout.setVerticalGroup(
             PANEL_PRINCIPALLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -226,25 +230,27 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(PANEL_PRINCIPAL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(15, 15, 15))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(331, 331, 331)
+                        .addGap(249, 249, 249)
                         .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(13, 13, 13)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(PANEL_PRINCIPAL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(PANEL_PRINCIPAL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -330,7 +336,7 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
     private javax.swing.JButton BTN_PANELESTADIOCO;
     private javax.swing.JPanel PANEL_PRINCIPAL;
     private javax.swing.Box.Filler filler1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;
     public javax.swing.JPanel jPanel2;

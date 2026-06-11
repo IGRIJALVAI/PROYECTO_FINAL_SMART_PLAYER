@@ -21,19 +21,23 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
-              <Component id="BTN_GUARDAR" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="BTN_CARGAR" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
-              <Component id="cmbPlaylists" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="102" max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" attributes="0">
-              <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" max="-2" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="88" max="-2" attributes="0"/>
+                      <Component id="BTN_GUARDAR" min="-2" pref="160" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                      <Component id="BTN_CARGAR" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                      <Component id="BTN_ENCRIPATR" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="COMBOXENCRIP" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="BTN_DESEMCRIPTAR" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="cmbPlaylists" min="-2" pref="159" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
                       <Component id="BTN_ATRAS" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                       <Component id="BTN_PLAY" min="-2" max="-2" attributes="0"/>
@@ -47,13 +51,12 @@
                       <Component id="BTN_ALETARIO" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="BTN_ELIMINAR" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
+                      <Component id="LBL_PORTADA" min="-2" pref="120" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" min="-2" pref="987" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="jScrollPane1" min="-2" pref="987" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="19" max="32767" attributes="0"/>
+              <EmptySpace pref="55" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -63,22 +66,31 @@
               <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="cmbPlaylists" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="BTN_GUARDAR" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="BTN_GUARDAR" alignment="1" min="-2" pref="55" max="-2" attributes="0"/>
                   <Component id="BTN_CARGAR" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="BTN_ENCRIPATR" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="BTN_DESEMCRIPTAR" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="COMBOXENCRIP" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="494" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="BTN_ATRAS" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="BTN_PLAY" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="BTN_SIGUIENTE" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="BTN_CIRUCLAR" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="BTN_STOP" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="BTN_ALETARIO" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="BTN_ELIMINAR" alignment="3" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="BTN_ATRAS" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="BTN_PLAY" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="BTN_SIGUIENTE" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="BTN_CIRUCLAR" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="BTN_STOP" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="BTN_ALETARIO" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="BTN_ELIMINAR" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="0" pref="82" max="32767" attributes="0"/>
+                  </Group>
+                  <Component id="LBL_PORTADA" alignment="0" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace pref="49" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -191,21 +203,24 @@
     <Component class="javax.swing.JComboBox" name="cmbPlaylists">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="4">
-            <StringItem index="0" value="Item 1"/>
-            <StringItem index="1" value="Item 2"/>
-            <StringItem index="2" value="Item 3"/>
-            <StringItem index="3" value="Item 4"/>
-          </StringArray>
+          <StringArray count="0"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmbPlaylistsActionPerformed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JButton" name="BTN_GUARDAR">
       <Properties>
-        <Property name="text" type="java.lang.String" value="GUARDAR"/>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="0" green="0" red="0" type="rgb"/>
+        </Property>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/Imagenes/guardar.png"/>
+        </Property>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BTN_GUARDARActionPerformed"/>
@@ -218,6 +233,34 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BTN_CARGARActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="BTN_ENCRIPATR">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="ENCRIPTAR"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BTN_ENCRIPATRActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="BTN_DESEMCRIPTAR">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="DESENCRIPTAR"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BTN_DESEMCRIPTARActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="COMBOXENCRIP">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="0"/>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="LBL_PORTADA">
     </Component>
   </SubComponents>
 </Form>
