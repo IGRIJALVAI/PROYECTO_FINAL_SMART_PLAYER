@@ -344,7 +344,8 @@ public void actualizarInfoCancion(String nombre, String artista) {
         return;
     }
 
-    principal.mp3.reproducir(musica.getRuta());  //PORTADA Y SLIDER Y SUS NLKNRES
+    principal.mp3.reproducir(musica.getRuta());
+    principal.estadisticasReproduccion.registrarReproduccion(musica);//PORTADA Y SLIDER Y SUS NLKNRES
     SLIDER_MUSICA.setValue(0);
    PORTADA_MP3 portada = new PORTADA_MP3();
    portada.mostrarPortada(musica.getRuta(), LBL_PORTADA);

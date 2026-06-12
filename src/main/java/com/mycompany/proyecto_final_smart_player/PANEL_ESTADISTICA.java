@@ -31,16 +31,32 @@ public class PANEL_ESTADISTICA extends javax.swing.JPanel {
 
     String artistaMasRepetido = obtenerArtistaMasRepetido();
     String generoMasRepetido = obtenerGeneroMasRepetido();
+    String artistaMasEscuchado = principal.estadisticasReproduccion.artistaMasEscuchado();
+    String generoMasEscuchado = principal.estadisticasReproduccion.generoMasEscuchado();
+    String historialArtistas = principal.estadisticasReproduccion.mostrarHistorialArtistas();
+    String historialGeneros = principal.estadisticasReproduccion.mostrarHistorialGeneros();
 
     TXT_ACTU.setText(
             "ESTADISTICAS DEL REPRODUCTOR\n"
-            + "------------------------------------------\n\n"
+            + "\n\n"
             + "CANCIONES\n"
             + "Total de canciones cargadas: " + principal.totalCancionesCargadas + "\n\n"
 
             + "TIEMPOS DE CARGA\n"
             + "Tiempo ABB: " + tiempoABBms + " ms\n"
             + "Tiempo AVL: " + tiempoAVLms + " ms\n\n"
+                    
+            + "ARTISTAS ESCUCHADOS\n"
+            + "\n"
+            + historialArtistas + "\n"
+
+            + "GENEROS ESCUCHADOS\n"
+            + "\n"
+            + historialGeneros + "\n"
+                    
+            + "MAS ESCUCHADOS\n"
+            + "Artista mas escuchado: " + artistaMasEscuchado + "\n"
+            + "Genero mas escuchado: " + generoMasEscuchado + "\n\n"
 
             + "DATOS MAS REPETIDOS\n"
             + "Artista mas repetido: " + artistaMasRepetido + "\n"
@@ -61,6 +77,9 @@ public class PANEL_ESTADISTICA extends javax.swing.JPanel {
             + "Cola: Cola de reproduccion\n"
     );
 }
+    
+    
+    
     public String obtenerArtistaMasRepetido() {
 
     if (principal.listaMusica.inicio == null) {
@@ -197,6 +216,7 @@ public class PANEL_ESTADISTICA extends javax.swing.JPanel {
 
         BTN_ACTUALIZAR.setBackground(new java.awt.Color(0, 0, 0));
         BTN_ACTUALIZAR.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/actualizar.png"))); // NOI18N
+        BTN_ACTUALIZAR.setBorderPainted(false);
         BTN_ACTUALIZAR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BTN_ACTUALIZARActionPerformed(evt);

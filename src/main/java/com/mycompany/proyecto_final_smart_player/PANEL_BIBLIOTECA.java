@@ -675,7 +675,8 @@ if (opcion == javax.swing.JFileChooser.APPROVE_OPTION) {
     actualizarInfoCancion(musica.getNombre(), musica.getArtista());
     if (principal.mp3.getRutaActual().equals("")) {
 
-        principal.mp3.reproducir(rutaSeleccionada);
+        principal.mp3.reproducir(rutaSeleccionada); // musica contador, portada y nombres
+        principal.estadisticasReproduccion.registrarReproduccion(musica);
 
         PORTADA_MP3 portada = new PORTADA_MP3();
         portada.mostrarPortada(rutaSeleccionada, LBL_PORTADA);
@@ -697,8 +698,13 @@ if (opcion == javax.swing.JFileChooser.APPROVE_OPTION) {
 
         principal.mp3.reproducir(rutaSeleccionada);
 
+        principal.historial.apilar(musica);
+        principal.estadisticasReproduccion.registrarReproduccion(musica);
+
         PORTADA_MP3 portada = new PORTADA_MP3();
         portada.mostrarPortada(rutaSeleccionada, LBL_PORTADA);
+
+        SLIDER_MUSICA.setValue(0);
 
         BTN_PLAY.setText("");
     }

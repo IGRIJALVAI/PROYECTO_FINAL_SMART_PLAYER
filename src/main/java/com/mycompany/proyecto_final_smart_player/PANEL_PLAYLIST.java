@@ -280,16 +280,40 @@ timerMusica.start();
 
     String nombre = tablaPlay.getValueAt(fila, 0).toString();
     String artista = tablaPlay.getValueAt(fila, 1).toString();
+    String album = tablaPlay.getValueAt(fila, 2).toString();
+    String genero = tablaPlay.getValueAt(fila, 3).toString();
+    int anio = Integer.parseInt(tablaPlay.getValueAt(fila, 4).toString());
+    String duracion = tablaPlay.getValueAt(fila, 5).toString();
+    double tamanio = Double.parseDouble(tablaPlay.getValueAt(fila, 6).toString());
     String ruta = tablaPlay.getValueAt(fila, 7).toString();
 
+    MUSICA musica = new MUSICA(
+            nombre,
+            artista,
+            album,
+            genero,
+            anio,
+            duracion,
+            tamanio,
+            ruta
+    );
+
     principal.mp3.reproducir(ruta);
-    
-    
-    SLIDER_MUSICA.setValue(0);  //EL SLIDER Y AQUI TYAMBIEN LA PORTEDAD Y SUS NOMBRES
+
+    // Aqui registra artista y genero mas escuchado
+    principal.estadisticasReproduccion.registrarReproduccion(musica);
+
+    // Slider
+    SLIDER_MUSICA.setValue(0);
+
+    // Portada
     actualizarPortada(ruta);
+
+    // Nombre y artista actual
     actualizarInfoCancion(nombre, artista);
 
-     BTN_PLAY.setText("");
+    BTN_PLAY.setText("");
+
 }
 public MUSICA buscarCancionEnBiblioteca(String nombre, String artista) {
 

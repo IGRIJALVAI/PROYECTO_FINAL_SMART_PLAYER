@@ -28,6 +28,7 @@ public class RESPRODUCTORMP3 extends javax.swing.JFrame {
      LISTA_CIRCULAR listaCircular = new LISTA_CIRCULAR();
      VARIAS_PLAYS VariosPlaylist = new VARIAS_PLAYS();
      PORTADA_MP3 portadaMP3 = new PORTADA_MP3();
+     ESTADISTICAS estadisticasReproduccion = new ESTADISTICAS();
      
      long tiempoCargaABB = 0;
      long tiempoCargaAVL = 0;
