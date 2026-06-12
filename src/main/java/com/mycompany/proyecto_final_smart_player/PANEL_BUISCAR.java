@@ -4,6 +4,14 @@
  */
 package com.mycompany.proyecto_final_smart_player;
 
+import java.awt.Color;
+import java.awt.Component;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+
 /**
  *
  * @author grija
@@ -21,6 +29,11 @@ public class PANEL_BUISCAR extends javax.swing.JPanel {
     public PANEL_BUISCAR(RESPRODUCTORMP3 principal) {
     initComponents();
     this.principal = principal;
+    String columnas[] = {"Nombre", "Artista", "Album", "Genero", "Año", "Duracion", "Tamaño MB", "Ruta"};
+
+    DefaultTableModel modelo = new DefaultTableModel(columnas, 0);
+
+    tablaBusqueda.setModel(modelo);
     
     COMBOX.addItem("InOrden ABB");
         COMBOX.addItem("PreOrden ABB");
@@ -30,8 +43,89 @@ public class PANEL_BUISCAR extends javax.swing.JPanel {
         COMBOX.addItem("PostOrden AVL");
 
         TXT_RESULTADO.setEditable(false);
-}
+        estiloTablaSpotify();
+   }
+    
+    
+    
+ private void estiloTablaSpotify() {
 
+    tablaBusqueda.setBackground(new Color(0, 0, 0));
+    tablaBusqueda.setForeground(Color.WHITE);
+    tablaBusqueda.setGridColor(new Color(35, 35, 35));
+
+    
+    tablaBusqueda.setSelectionBackground(new Color(180, 0, 0)); // cuadno se oprime se pone rojo
+
+    tablaBusqueda.setRowHeight(35);
+    tablaBusqueda.setShowGrid(true);
+    tablaBusqueda.setOpaque(true);
+    tablaBusqueda.setFillsViewportHeight(true);
+
+    jScrollPane1.getViewport().setBackground(new Color(0, 0, 0));
+    jScrollPane1.setBackground(new Color(0, 0, 0));
+    jScrollPane1.setBorder(null);
+
+    JTableHeader header = tablaBusqueda.getTableHeader();
+    header.setBackground(new Color(15, 15, 15));
+    header.setForeground(Color.WHITE);
+    header.setOpaque(true);
+
+    header.setDefaultRenderer(new DefaultTableCellRenderer() {
+        @Override
+        public Component getTableCellRendererComponent(
+                JTable table, Object value, boolean isSelected,
+                boolean hasFocus, int row, int column) {
+
+            JLabel label = (JLabel) super.getTableCellRendererComponent(
+                    table, value, isSelected, hasFocus, row, column);
+
+            label.setBackground(new Color(15, 15, 15));
+            label.setForeground(Color.RED);
+            label.setHorizontalAlignment(JLabel.CENTER);
+            label.setOpaque(true);
+
+            return label;
+        }
+    });
+
+    DefaultTableCellRenderer render = new DefaultTableCellRenderer() {
+        @Override
+        public Component getTableCellRendererComponent(
+                JTable table, Object value, boolean isSelected,
+                boolean hasFocus, int row, int column) {
+
+            Component c = super.getTableCellRendererComponent(
+                    table, value, isSelected, hasFocus, row, column);
+
+            if (isSelected) {
+                c.setBackground(new Color(180, 0, 0)); // Rojo 
+                c.setForeground(Color.WHITE);
+            } else {
+                c.setBackground(new Color(0, 0, 0));   // fondo negro
+                c.setForeground(Color.WHITE);
+            }
+
+            return c;
+        }
+    };
+     for (int i = 0; i < tablaBusqueda.getColumnCount(); i++) {
+        tablaBusqueda.getColumnModel().getColumn(i).setCellRenderer(render);
+    }
+}
+ 
+ public MUSICA obtenerMusicaDeTablaBusqueda(int fila) {
+    String nombre = tablaBusqueda.getValueAt(fila, 0).toString();
+    String artista = tablaBusqueda.getValueAt(fila, 1).toString();
+    String album = tablaBusqueda.getValueAt(fila, 2).toString();
+    String genero = tablaBusqueda.getValueAt(fila, 3).toString();
+    int anio = Integer.parseInt(tablaBusqueda.getValueAt(fila, 4).toString());
+    String duracion = tablaBusqueda.getValueAt(fila, 5).toString();
+    double tamanio = Double.parseDouble(tablaBusqueda.getValueAt(fila, 6).toString());
+    String ruta = tablaBusqueda.getValueAt(fila, 7).toString();
+    MUSICA musica = new MUSICA(nombre, artista, album, genero, anio, duracion, tamanio, ruta);
+    return musica;
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -52,6 +146,10 @@ public class PANEL_BUISCAR extends javax.swing.JPanel {
         jScrollPane5 = new javax.swing.JScrollPane();
         TXT_RECORRRIDOSSS = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaBusqueda = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(0, 0, 0));
 
@@ -68,6 +166,7 @@ public class PANEL_BUISCAR extends javax.swing.JPanel {
             }
         });
 
+        TXT_RESULTADO.setBackground(new java.awt.Color(0, 0, 0));
         TXT_RESULTADO.setColumns(20);
         TXT_RESULTADO.setRows(5);
         jScrollPane2.setViewportView(TXT_RESULTADO);
@@ -99,79 +198,126 @@ public class PANEL_BUISCAR extends javax.swing.JPanel {
             }
         });
 
+        TXT_RECORRRIDOSSS.setBackground(new java.awt.Color(0, 0, 0));
         TXT_RECORRRIDOSSS.setColumns(20);
         TXT_RECORRRIDOSSS.setRows(5);
         jScrollPane5.setViewportView(TXT_RECORRRIDOSSS);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscarpor.png"))); // NOI18N
 
+        tablaBusqueda.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tablaBusqueda);
+
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("jButton2");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(19, 19, 19)
+                        .addComponent(TXT_BUSCARCAN, javax.swing.GroupLayout.PREFERRED_SIZE, 518, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(BTN_ARBOLES, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(111, 111, 111)
+                        .addComponent(BTN_ARTISTA, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(103, 103, 103)
+                        .addComponent(BTN_GENERO, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(236, 236, 236)
+                        .addComponent(jButton1)
+                        .addGap(67, 67, 67)
+                        .addComponent(jButton2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(BTN_ARTISTA, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(BTN_ARBOLES, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(BTN_GENERO, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(TXT_BUSCARCAN, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(56, 56, 56)))
+                            .addComponent(jScrollPane2)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 692, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(BTN_MOSTARRECORERIDOS)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(COMBOX, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(196, 196, 196))
+                .addGap(107, 107, 107))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
+                        .addGap(21, 21, 21)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(COMBOX, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(BTN_MOSTARRECORERIDOS))
                         .addGap(11, 11, 11)
-                        .addComponent(jScrollPane5))
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 663, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TXT_BUSCARCAN, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(33, 33, 33)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(BTN_ARBOLES)
+                                .addGap(7, 7, 7))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(BTN_ARTISTA)
+                                    .addComponent(BTN_GENERO, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(47, 47, 47)
-                        .addComponent(BTN_ARBOLES)
-                        .addGap(18, 18, 18)
-                        .addComponent(BTN_ARTISTA)
-                        .addGap(18, 18, 18)
-                        .addComponent(BTN_GENERO, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(43, 43, 43)
-                        .addComponent(TXT_BUSCARCAN, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(31, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton1)
+                            .addComponent(jButton2))
+                        .addGap(27, 27, 27)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void BTN_ARBOLESActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_ARBOLESActionPerformed
         // TODO add your handling code here:
-       String nombre = TXT_BUSCARCAN.getText().trim();
+      
+    String nombre = TXT_BUSCARCAN.getText().trim();
 
     if (nombre.equals("")) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Ingrese el nombre de una cancion");
+        javax.swing.JOptionPane.showMessageDialog(principal, "Ingrese el nombre de una cancion");
         return;
     }
+
+    DefaultTableModel modelo = (DefaultTableModel) tablaBusqueda.getModel();
+    modelo.setRowCount(0);
 
     long inicioABB = System.nanoTime();
     MUSICA resultadoABB = principal.arbolABB.buscarNodo(nombre);
@@ -199,6 +345,18 @@ public class PANEL_BUISCAR extends javax.swing.JPanel {
                 + "\nTiempo AVL: " + tiempoAVL + " ns"
         );
 
+        Object fila[] = new Object[8];
+        fila[0] = resultadoABB.getNombre();
+        fila[1] = resultadoABB.getArtista();
+        fila[2] = resultadoABB.getAlbum();
+        fila[3] = resultadoABB.getGenero();
+        fila[4] = resultadoABB.getAnio();
+        fila[5] = resultadoABB.getDuracion();
+        fila[6] = resultadoABB.getTamanioMB();
+        fila[7] = resultadoABB.getRuta();
+
+        modelo.addRow(fila);
+
     } else {
 
         String parecidos = principal.arbolABB.buscarParecido(nombre);
@@ -216,6 +374,8 @@ public class PANEL_BUISCAR extends javax.swing.JPanel {
                     + "\nTiempo ABB: " + tiempoABB + " ns"
                     + "\nTiempo AVL: " + tiempoAVL + " ns"
             );
+
+            principal.arbolABB.llenarTablaParecido(nombre, modelo);
         }
     }
     }//GEN-LAST:event_BTN_ARBOLESActionPerformed
@@ -258,10 +418,10 @@ public class PANEL_BUISCAR extends javax.swing.JPanel {
 
     private void BTN_ARTISTAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_ARTISTAActionPerformed
         // TODO add your handling code here:
-            String texto = TXT_BUSCARCAN.getText();
+           String texto = TXT_BUSCARCAN.getText();
 
     if (texto.trim().equals("")) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Ingrese un artista para buscar");
+        javax.swing.JOptionPane.showMessageDialog(principal, "Ingrese un artista para buscar");
         return;
     }
 
@@ -276,14 +436,17 @@ public class PANEL_BUISCAR extends javax.swing.JPanel {
             + resultado
             + "\nTiempo tabla hash: " + tiempo + " ns"
     );
+
+    DefaultTableModel modelo = (DefaultTableModel) tablaBusqueda.getModel();
+    principal.hashArtista.llenarTablaParecido(texto, modelo);
     }//GEN-LAST:event_BTN_ARTISTAActionPerformed
 
     private void BTN_GENEROActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_GENEROActionPerformed
         // TODO add your handling code here:
-         String texto = TXT_BUSCARCAN.getText();
+        String texto = TXT_BUSCARCAN.getText();
 
     if (texto.trim().equals("")) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Ingrese un genero para buscar");
+        javax.swing.JOptionPane.showMessageDialog(principal, "Ingrese un genero para buscar");
         return;
     }
 
@@ -298,7 +461,34 @@ public class PANEL_BUISCAR extends javax.swing.JPanel {
             + resultado
             + "\nTiempo tabla hash: " + tiempo + " ns"
     );
+
+    DefaultTableModel modelo = (DefaultTableModel) tablaBusqueda.getModel();
+    principal.hashGenero.llenarTablaParecido(texto, modelo);
     }//GEN-LAST:event_BTN_GENEROActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+          int fila = tablaBusqueda.getSelectedRow();
+
+    if (fila == -1) {
+        javax.swing.JOptionPane.showMessageDialog(principal, "Seleccione una cancion de la tabla"); //resproduce la cacuioij buscada
+        return;
+    }
+    MUSICA musica = obtenerMusicaDeTablaBusqueda(fila);
+    principal.mp3.reproducir(musica.getRuta());
+    principal.historial.apilar(musica);
+    principal.estadisticasReproduccion.registrarReproduccion(musica);
+    principal.listaDoble.ponerActualPorRuta(musica.getRuta());
+    javax.swing.JOptionPane.showMessageDialog(
+            principal,
+            "Reproduciendo:\n" + musica.getNombre() + "\n" + musica.getArtista()
+    );
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        principal.mp3.detener();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -310,8 +500,12 @@ public class PANEL_BUISCAR extends javax.swing.JPanel {
     private javax.swing.JTextField TXT_BUSCARCAN;
     private javax.swing.JTextArea TXT_RECORRRIDOSSS;
     private javax.swing.JTextArea TXT_RESULTADO;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JTable tablaBusqueda;
     // End of variables declaration//GEN-END:variables
 }

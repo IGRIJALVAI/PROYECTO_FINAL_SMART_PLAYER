@@ -159,13 +159,9 @@ public class ARBOL_AVL {
     }
 
     public void llenarTablaInorden(NODO_AVL r, DefaultTableModel modelo) {
-
         if (r != null) {
-
             llenarTablaInorden(r.hijoIzquierdo, modelo);
-
             Object fila[] = new Object[8];
-
             fila[0] = r.musica.getNombre();
             fila[1] = r.musica.getArtista();
             fila[2] = r.musica.getAlbum();
@@ -174,9 +170,7 @@ public class ARBOL_AVL {
             fila[5] = r.musica.getDuracion();
             fila[6] = r.musica.getTamanioMB();
             fila[7] = r.musica.getRuta();
-
             modelo.addRow(fila);
-
             llenarTablaInorden(r.hijoDerecho, modelo);
         }
     }
@@ -205,31 +199,26 @@ public String InOrdenTexto(NODO_AVL r) {
         texto = texto + r.musica.getNombre() + " - " + r.musica.getArtista() + "\n";
         texto = texto + InOrdenTexto(r.hijoDerecho);
     }
-
     return texto;
 }
 
 public String PreOrdenTexto(NODO_AVL r) {
     String texto = "";
-
     if (r != null) {
         texto = texto + r.musica.getNombre() + " - " + r.musica.getArtista() + "\n";
         texto = texto + PreOrdenTexto(r.hijoIzquierdo);
         texto = texto + PreOrdenTexto(r.hijoDerecho);
     }
-
     return texto;
 }
 
 public String PostOrdenTexto(NODO_AVL r) {
     String texto = "";
-
     if (r != null) {
         texto = texto + PostOrdenTexto(r.hijoIzquierdo);
         texto = texto + PostOrdenTexto(r.hijoDerecho);
         texto = texto + r.musica.getNombre() + " - " + r.musica.getArtista() + "\n";
     }
-
     return texto;
 }
     
@@ -238,23 +227,17 @@ public String PostOrdenTexto(NODO_AVL r) {
     return buscarParecidoRec(raiz, texto.toLowerCase());
 }
 
-public String buscarParecidoRec(NODO_AVL r, String texto) {
-
+public String buscarParecidoRec(NODO_AVL r, String texto) { //metodo paras bsucar una cancoin parecio nio igual
     String resultado = "";
-
     if (r != null) {
-
         resultado = resultado + buscarParecidoRec(r.hijoIzquierdo, texto);
-
         if (r.musica.getNombre().toLowerCase().contains(texto)) {
             resultado = resultado
                     + r.musica.getNombre() + " - "
                     + r.musica.getArtista() + "\n";
         }
-
         resultado = resultado + buscarParecidoRec(r.hijoDerecho, texto);
     }
-
     return resultado;
 }
     

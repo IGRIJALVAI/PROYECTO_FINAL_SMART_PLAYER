@@ -4,6 +4,8 @@
  */
 package com.mycompany.proyecto_final_smart_player;
 
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author grija
@@ -128,6 +130,38 @@ public class TABLA_HASH {
 
         return texto;
     }
+    public void llenarTablaParecido(String texto, DefaultTableModel modelo) {
+
+    texto = limpiarClave(texto);
+
+    modelo.setRowCount(0);
+
+    for (int i = 0; i < tamano; i++) {
+
+        NODO_HASH aux = tabla[i];
+
+        while (aux != null) {
+
+            if (aux.clave.contains(texto)) {
+
+                Object fila[] = new Object[8];
+
+                fila[0] = aux.musica.getNombre();
+                fila[1] = aux.musica.getArtista();
+                fila[2] = aux.musica.getAlbum();
+                fila[3] = aux.musica.getGenero();
+                fila[4] = aux.musica.getAnio();
+                fila[5] = aux.musica.getDuracion();
+                fila[6] = aux.musica.getTamanioMB();
+                fila[7] = aux.musica.getRuta();
+
+                modelo.addRow(fila);
+            }
+
+            aux = aux.siguiente;
+        }
+    }
+}
     
     
 }

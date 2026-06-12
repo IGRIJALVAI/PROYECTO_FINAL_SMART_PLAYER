@@ -80,5 +80,63 @@ public class LISTA_CIRCULAR {
 
         return texto;
     }
-    
+    public void ponerActualPorRuta(String ruta) {
+
+    if (inicio == null) {
+        return;
+    }
+
+    nodo_CIRCULAR aux = inicio;
+
+    do {
+        if (aux.musica.getRuta().equals(ruta)) {
+            actual = aux;
+            return;
+        }
+
+        aux = aux.siguiente;
+
+    } while (aux != inicio);
+}
+    public MUSICA siguienteCircular() {
+
+    if (inicio == null) {
+        return null;
+    }
+
+    if (actual == null) {
+        actual = inicio;
+        return actual.musica;
+    }
+
+    actual = actual.siguiente;
+
+    return actual.musica;
+}
+    public MUSICA anteriorCircular() {
+
+    if (inicio == null) {
+        return null;
+    }
+
+    if (actual == null) {
+        actual = fin;
+        return actual.musica;
+    }
+
+    if (actual == inicio) {
+        actual = fin;
+        return actual.musica;
+    }
+
+    nodo_CIRCULAR aux = inicio;
+
+    while (aux.siguiente != actual) {
+        aux = aux.siguiente;
+    }
+
+    actual = aux;
+
+    return actual.musica;
+}
 }

@@ -207,24 +207,52 @@ public String buscarParecido(String texto) {
 }
 
 public String buscarParecidoRec(NODO_ABB r, String texto) {
-
     String resultado = "";
-
     if (r != null) {
-
         resultado = resultado + buscarParecidoRec(r.hijoIzquierdo, texto);
-
         if (r.musica.getNombre().toLowerCase().contains(texto)) {
             resultado = resultado
                     + r.musica.getNombre() + " - "
                     + r.musica.getArtista() + "\n";
         }
-
         resultado = resultado + buscarParecidoRec(r.hijoDerecho, texto);
     }
-
     return resultado;
-}
+    }
+
+    public void llenarTablaParecido(String texto, DefaultTableModel modelo) {   
+    modelo.setRowCount(0);
+    llenarTablaParecidoRecursivo(raiz, texto.toLowerCase(), modelo);
     
+     }
+
+public void llenarTablaParecidoRecursivo(NODO_ABB r, String texto, DefaultTableModel modelo) { //pra bsicar parecidos parar la canciones
+    if (r != null) {
+        llenarTablaParecidoRecursivo(r.hijoIzquierdo, texto, modelo);
+        if (r.musica.getNombre().toLowerCase().contains(texto)) {
+            Object fila[] = new Object[8];
+            fila[0] = r.musica.getNombre();
+            fila[1] = r.musica.getArtista();
+            fila[2] = r.musica.getAlbum();
+            fila[3] = r.musica.getGenero();
+            fila[4] = r.musica.getAnio();
+            fila[5] = r.musica.getDuracion();
+            fila[6] = r.musica.getTamanioMB();
+            fila[7] = r.musica.getRuta();
+            modelo.addRow(fila);
+        }
+        llenarTablaParecidoRecursivo(r.hijoDerecho, texto, modelo);
+    }
+}
+
+
+
+public void llenarListaCircularInorden(NODO_ABB r, LISTA_CIRCULAR lista) {  //para la lsita ciruclar 
+    if (r != null) {
+        llenarListaCircularInorden(r.hijoIzquierdo, lista);
+        lista.agregar(r.musica);
+        llenarListaCircularInorden(r.hijoDerecho, lista);
+    }
+}
     
 }

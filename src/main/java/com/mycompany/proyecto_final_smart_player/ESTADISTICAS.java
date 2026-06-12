@@ -78,7 +78,7 @@ public class ESTADISTICAS {
     public String artistaMasEscuchado() {
 
         if (totalArtistas == 0) {
-            return "Todavia no se ha reproducido musica";
+            return "No se ha reproducido musica";
         }
 
         int mayor = 0;
@@ -97,7 +97,7 @@ public class ESTADISTICAS {
     public String generoMasEscuchado() {
 
         if (totalGeneros == 0) {
-            return "Todavia no se ha reproducido musica";
+            return "No se ha reproducido musica";
         }
 
         int mayor = 0;
@@ -115,7 +115,7 @@ public class ESTADISTICAS {
     public String mostrarHistorialArtistas() {
 
     if (totalArtistas == 0) {
-        return "Todavia no se ha reproducido musica\n";
+            return "No se reproducido musica\n";
     }
 
     String texto = "";
@@ -128,17 +128,13 @@ public class ESTADISTICAS {
 }
 
 public String mostrarHistorialGeneros() {
-
     if (totalGeneros == 0) {
-        return "Todavia no se ha reproducido musica\n";
+        return "No se reproducido musica\n";
     }
-
     String texto = "";
-
     for (int i = 0; i < totalGeneros; i++) {
         texto = texto + generos[i] + " - " + contadorGeneros[i] + " reproducciones\n";
     }
-
     return texto;
 }
     

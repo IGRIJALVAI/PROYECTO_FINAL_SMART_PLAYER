@@ -50,57 +50,42 @@ public class PANEL_BIBLIOTECA extends javax.swing.JPanel {
                 }
             }
         });
-
         timerMusica.start();
-        
         String columnas[] = {"Nombre", "Artista", "Album", "Genero", "Año", "Duracion", "Tamaño", "Ruta"};
-
         DefaultTableModel modelo = new DefaultTableModel(columnas, 0);
-
         tablaMusica.setModel(modelo);
              estiloTablaSpotify();
     }
     
     public String formatoTiempo(int segundosTotales) {
-
     int minutos = segundosTotales / 60;
     int segundos = segundosTotales % 60;
-
     String textoSegundos = "";
-
     if (segundos < 10) {
         textoSegundos = "0" + segundos;
     } else {
         textoSegundos = "" + segundos;
     }
-
     return minutos + ":" + textoSegundos;
 }
     
     
     private void estiloTablaSpotify() {
-
     tablaMusica.setBackground(new Color(0, 0, 0));
     tablaMusica.setForeground(Color.WHITE);
     tablaMusica.setGridColor(new Color(35, 35, 35));
-
-    
     tablaMusica.setSelectionBackground(new Color(180, 0, 0)); // cuadno se oprime se pone rojo
-
     tablaMusica.setRowHeight(35);
     tablaMusica.setShowGrid(true);
     tablaMusica.setOpaque(true);
     tablaMusica.setFillsViewportHeight(true);
-
     jScrollPane1.getViewport().setBackground(new Color(0, 0, 0));
     jScrollPane1.setBackground(new Color(0, 0, 0));
     jScrollPane1.setBorder(null);
-
     JTableHeader header = tablaMusica.getTableHeader();
     header.setBackground(new Color(15, 15, 15));
     header.setForeground(Color.WHITE);
     header.setOpaque(true);
-
     header.setDefaultRenderer(new DefaultTableCellRenderer() {
         @Override
         public Component getTableCellRendererComponent(
@@ -281,6 +266,7 @@ public void reproducirFilaBiblioteca(int fila) {
     String ruta = tablaMusica.getValueAt(fila, 7).toString();
 
     principal.listaDoble.ponerActualPorRuta(ruta);
+    
 
     MUSICA musica = obtenerMusicaDeTabla(fila);
 
@@ -302,13 +288,20 @@ public void reproducirMusicaBiblioteca(MUSICA musica) {
         return;
     }
 
-    principal.historial.apilar(musica);
+    principal.listaDoble.ponerActualPorRuta(musica.getRuta());
+    principal.listaCircular.ponerActualPorRuta(musica.getRuta());
+
     principal.mp3.reproducir(musica.getRuta());
+
+    principal.historial.apilar(musica);
+    principal.estadisticasReproduccion.registrarReproduccion(musica);
 
     PORTADA_MP3 portada = new PORTADA_MP3();
     portada.mostrarPortada(musica.getRuta(), LBL_PORTADA);
 
     actualizarInfoCancion(musica.getNombre(), musica.getArtista());
+
+    SLIDER_MUSICA.setValue(0);
 
     BTN_PLAY.setText("");
 
@@ -606,8 +599,8 @@ if (opcion == javax.swing.JFileChooser.APPROVE_OPTION) {
 
         principal.arbolABB = new ARBOL_ABB();
         principal.arbolAVL = new ARBOL_AVL();
-        principal.hashArtista = new TABLA_HASH(10000);
-        principal.hashGenero = new TABLA_HASH(2000);
+        principal.hashArtista = new TABLA_HASH(15000);
+        principal.hashGenero = new TABLA_HASH(5000);
 
         principal.listaMusica = new LISTA_SIMPLE();
         principal.listaDoble = new LISTA_DOBLE();
@@ -629,21 +622,21 @@ if (opcion == javax.swing.JFileChooser.APPROVE_OPTION) {
     } else {
         return;
     }
-
-    
     cargarMusicaDeCarpeta(carpeta);
-
     DefaultTableModel modelo = (DefaultTableModel) tablaMusica.getModel();
-
     modelo.setRowCount(0);
-
     principal.arbolABB.llenarTablaInorden(principal.arbolABB.getRaiz(), modelo);
-
     principal.listaDoble = new LISTA_DOBLE();
-    principal.arbolABB.llenarListaDobleInorden(
+    principal.arbolABB.llenarListaDobleInorden(   //PARA QUE SE ORDENDNE IGUAL QUE SALE EN LA TABLA
             principal.arbolABB.getRaiz(),
             principal.listaDoble
     );
+    principal.listaCircular = new LISTA_CIRCULAR();
+
+principal.arbolABB.llenarListaCircularInorden(
+        principal.arbolABB.getRaiz(),
+        principal.listaCircular
+);
 
     double tiempoABBms = principal.tiempoCargaABB / 1000000.0;
     double tiempoAVLms = principal.tiempoCargaAVL / 1000000.0;
@@ -659,7 +652,7 @@ if (opcion == javax.swing.JFileChooser.APPROVE_OPTION) {
 
     private void BTN_PLAYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_PLAYActionPerformed
         // TODO add your handling code here:
-         int fila = tablaMusica.getSelectedRow();
+         int fila = tablaMusica.getSelectedRow(); //tiens que dar le al una cacion de la tabal apra que jale
 
     if (fila == -1) {
         javax.swing.JOptionPane.showMessageDialog(this, "Seleccione una cancion de la tabla");
@@ -668,7 +661,8 @@ if (opcion == javax.swing.JFileChooser.APPROVE_OPTION) {
 
     String rutaSeleccionada = tablaMusica.getValueAt(fila, 7).toString();
 
-    principal.listaDoble.ponerActualPorRuta(rutaSeleccionada);
+    principal.listaDoble.ponerActualPorRuta(rutaSeleccionada); //cargamos las dos listas
+    principal.listaCircular.ponerActualPorRuta(rutaSeleccionada);
 
     MUSICA musica = obtenerMusicaDeTabla(fila);
     principal.historial.apilar(musica);
@@ -685,10 +679,8 @@ if (opcion == javax.swing.JFileChooser.APPROVE_OPTION) {
         BTN_PLAY.setText("");
 
     } else if (principal.mp3.getRutaActual().equals(rutaSeleccionada)) {
-
         principal.mp3.playPausa();
-
-        if (principal.mp3.estaSonando()) {
+        if (principal.mp3.estaSonando()) {// para las pausas
             BTN_PLAY.setText("");
         } else {
             BTN_PLAY.setText("");
@@ -696,16 +688,12 @@ if (opcion == javax.swing.JFileChooser.APPROVE_OPTION) {
 
     } else {
 
-        principal.mp3.reproducir(rutaSeleccionada);
-
+        principal.mp3.reproducir(rutaSeleccionada); //despues de darle play otra vez
         principal.historial.apilar(musica);
         principal.estadisticasReproduccion.registrarReproduccion(musica);
-
         PORTADA_MP3 portada = new PORTADA_MP3();
         portada.mostrarPortada(rutaSeleccionada, LBL_PORTADA);
-
-        SLIDER_MUSICA.setValue(0);
-
+        SLIDER_MUSICA.setValue(0);// el slider
         BTN_PLAY.setText("");
     }
     }//GEN-LAST:event_BTN_PLAYActionPerformed
@@ -713,28 +701,14 @@ if (opcion == javax.swing.JFileChooser.APPROVE_OPTION) {
     private void BTN_ATRASActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_ATRASActionPerformed
         // TODO add your handling code here:
        
-    MUSICA musica = principal.listaDoble.anterior();
-
+    MUSICA musica;
+    if (circularActivo == true) { // se verificsa que el circular este actuivo o no
+        musica = principal.listaCircular.anteriorCircular();
+    } else {
+        musica = principal.listaDoble.anterior();
+    }
     if (musica == null) {
-
-        if (circularActivo == true) {
-
-            if (tablaMusica.getRowCount() == 0) {
-                javax.swing.JOptionPane.showMessageDialog(this, "No hay canciones cargadas");
-                return;
-            }
-
-            int ultimaFila = tablaMusica.getRowCount() - 1;
-            musica = obtenerMusicaDeTabla(ultimaFila);
-
-            principal.listaDoble.ponerActualPorRuta(musica.getRuta());
-
-            reproducirMusicaBiblioteca(musica);
-
-        } else {
-            javax.swing.JOptionPane.showMessageDialog(this, "No hay cancion anterior");
-        }
-
+        javax.swing.JOptionPane.showMessageDialog(principal, "No hay cancion anterior"); // l,ego al final de la liosta
     } else {
         reproducirMusicaBiblioteca(musica);
     }
@@ -742,73 +716,50 @@ if (opcion == javax.swing.JFileChooser.APPROVE_OPTION) {
 
     private void BTN_SIGUIENTEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_SIGUIENTEActionPerformed
         // TODO add your handling code here:
-        MUSICA musica = principal.listaDoble.siguiente();
+        MUSICA musica;
+
+    if (circularActivo == true) { // se verificsa que el circular este actuivo o no
+        musica = principal.listaCircular.siguienteCircular();
+    } else {
+        musica = principal.listaDoble.siguiente();
+    }
 
     if (musica == null) {
-
-        if (circularActivo == true) {
-
-            if (tablaMusica.getRowCount() == 0) {
-                javax.swing.JOptionPane.showMessageDialog(this, "No hay canciones cargadas");
-                return;
-            }
-
-            musica = obtenerMusicaDeTabla(0);
-
-            principal.listaDoble.ponerActualPorRuta(musica.getRuta());
-
-            reproducirMusicaBiblioteca(musica);
-
-        } else {
-            javax.swing.JOptionPane.showMessageDialog(this, "No hay cancion siguiente");
-        }
-
+        javax.swing.JOptionPane.showMessageDialog(principal, "No hay cancion siguiente");
     } else {
         reproducirMusicaBiblioteca(musica);
-    
     }
        
     }//GEN-LAST:event_BTN_SIGUIENTEActionPerformed
 
     private void BTN_DETENERActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_DETENERActionPerformed
         // TODO add your handling code here:
-          principal.mp3.detener();
+          principal.mp3.detener(); // solo detiene ajajaja
     }//GEN-LAST:event_BTN_DETENERActionPerformed
 
     private void BTN_AGREGSARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_AGREGSARActionPerformed
         // TODO add your handling code here:
-        
-   
     int fila = tablaMusica.getSelectedRow();
-
     if (fila == -1) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Seleccione una cancion de la tabla");
+        javax.swing.JOptionPane.showMessageDialog(this, "Seleccione una cancion de la tabla"); // se tiene que leccionar una cacouion de la tbala para iniiar
         return;
     }
-
     if (cmbPlaylistsBiblioteca.getSelectedItem() == null) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Seleccione una playlist");
+        javax.swing.JOptionPane.showMessageDialog(this, "Seleccione una playlist"); // en el comobox se tiene quwq ver la play
         return;
     }
-
     String nombrePlaylist = cmbPlaylistsBiblioteca.getSelectedItem().toString();
-
     PLAYLIST playlist = principal.VariosPlaylist.buscarPlaylist(nombrePlaylist);
-
     if (playlist == null) {
         javax.swing.JOptionPane.showMessageDialog(this, "No existe esa playlist");
         return;
     }
-
     MUSICA musica = obtenerMusicaDeTabla(fila);
-
     playlist.agregar(musica);
-
     if (principal.panelPlay != null) {
         principal.panelPlay.actualizarComboPlaylists();
         principal.panelPlay.mostrarPlaylist(nombrePlaylist);
     }
-
     javax.swing.JOptionPane.showMessageDialog(this,
             "Cancion agregada a la playlist: " + nombrePlaylist);
        
@@ -821,23 +772,17 @@ if (opcion == javax.swing.JFileChooser.APPROVE_OPTION) {
     if (nombre == null || nombre.equals("")) {
         return;
     }
-
     PLAYLIST existe = principal.VariosPlaylist.buscarPlaylist(nombre);
-
     if (existe != null) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Ya existe una playlist con ese nombre");
+        javax.swing.JOptionPane.showMessageDialog(this, "Ya existe");
         return;
     }
-
     principal.VariosPlaylist.crearPlaylist(nombre);
-
     cmbPlaylistsBiblioteca.addItem(nombre);
-
     if (principal.panelPlay != null) {
         principal.panelPlay.actualizarComboPlaylists();
     }
-
-    javax.swing.JOptionPane.showMessageDialog(this, "Playlist creada correctamente");
+    javax.swing.JOptionPane.showMessageDialog(this, "Playlist creada");
     }//GEN-LAST:event_BTN_CREAR_PLAYActionPerformed
 
     private void BTN_AGREAGRCOLAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_AGREAGRCOLAActionPerformed
@@ -858,7 +803,7 @@ if (opcion == javax.swing.JFileChooser.APPROVE_OPTION) {
         principal.panelCola.actualizarTablaCola();
     }
 
-    javax.swing.JOptionPane.showMessageDialog(this, "Cancion agregada a la cola");
+    javax.swing.JOptionPane.showMessageDialog(this, "Cancion agregada");
     
     }//GEN-LAST:event_BTN_AGREAGRCOLAActionPerformed
 
@@ -885,11 +830,11 @@ if (opcion == javax.swing.JFileChooser.APPROVE_OPTION) {
        if (circularActivo == false) {
         circularActivo = true;
         BTN_CIRCULAR.setText("");
-        javax.swing.JOptionPane.showMessageDialog(this, "Modo circular activado");
+        javax.swing.JOptionPane.showMessageDialog(this, "activado");
     } else {
         circularActivo = false;
         BTN_CIRCULAR.setText("Circular OFF");
-        javax.swing.JOptionPane.showMessageDialog(this, "Modo circular desactivado");
+        javax.swing.JOptionPane.showMessageDialog(this, " desactivado");
     }
         
     }//GEN-LAST:event_BTN_CIRCULARActionPerformed

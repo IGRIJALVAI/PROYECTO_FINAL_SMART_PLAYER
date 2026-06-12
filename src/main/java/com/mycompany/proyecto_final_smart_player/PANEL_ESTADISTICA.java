@@ -40,7 +40,7 @@ public class PANEL_ESTADISTICA extends javax.swing.JPanel {
             "ESTADISTICAS DEL REPRODUCTOR\n"
             + "\n\n"
             + "CANCIONES\n"
-            + "Total de canciones cargadas: " + principal.totalCancionesCargadas + "\n\n"
+            + "Total de canciones" + principal.totalCancionesCargadas + "\n\n"
 
             + "TIEMPOS DE CARGA\n"
             + "Tiempo ABB: " + tiempoABBms + " ms\n"
@@ -85,73 +85,52 @@ public class PANEL_ESTADISTICA extends javax.swing.JPanel {
     if (principal.listaMusica.inicio == null) {
         return "No hay canciones cargadas";
     }
-
     String artistaMayor = "";
     int mayor = 0;
-
     Nodo_Simple aux1 = principal.listaMusica.inicio;
-
     while (aux1 != null) {
-
         String artistaActual = aux1.musica.getArtista();
         int contador = 0;
-
         Nodo_Simple aux2 = principal.listaMusica.inicio;
-
         while (aux2 != null) {
             if (aux2.musica.getArtista().equalsIgnoreCase(artistaActual)) {
                 contador++;
             }
-
             aux2 = aux2.siguiente;
         }
-
         if (contador > mayor) {
             mayor = contador;
             artistaMayor = artistaActual;
         }
-
         aux1 = aux1.siguiente;
     }
-
     return artistaMayor + " (" + mayor + " canciones)";
 }
     
     
     public String obtenerGeneroMasRepetido() {
-
     if (principal.listaMusica.inicio == null) {
         return "No hay canciones cargadas";
     }
-
     String generoMayor = "";
     int mayor = 0;
-
     Nodo_Simple aux1 = principal.listaMusica.inicio;
-
     while (aux1 != null) {
-
         String generoActual = aux1.musica.getGenero();
         int contador = 0;
-
         Nodo_Simple aux2 = principal.listaMusica.inicio;
-
         while (aux2 != null) {
             if (aux2.musica.getGenero().equalsIgnoreCase(generoActual)) {
                 contador++;
             }
-
             aux2 = aux2.siguiente;
         }
-
         if (contador > mayor) {
             mayor = contador;
             generoMayor = generoActual;
         }
-
         aux1 = aux1.siguiente;
     }
-
     return generoMayor + " (" + mayor + " canciones)";
 }
     
@@ -159,19 +138,13 @@ public class PANEL_ESTADISTICA extends javax.swing.JPanel {
     
     
     public String obtenerDatosPlaylists() {
-
     String texto = "";
-
     if (principal.VariosPlaylist.contador == 0) {
         return "No hay playlists creadas\n";
     }
-
     for (int i = 0; i < principal.VariosPlaylist.contador; i++) {
-
         PLAYLIST playlist = principal.VariosPlaylist.playlists[i];
-
         int cantidad = contarCancionesPlaylist(playlist);
-
         texto = texto
                 + "Playlist: " + playlist.getNombre()
                 + " - Canciones: " + cantidad + "\n";
@@ -181,16 +154,12 @@ public class PANEL_ESTADISTICA extends javax.swing.JPanel {
 }
     
     public int contarCancionesPlaylist(PLAYLIST playlist) {
-
     int contador = 0;
-
     NODO_PLAY aux = playlist.inicio;
-
     while (aux != null) {
         contador++;
         aux = aux.siguiente;
     }
-
     return contador;
 }
     
@@ -223,6 +192,7 @@ public class PANEL_ESTADISTICA extends javax.swing.JPanel {
             }
         });
 
+        TXT_ACTU.setBackground(new java.awt.Color(0, 0, 0));
         TXT_ACTU.setColumns(20);
         TXT_ACTU.setRows(5);
         jScrollPane1.setViewportView(TXT_ACTU);
@@ -259,12 +229,12 @@ public class PANEL_ESTADISTICA extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 477, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(BTN_VER_AVL)
                             .addComponent(BTN_VER_ABB))))
-                .addContainerGap(196, Short.MAX_VALUE))
+                .addContainerGap(70, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -281,8 +251,8 @@ public class PANEL_ESTADISTICA extends javax.swing.JPanel {
                         .addComponent(BTN_VER_AVL))
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(68, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 523, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

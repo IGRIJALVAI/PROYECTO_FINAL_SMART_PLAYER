@@ -70,6 +70,7 @@ timerMusica.start();
     estiloTablaSpotify();
     COMBOXENCRIP.removeAllItems();
     COMBOXENCRIP.addItem("CESAR");
+    COMBOXENCRIP.addItem("CESAR ASCII");
     COMBOXENCRIP.addItem("XOR");
     COMBOXENCRIP.addItem("INVERTIDO");
     COMBOXENCRIP.addItem("BASE64");
@@ -332,6 +333,77 @@ public MUSICA buscarCancionEnBiblioteca(String nombre, String artista) {
 
     return null;
 }
+public MUSICA buscarCancionPorNombre(String nombre) {  //si viene simple
+
+    Nodo_Simple aux = principal.listaMusica.inicio;
+
+    while (aux != null) {
+
+        String nombreBiblioteca = aux.musica.getNombre().toLowerCase();
+        String nombreBuscado = nombre.toLowerCase();
+
+        if (nombreBiblioteca.equals(nombreBuscado)
+                || nombreBiblioteca.contains(nombreBuscado)
+                || nombreBuscado.contains(nombreBiblioteca)) {
+
+            return aux.musica;
+        }
+
+        aux = aux.siguiente;
+    }
+
+    return null;
+}
+public void cargarListaSimple(String texto) {  //para la play viene facil
+
+    String lineas[] = texto.split("\\R");
+
+    if (lineas.length == 0) {
+        javax.swing.JOptionPane.showMessageDialog(principal, "El archivo esta vacio");
+        return;
+    }
+
+    String nombrePlaylist = lineas[0].trim();
+
+    if (nombrePlaylist.equals("")) {
+        nombrePlaylist = "Playlist importada";
+    }
+
+    if (principal.VariosPlaylist.buscarPlaylist(nombrePlaylist) == null) {
+        principal.VariosPlaylist.crearPlaylist(nombrePlaylist);
+    }
+
+    PLAYLIST playlistNueva = principal.VariosPlaylist.buscarPlaylist(nombrePlaylist);
+
+    int agregadas = 0;
+
+    for (int i = 1; i < lineas.length; i++) {
+
+        String nombreCancion = lineas[i].trim();
+
+        if (!nombreCancion.equals("")) {
+
+            MUSICA musica = buscarCancionPorNombre(nombreCancion);
+
+            if (musica != null) {
+                playlistNueva.agregar(musica);
+                agregadas++;
+            }
+        }
+    }
+
+    playlist = playlistNueva;
+
+    actualizarComboPlaylists();
+    mostrarPlaylist(nombrePlaylist);
+
+    javax.swing.JOptionPane.showMessageDialog(
+            principal,
+            "Lista simple cargada\n"
+            + "Playlist: " + nombrePlaylist + "\n"
+            + "Canciones encontradas: " + agregadas
+    );
+}
 
 
     /**
@@ -486,6 +558,11 @@ public MUSICA buscarCancionEnBiblioteca(String nombre, String artista) {
         });
 
         COMBOXENCRIP.setBackground(new java.awt.Color(0, 0, 0));
+        COMBOXENCRIP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                COMBOXENCRIPActionPerformed(evt);
+            }
+        });
 
         jLabel1.setBackground(new java.awt.Color(0, 0, 0));
         jLabel1.setForeground(new java.awt.Color(204, 0, 0));
@@ -1052,12 +1129,19 @@ public MUSICA buscarCancionEnBiblioteca(String nombre, String artista) {
 
             ENCRIPTADOR encriptador = new ENCRIPTADOR();
 
-            String textoNormal = encriptador.desencriptarAutomatico(textoEncriptado);
+            String textoNormal = encriptador.desencriptarFlexible(textoEncriptado); // aqui donde llamaso al mas flexible
 
             if (textoNormal.equals("")) {
                 javax.swing.JOptionPane.showMessageDialog(this, "No se pudo desencriptar el archivo");
                 return;
             }
+            if (!textoNormal.contains("Nombre: ")
+                && !textoNormal.contains("Artista: ")
+                && !textoNormal.contains("Ruta: ")) {
+
+            cargarListaSimple(textoNormal);
+            return;
+        }
 
             java.io.BufferedReader lector = new java.io.BufferedReader(
                     new java.io.StringReader(textoNormal)
@@ -1196,6 +1280,10 @@ public MUSICA buscarCancionEnBiblioteca(String nombre, String artista) {
 
         moviendoSlider = false;
     }//GEN-LAST:event_SLIDER_MUSICAMouseReleased
+
+    private void COMBOXENCRIPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_COMBOXENCRIPActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_COMBOXENCRIPActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -13,8 +13,8 @@ import java.util.Base64;
  */
 public class ENCRIPTADOR {
     
-     int claveCesar = 3;
-    String claveXOR = "SMART";
+     int claveCesar = 3; // de cuantos salstos quieres 
+     String claveXOR = "SMART"; // la clave de xor
 
     public String encriptarCesar(String texto) {
         return aplicarCesar(texto, claveCesar);
@@ -116,53 +116,94 @@ public class ENCRIPTADOR {
 
     public String desencriptarAutomatico(String textoEncriptado) {
 
-        String resultado;
+    String resultado;
 
-        for (int clave = 1; clave <= 25; clave++) {
-            resultado = aplicarCesar(textoEncriptado, -clave);
+  
+    for (int clave = 1; clave <= 25; clave++) {
+        resultado = aplicarCesar(textoEncriptado, -clave);
 
-            if (esPlaylistValida(resultado)) {
-                return resultado;
-            }
-        }
-
-        resultado = desencriptarXOR(textoEncriptado);
         if (esPlaylistValida(resultado)) {
             return resultado;
         }
-
-        resultado = desencriptarInvertido(textoEncriptado);
-        if (esPlaylistValida(resultado)) {
-            return resultado;
-        }
-
-        resultado = desencriptarBase64(textoEncriptado);
-        if (esPlaylistValida(resultado)) {
-            return resultado;
-        }
-
-        return "";
     }
 
+ 
+    for (int clave = 1; clave <= 25; clave++) {
+        resultado = aplicarCesarAscii(textoEncriptado, -clave);
+
+        if (esPlaylistValida(resultado)) {
+            return resultado;
+        }
+    }
+
+ 
+    resultado = desencriptarXOR(textoEncriptado);
+    if (esPlaylistValida(resultado)) {
+        return resultado;
+    }
+
+
+    resultado = desencriptarInvertido(textoEncriptado);
+    if (esPlaylistValida(resultado)) {
+        return resultado;
+    }
+
+  
+    resultado = desencriptarBase64(textoEncriptado);
+    if (esPlaylistValida(resultado)) {
+        return resultado;
+    }
+
+    return "";
+}
+
+  public String aplicarCesarAscii(String texto, int clave) {
+
+    String resultado = "";
+
+    for (int i = 0; i < texto.length(); i++) {
+        char c = texto.charAt(i);
+
+        if (c == '\n' || c == '\r') {
+            resultado += c;
+        } else {
+            c = (char) (c + clave);
+            resultado += c;
+        }
+    }
+
+    return resultado;
+}
+
+public String encriptarCesarAscii(String texto) {
+    return aplicarCesarAscii(texto, claveCesar);
+}
+
+public String desencriptarCesarAscii(String texto) {
+    return aplicarCesarAscii(texto, -claveCesar);
+}
+    
+    
     public boolean esPlaylistValida(String texto) {
 
         if (texto == null) {
             return false;
         }
-
         if (texto.contains("PLAYLIST:")
                 && texto.contains("Nombre:")
                 && texto.contains("Artista:")
                 && texto.contains("Ruta:")) {
             return true;
         }
-
         return false;
     }
     public String encriptarPorMetodo(String texto, String metodo) {
 
     if (metodo.equalsIgnoreCase("CESAR")) {
         return encriptarCesar(texto);
+    }
+     if (metodo.equalsIgnoreCase("CESAR ASCII")) {
+        return encriptarCesarAscii(texto);
     }
 
     if (metodo.equalsIgnoreCase("XOR")) {
@@ -179,7 +220,57 @@ public class ENCRIPTADOR {
 
     return encriptarInvertido(texto);
 }
-    
-    
+   public String desencriptarFlexible(String textoEncriptado) {
+
+    String resultado;
+
+    resultado = desencriptarAutomatico(textoEncriptado);
+
+    if (!resultado.equals("")) {
+        return resultado;
+    }
+
+    for (int clave = 1; clave <= 25; clave++) {
+        resultado = aplicarCesarAscii(textoEncriptado, -clave);
+
+        if (esListaSimpleValida(resultado)) {
+            return resultado;
+        }
+    }
+
+    return "";
+}
+    public boolean esListaSimpleValida(String texto) {
+
+    if (texto == null) {
+        return false;
+    }
+
+    String lineas[] = texto.split("\\R");
+
+    int lineasConTexto = 0;
+
+    for (int i = 0; i < lineas.length; i++) {
+        if (!lineas[i].trim().equals("")) {
+            lineasConTexto++;
+        }
+    }
+
+    if (lineasConTexto < 2) {
+        return false;
+    }
+
+   
+    if (!texto.contains(" ")) {  // Una lista simple desencriptada debe tener espacios normales
+        return false;
+    }
+
+   
+    if (texto.contains("#") || texto.contains("|") || texto.contains("\\") || texto.contains("\"")) {  // Si todavia tiene simbolos raros  no la aceptamos
+        return false;
+    }
+
+    return true;
+}
     
 }
