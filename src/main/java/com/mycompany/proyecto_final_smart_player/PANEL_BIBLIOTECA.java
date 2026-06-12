@@ -21,6 +21,9 @@ public class PANEL_BIBLIOTECA extends javax.swing.JPanel {
 
 
      RESPRODUCTORMP3 principal;
+     boolean circularActivo = false;
+     javax.swing.Timer timerMusica;
+     boolean moviendoSlider = false;
 
         public PANEL_BIBLIOTECA() {
                initComponents();
@@ -29,6 +32,27 @@ public class PANEL_BIBLIOTECA extends javax.swing.JPanel {
     public PANEL_BIBLIOTECA(RESPRODUCTORMP3 principal) {
         initComponents();
         this.principal = principal;
+        SLIDER_MUSICA.setMinimum(0);
+        SLIDER_MUSICA.setValue(0);
+
+        timerMusica = new javax.swing.Timer(500, new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+
+                if (principal.mp3.reproductor != null && moviendoSlider == false) {
+
+                    int duracion = (int) principal.mp3.obtenerDuracion();
+                    int actual = (int) principal.mp3.obtenerTiempoActual();
+
+                    if (duracion > 0) {
+                        SLIDER_MUSICA.setMaximum(duracion);
+                        SLIDER_MUSICA.setValue(actual);
+                    }
+                }
+            }
+        });
+
+        timerMusica.start();
+        
         String columnas[] = {"Nombre", "Artista", "Album", "Genero", "Año", "Duracion", "Tamaño", "Ruta"};
 
         DefaultTableModel modelo = new DefaultTableModel(columnas, 0);
@@ -36,6 +60,23 @@ public class PANEL_BIBLIOTECA extends javax.swing.JPanel {
         tablaMusica.setModel(modelo);
              estiloTablaSpotify();
     }
+    
+    public String formatoTiempo(int segundosTotales) {
+
+    int minutos = segundosTotales / 60;
+    int segundos = segundosTotales % 60;
+
+    String textoSegundos = "";
+
+    if (segundos < 10) {
+        textoSegundos = "0" + segundos;
+    } else {
+        textoSegundos = "" + segundos;
+    }
+
+    return minutos + ":" + textoSegundos;
+}
+    
     
     private void estiloTablaSpotify() {
 
@@ -203,8 +244,76 @@ public MUSICA obtenerMusicaDeTabla(int fila) {
         }
     }
 }
-    
+    public String cortarTexto(String texto, int limite) {
 
+    if (texto == null) {
+        return "Desconocido";
+    }
+
+    if (texto.length() > limite) {
+        return texto.substring(0, limite) + "...";
+    }
+
+    return texto;
+}
+
+public void actualizarInfoCancion(String nombre, String artista) {
+
+    String nombreCorto = cortarTexto(nombre, 25);
+    String artistaCorto = cortarTexto(artista, 20);
+
+    LBL_CANCION_ACTUAL.setText("Cancion: " + nombreCorto);
+    LBL_ARTISTA_ACTUAL.setText("Artista: " + artistaCorto);
+
+    LBL_CANCION_ACTUAL.setToolTipText(nombre);
+    LBL_ARTISTA_ACTUAL.setToolTipText(artista);
+}
+
+public void reproducirFilaBiblioteca(int fila) {
+
+    if (fila < 0 || fila >= tablaMusica.getRowCount()) {
+        return;
+    }
+
+    tablaMusica.setRowSelectionInterval(fila, fila);
+    tablaMusica.scrollRectToVisible(tablaMusica.getCellRect(fila, 0, true));
+
+    String ruta = tablaMusica.getValueAt(fila, 7).toString();
+
+    principal.listaDoble.ponerActualPorRuta(ruta);
+
+    MUSICA musica = obtenerMusicaDeTabla(fila);
+
+    principal.mp3.reproducir(ruta);
+
+    principal.historial.apilar(musica);
+
+    PORTADA_MP3 portada = new PORTADA_MP3();
+    portada.mostrarPortada(ruta, LBL_PORTADA);
+
+    actualizarInfoCancion(musica.getNombre(), musica.getArtista());
+
+    BTN_PLAY.setText("");
+}
+
+public void reproducirMusicaBiblioteca(MUSICA musica) {
+
+    if (musica == null) {
+        return;
+    }
+
+    principal.historial.apilar(musica);
+    principal.mp3.reproducir(musica.getRuta());
+
+    PORTADA_MP3 portada = new PORTADA_MP3();
+    portada.mostrarPortada(musica.getRuta(), LBL_PORTADA);
+
+    actualizarInfoCancion(musica.getNombre(), musica.getArtista());
+
+    BTN_PLAY.setText("");
+
+    seleccionarCancionEnTabla(musica.getRuta());
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -214,6 +323,7 @@ public MUSICA obtenerMusicaDeTabla(int fila) {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDialog1 = new javax.swing.JDialog();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaMusica = new javax.swing.JTable();
         BTN_PLAY = new javax.swing.JButton();
@@ -227,8 +337,22 @@ public MUSICA obtenerMusicaDeTabla(int fila) {
         jLabel1 = new javax.swing.JLabel();
         BTN_AGREAGRCOLA = new javax.swing.JButton();
         LBL_PORTADA = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        LBL_CANCION_ACTUAL = new javax.swing.JLabel();
+        LBL_ARTISTA_ACTUAL = new javax.swing.JLabel();
+        SLIDER_MUSICA = new javax.swing.JSlider();
+        BTN_CIRCULAR = new javax.swing.JButton();
+        BTN_ALEAOTIO = new javax.swing.JButton();
+
+        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
+        jDialog1.getContentPane().setLayout(jDialog1Layout);
+        jDialog1Layout.setHorizontalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        jDialog1Layout.setVerticalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
 
         setBackground(new java.awt.Color(0, 0, 0));
 
@@ -250,28 +374,36 @@ public MUSICA obtenerMusicaDeTabla(int fila) {
             tablaMusica.getColumnModel().getColumn(3).setResizable(false);
         }
 
-        BTN_PLAY.setText("play");
+        BTN_PLAY.setBackground(new java.awt.Color(0, 0, 0));
+        BTN_PLAY.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/2.png"))); // NOI18N
+        BTN_PLAY.setBorderPainted(false);
         BTN_PLAY.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BTN_PLAYActionPerformed(evt);
             }
         });
 
-        BTN_ATRAS.setText("ATRAS");
+        BTN_ATRAS.setBackground(new java.awt.Color(0, 0, 0));
+        BTN_ATRAS.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/anterior.jpg"))); // NOI18N
+        BTN_ATRAS.setBorderPainted(false);
         BTN_ATRAS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BTN_ATRASActionPerformed(evt);
             }
         });
 
-        BTN_SIGUIENTE.setText("siguiente");
+        BTN_SIGUIENTE.setBackground(new java.awt.Color(0, 0, 0));
+        BTN_SIGUIENTE.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/siguiente+.jpg"))); // NOI18N
+        BTN_SIGUIENTE.setBorderPainted(false);
         BTN_SIGUIENTE.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BTN_SIGUIENTEActionPerformed(evt);
             }
         });
 
-        BTN_DETENER.setText("DETENER");
+        BTN_DETENER.setBackground(new java.awt.Color(0, 0, 0));
+        BTN_DETENER.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/stop.jpg"))); // NOI18N
+        BTN_DETENER.setBorderPainted(false);
         BTN_DETENER.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BTN_DETENERActionPerformed(evt);
@@ -311,7 +443,9 @@ public MUSICA obtenerMusicaDeTabla(int fila) {
         jLabel1.setForeground(new java.awt.Color(153, 0, 0));
         jLabel1.setText("PLAYLIST:");
 
-        BTN_AGREAGRCOLA.setText("COLA");
+        BTN_AGREAGRCOLA.setBackground(new java.awt.Color(0, 0, 0));
+        BTN_AGREAGRCOLA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/colasssss.png"))); // NOI18N
+        BTN_AGREAGRCOLA.setBorderPainted(false);
         BTN_AGREAGRCOLA.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BTN_AGREAGRCOLAActionPerformed(evt);
@@ -320,9 +454,34 @@ public MUSICA obtenerMusicaDeTabla(int fila) {
 
         LBL_PORTADA.setBackground(new java.awt.Color(0, 0, 0));
 
-        jLabel2.setText("jLabel2");
+        SLIDER_MUSICA.setBackground(new java.awt.Color(0, 0, 0));
+        SLIDER_MUSICA.setForeground(new java.awt.Color(204, 0, 0));
+        SLIDER_MUSICA.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                SLIDER_MUSICAMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                SLIDER_MUSICAMouseReleased(evt);
+            }
+        });
 
-        jLabel3.setText("jLabel3");
+        BTN_CIRCULAR.setBackground(new java.awt.Color(0, 0, 0));
+        BTN_CIRCULAR.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/circular.jpg"))); // NOI18N
+        BTN_CIRCULAR.setBorderPainted(false);
+        BTN_CIRCULAR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_CIRCULARActionPerformed(evt);
+            }
+        });
+
+        BTN_ALEAOTIO.setBackground(new java.awt.Color(0, 0, 0));
+        BTN_ALEAOTIO.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/aleatoria.jpg"))); // NOI18N
+        BTN_ALEAOTIO.setBorderPainted(false);
+        BTN_ALEAOTIO.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_ALEAOTIOActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -331,6 +490,32 @@ public MUSICA obtenerMusicaDeTabla(int fila) {
             .addGroup(layout.createSequentialGroup()
                 .addGap(45, 45, 45)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1065, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(LBL_PORTADA, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(LBL_CANCION_ACTUAL, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(LBL_ARTISTA_ACTUAL, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(41, 41, 41)
+                                .addComponent(BTN_ATRAS, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(BTN_PLAY)
+                                .addGap(29, 29, 29)
+                                .addComponent(BTN_SIGUIENTE, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(54, 54, 54)
+                                .addComponent(BTN_DETENER, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(BTN_CIRCULAR, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(BTN_ALEAOTIO, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(BTN_AGREAGRCOLA))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(75, 75, 75)
+                                .addComponent(SLIDER_MUSICA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(BTN_CARGARCARPETA)
                         .addGap(292, 292, 292)
@@ -340,25 +525,8 @@ public MUSICA obtenerMusicaDeTabla(int fila) {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(cmbPlaylistsBiblioteca, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1033, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(LBL_PORTADA, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(66, 66, 66)
-                        .addComponent(BTN_ATRAS)
-                        .addGap(45, 45, 45)
-                        .addComponent(BTN_PLAY)
-                        .addGap(49, 49, 49)
-                        .addComponent(BTN_SIGUIENTE)
-                        .addGap(78, 78, 78)
-                        .addComponent(BTN_DETENER)
-                        .addGap(44, 44, 44)
-                        .addComponent(BTN_AGREAGRCOLA)))
-                .addContainerGap(38, Short.MAX_VALUE))
+                        .addComponent(cmbPlaylistsBiblioteca, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(90, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -377,25 +545,42 @@ public MUSICA obtenerMusicaDeTabla(int fila) {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(BTN_CREAR_PLAY, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 544, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(LBL_PORTADA, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(81, 81, 81)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(BTN_AGREAGRCOLA)
-                                .addComponent(BTN_ATRAS)
-                                .addComponent(BTN_PLAY)
-                                .addComponent(BTN_SIGUIENTE)
-                                .addComponent(BTN_DETENER)))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE))))
-                .addContainerGap(98, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(562, 562, 562)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(LBL_CANCION_ACTUAL, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(LBL_ARTISTA_ACTUAL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(LBL_PORTADA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 544, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(26, 26, 26)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(BTN_ATRAS, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(BTN_SIGUIENTE, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(BTN_AGREAGRCOLA, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(24, 24, 24)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(BTN_CIRCULAR, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(BTN_DETENER, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(BTN_ALEAOTIO, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(BTN_PLAY)))
+                        .addGap(18, 18, 18)
+                        .addComponent(SLIDER_MUSICA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(19, 19, 19)))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -487,24 +672,25 @@ if (opcion == javax.swing.JFileChooser.APPROVE_OPTION) {
 
     MUSICA musica = obtenerMusicaDeTabla(fila);
     principal.historial.apilar(musica);
-
+    actualizarInfoCancion(musica.getNombre(), musica.getArtista());
     if (principal.mp3.getRutaActual().equals("")) {
 
         principal.mp3.reproducir(rutaSeleccionada);
 
         PORTADA_MP3 portada = new PORTADA_MP3();
         portada.mostrarPortada(rutaSeleccionada, LBL_PORTADA);
+        SLIDER_MUSICA.setValue(0);
 
-        BTN_PLAY.setText("Pausa");
+        BTN_PLAY.setText("");
 
     } else if (principal.mp3.getRutaActual().equals(rutaSeleccionada)) {
 
         principal.mp3.playPausa();
 
         if (principal.mp3.estaSonando()) {
-            BTN_PLAY.setText("Pausa");
+            BTN_PLAY.setText("");
         } else {
-            BTN_PLAY.setText("Play");
+            BTN_PLAY.setText("");
         }
 
     } else {
@@ -514,7 +700,7 @@ if (opcion == javax.swing.JFileChooser.APPROVE_OPTION) {
         PORTADA_MP3 portada = new PORTADA_MP3();
         portada.mostrarPortada(rutaSeleccionada, LBL_PORTADA);
 
-        BTN_PLAY.setText("Pausa");
+        BTN_PLAY.setText("");
     }
     }//GEN-LAST:event_BTN_PLAYActionPerformed
 
@@ -524,13 +710,27 @@ if (opcion == javax.swing.JFileChooser.APPROVE_OPTION) {
     MUSICA musica = principal.listaDoble.anterior();
 
     if (musica == null) {
-        javax.swing.JOptionPane.showMessageDialog(this, "No hay cancion anterior");
-    } else {
-        principal.historial.apilar(musica);
-        principal.mp3.reproducir(musica.getRuta());
-        BTN_PLAY.setText("Pausa");
 
-        seleccionarCancionEnTabla(musica.getRuta());
+        if (circularActivo == true) {
+
+            if (tablaMusica.getRowCount() == 0) {
+                javax.swing.JOptionPane.showMessageDialog(this, "No hay canciones cargadas");
+                return;
+            }
+
+            int ultimaFila = tablaMusica.getRowCount() - 1;
+            musica = obtenerMusicaDeTabla(ultimaFila);
+
+            principal.listaDoble.ponerActualPorRuta(musica.getRuta());
+
+            reproducirMusicaBiblioteca(musica);
+
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "No hay cancion anterior");
+        }
+
+    } else {
+        reproducirMusicaBiblioteca(musica);
     }
     }//GEN-LAST:event_BTN_ATRASActionPerformed
 
@@ -539,14 +739,29 @@ if (opcion == javax.swing.JFileChooser.APPROVE_OPTION) {
         MUSICA musica = principal.listaDoble.siguiente();
 
     if (musica == null) {
-        javax.swing.JOptionPane.showMessageDialog(this, "No hay cancion siguiente");
-    } else {
-        principal.historial.apilar(musica);
-        principal.mp3.reproducir(musica.getRuta());
-        BTN_PLAY.setText("Pausa");
 
-        seleccionarCancionEnTabla(musica.getRuta());
+        if (circularActivo == true) {
+
+            if (tablaMusica.getRowCount() == 0) {
+                javax.swing.JOptionPane.showMessageDialog(this, "No hay canciones cargadas");
+                return;
+            }
+
+            musica = obtenerMusicaDeTabla(0);
+
+            principal.listaDoble.ponerActualPorRuta(musica.getRuta());
+
+            reproducirMusicaBiblioteca(musica);
+
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "No hay cancion siguiente");
+        }
+
+    } else {
+        reproducirMusicaBiblioteca(musica);
+    
     }
+       
     }//GEN-LAST:event_BTN_SIGUIENTEActionPerformed
 
     private void BTN_DETENERActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_DETENERActionPerformed
@@ -641,21 +856,73 @@ if (opcion == javax.swing.JFileChooser.APPROVE_OPTION) {
     
     }//GEN-LAST:event_BTN_AGREAGRCOLAActionPerformed
 
+    private void BTN_ALEAOTIOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_ALEAOTIOActionPerformed
+        // TODO add your handling code here:
+        int totalFilas = tablaMusica.getRowCount();
+
+    if (totalFilas == 0) {
+        javax.swing.JOptionPane.showMessageDialog(this, "No hay canciones cargadas");
+        return;
+    }
+
+    int fila = (int) (Math.random() * totalFilas);
+
+    MUSICA musica = obtenerMusicaDeTabla(fila);
+
+    principal.listaDoble.ponerActualPorRuta(musica.getRuta());
+
+    reproducirMusicaBiblioteca(musica);
+    }//GEN-LAST:event_BTN_ALEAOTIOActionPerformed
+
+    private void BTN_CIRCULARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_CIRCULARActionPerformed
+        // TODO add your handling code here:
+       if (circularActivo == false) {
+        circularActivo = true;
+        BTN_CIRCULAR.setText("");
+        javax.swing.JOptionPane.showMessageDialog(this, "Modo circular activado");
+    } else {
+        circularActivo = false;
+        BTN_CIRCULAR.setText("Circular OFF");
+        javax.swing.JOptionPane.showMessageDialog(this, "Modo circular desactivado");
+    }
+        
+    }//GEN-LAST:event_BTN_CIRCULARActionPerformed
+
+    private void SLIDER_MUSICAMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SLIDER_MUSICAMousePressed
+        // TODO add your handling code here:
+        
+         moviendoSlider = true;
+        
+    }//GEN-LAST:event_SLIDER_MUSICAMousePressed
+
+    private void SLIDER_MUSICAMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SLIDER_MUSICAMouseReleased
+        // TODO add your handling code here:
+        int segundos = SLIDER_MUSICA.getValue();
+
+        principal.mp3.irA(segundos);
+
+        moviendoSlider = false;
+    }//GEN-LAST:event_SLIDER_MUSICAMouseReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BTN_AGREAGRCOLA;
     private javax.swing.JButton BTN_AGREGSAR;
+    private javax.swing.JButton BTN_ALEAOTIO;
     private javax.swing.JButton BTN_ATRAS;
     private javax.swing.JButton BTN_CARGARCARPETA;
+    private javax.swing.JButton BTN_CIRCULAR;
     private javax.swing.JButton BTN_CREAR_PLAY;
     private javax.swing.JButton BTN_DETENER;
     private javax.swing.JButton BTN_PLAY;
     private javax.swing.JButton BTN_SIGUIENTE;
+    private javax.swing.JLabel LBL_ARTISTA_ACTUAL;
+    private javax.swing.JLabel LBL_CANCION_ACTUAL;
     private javax.swing.JLabel LBL_PORTADA;
+    private javax.swing.JSlider SLIDER_MUSICA;
     private javax.swing.JComboBox<String> cmbPlaylistsBiblioteca;
+    private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaMusica;
     // End of variables declaration//GEN-END:variables

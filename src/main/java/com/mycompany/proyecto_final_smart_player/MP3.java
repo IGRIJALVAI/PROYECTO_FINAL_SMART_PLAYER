@@ -4,6 +4,7 @@ import java.io.File;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 
 /**
  *
@@ -90,5 +91,28 @@ public class MP3 {
     
     public String getRutaActual() {
     return rutaActual;
+}
+    
+    
+    public double obtenerDuracion() {
+    if (reproductor != null) {
+        return reproductor.getTotalDuration().toSeconds();
+    }
+
+    return 0;
+}
+
+public double obtenerTiempoActual() {
+    if (reproductor != null) {
+        return reproductor.getCurrentTime().toSeconds();
+    }
+
+    return 0;
+}
+
+public void irA(double segundos) {
+    if (reproductor != null) {
+        reproductor.seek(Duration.seconds(segundos));
+    }
 }
 }

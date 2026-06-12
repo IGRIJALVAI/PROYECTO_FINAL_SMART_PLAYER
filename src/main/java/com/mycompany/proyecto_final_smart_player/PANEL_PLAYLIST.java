@@ -26,6 +26,8 @@ public class PANEL_PLAYLIST extends javax.swing.JPanel {
     boolean circularActivo = false;
     int indiceActual = -1;
     boolean actualizandoCombo = false;
+    javax.swing.Timer timerMusica;
+    boolean moviendoSlider = false;
     
     
   
@@ -38,6 +40,26 @@ public class PANEL_PLAYLIST extends javax.swing.JPanel {
     initComponents();
 
     this.principal = principal;
+    SLIDER_MUSICA.setMinimum(0);
+    SLIDER_MUSICA.setValue(0);
+
+    timerMusica = new javax.swing.Timer(500, new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+
+            if (principal.mp3.reproductor != null && moviendoSlider == false) {
+
+                int duracion = (int) principal.mp3.obtenerDuracion();
+                int actual = (int) principal.mp3.obtenerTiempoActual();
+
+                if (duracion > 0) {
+                    SLIDER_MUSICA.setMaximum(duracion);
+                    SLIDER_MUSICA.setValue(actual);
+                }
+            }
+        }
+    });
+
+timerMusica.start();
      String columnas[] = {"Nombre", "Artista", "Album", "Genero", "Año", "Duracion", "Tamaño MB", "Ruta"};
 
     DefaultTableModel modelo = new DefaultTableModel(columnas, 0);
@@ -55,6 +77,24 @@ public class PANEL_PLAYLIST extends javax.swing.JPanel {
     actualizarComboPlaylists();
   
     }
+    
+    public String formatoTiempo(int segundosTotales) {
+
+    int minutos = segundosTotales / 60;
+    int segundos = segundosTotales % 60;
+
+    String textoSegundos = "";
+
+    if (segundos < 10) {
+        textoSegundos = "0" + segundos;
+    } else {
+        textoSegundos = "" + segundos;
+    }
+
+    return minutos + ":" + textoSegundos;
+}
+    
+    
     public void recibirPlaylist(PLAYLIST playlist) {
     this.playlist = playlist;
     cargarPlaylist();
@@ -194,7 +234,33 @@ public class PANEL_PLAYLIST extends javax.swing.JPanel {
     cargarPlaylist();
 }
     
-    public void reproducirFila(int fila) {
+    
+    
+    public void actualizarInfoCancion(String nombre, String artista) {
+
+    String nombreCorto = cortarTexto(nombre, 25);
+    String artistaCorto = cortarTexto(artista, 20);
+
+    LBL_CANCION_ACTUAL.setText("Cancion: " + nombreCorto);
+    LBL_ARTISTA_ACTUAL.setText("Artista: " + artistaCorto);
+
+    LBL_CANCION_ACTUAL.setToolTipText(nombre);
+    LBL_ARTISTA_ACTUAL.setToolTipText(artista);
+}
+    public String cortarTexto(String texto, int limite) {
+
+    if (texto == null) {
+        return "Desconocido";
+    }
+
+    if (texto.length() > limite) {
+        return texto.substring(0, limite) + "...";
+    }
+
+    return texto;
+}
+    
+   public void reproducirFila(int fila) {
 
     int totalFilas = tablaPlay.getRowCount();
 
@@ -212,12 +278,18 @@ public class PANEL_PLAYLIST extends javax.swing.JPanel {
     tablaPlay.setRowSelectionInterval(fila, fila);
     tablaPlay.scrollRectToVisible(tablaPlay.getCellRect(fila, 0, true));
 
+    String nombre = tablaPlay.getValueAt(fila, 0).toString();
+    String artista = tablaPlay.getValueAt(fila, 1).toString();
     String ruta = tablaPlay.getValueAt(fila, 7).toString();
 
     principal.mp3.reproducir(ruta);
+    
+    
+    SLIDER_MUSICA.setValue(0);  //EL SLIDER Y AQUI TYAMBIEN LA PORTEDAD Y SUS NOMBRES
     actualizarPortada(ruta);
+    actualizarInfoCancion(nombre, artista);
 
-    BTN_PLAY.setText("Pausa");
+     BTN_PLAY.setText("");
 }
 public MUSICA buscarCancionEnBiblioteca(String nombre, String artista) {
 
@@ -236,6 +308,8 @@ public MUSICA buscarCancionEnBiblioteca(String nombre, String artista) {
 
     return null;
 }
+
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -261,6 +335,10 @@ public MUSICA buscarCancionEnBiblioteca(String nombre, String artista) {
         BTN_DESEMCRIPTAR = new javax.swing.JButton();
         COMBOXENCRIP = new javax.swing.JComboBox<>();
         LBL_PORTADA = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        LBL_CANCION_ACTUAL = new javax.swing.JLabel();
+        LBL_ARTISTA_ACTUAL = new javax.swing.JLabel();
+        SLIDER_MUSICA = new javax.swing.JSlider();
 
         setBackground(new java.awt.Color(0, 0, 0));
 
@@ -277,55 +355,70 @@ public MUSICA buscarCancionEnBiblioteca(String nombre, String artista) {
         ));
         jScrollPane1.setViewportView(tablaPlay);
 
-        BTN_ATRAS.setText("ATRAS");
+        BTN_ATRAS.setBackground(new java.awt.Color(0, 0, 0));
+        BTN_ATRAS.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/anterior.jpg"))); // NOI18N
+        BTN_ATRAS.setBorderPainted(false);
         BTN_ATRAS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BTN_ATRASActionPerformed(evt);
             }
         });
 
-        BTN_PLAY.setText("PLAY");
+        BTN_PLAY.setBackground(new java.awt.Color(0, 0, 0));
+        BTN_PLAY.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/2.png"))); // NOI18N
+        BTN_PLAY.setBorderPainted(false);
         BTN_PLAY.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BTN_PLAYActionPerformed(evt);
             }
         });
 
-        BTN_SIGUIENTE.setText("SIGUIENTE");
+        BTN_SIGUIENTE.setBackground(new java.awt.Color(0, 0, 0));
+        BTN_SIGUIENTE.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/siguiente+.jpg"))); // NOI18N
+        BTN_SIGUIENTE.setBorderPainted(false);
         BTN_SIGUIENTE.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BTN_SIGUIENTEActionPerformed(evt);
             }
         });
 
-        BTN_CIRUCLAR.setText("CIRCULAR");
+        BTN_CIRUCLAR.setBackground(new java.awt.Color(0, 0, 0));
+        BTN_CIRUCLAR.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/circular.jpg"))); // NOI18N
+        BTN_CIRUCLAR.setBorderPainted(false);
         BTN_CIRUCLAR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BTN_CIRUCLARActionPerformed(evt);
             }
         });
 
-        BTN_STOP.setText("STOP");
+        BTN_STOP.setBackground(new java.awt.Color(0, 0, 0));
+        BTN_STOP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/stop.jpg"))); // NOI18N
+        BTN_STOP.setBorderPainted(false);
         BTN_STOP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BTN_STOPActionPerformed(evt);
             }
         });
 
-        BTN_ALETARIO.setText("ALEATRORIO");
+        BTN_ALETARIO.setBackground(new java.awt.Color(0, 0, 0));
+        BTN_ALETARIO.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/aleatoria.jpg"))); // NOI18N
+        BTN_ALETARIO.setBorderPainted(false);
         BTN_ALETARIO.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BTN_ALETARIOActionPerformed(evt);
             }
         });
 
-        BTN_ELIMINAR.setText("ELIMINAR");
+        BTN_ELIMINAR.setBackground(new java.awt.Color(0, 0, 0));
+        BTN_ELIMINAR.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/eliminar.png"))); // NOI18N
+        BTN_ELIMINAR.setBorderPainted(false);
         BTN_ELIMINAR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BTN_ELIMINARActionPerformed(evt);
             }
         });
 
+        cmbPlaylists.setBackground(new java.awt.Color(0, 0, 0));
         cmbPlaylists.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbPlaylistsActionPerformed(evt);
@@ -334,30 +427,54 @@ public MUSICA buscarCancionEnBiblioteca(String nombre, String artista) {
 
         BTN_GUARDAR.setBackground(new java.awt.Color(0, 0, 0));
         BTN_GUARDAR.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/guardar.png"))); // NOI18N
+        BTN_GUARDAR.setBorderPainted(false);
         BTN_GUARDAR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BTN_GUARDARActionPerformed(evt);
             }
         });
 
-        BTN_CARGAR.setText("CARGAR");
+        BTN_CARGAR.setBackground(new java.awt.Color(0, 0, 0));
+        BTN_CARGAR.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cargar.png"))); // NOI18N
+        BTN_CARGAR.setBorderPainted(false);
         BTN_CARGAR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BTN_CARGARActionPerformed(evt);
             }
         });
 
-        BTN_ENCRIPATR.setText("ENCRIPTAR");
+        BTN_ENCRIPATR.setBackground(new java.awt.Color(0, 0, 0));
+        BTN_ENCRIPATR.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/encriptar.png"))); // NOI18N
+        BTN_ENCRIPATR.setBorderPainted(false);
         BTN_ENCRIPATR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BTN_ENCRIPATRActionPerformed(evt);
             }
         });
 
-        BTN_DESEMCRIPTAR.setText("DESENCRIPTAR");
+        BTN_DESEMCRIPTAR.setBackground(new java.awt.Color(0, 0, 0));
+        BTN_DESEMCRIPTAR.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/desencriptar.png"))); // NOI18N
+        BTN_DESEMCRIPTAR.setBorderPainted(false);
         BTN_DESEMCRIPTAR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BTN_DESEMCRIPTARActionPerformed(evt);
+            }
+        });
+
+        COMBOXENCRIP.setBackground(new java.awt.Color(0, 0, 0));
+
+        jLabel1.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel1.setForeground(new java.awt.Color(204, 0, 0));
+        jLabel1.setText("PLAYLIST:");
+
+        SLIDER_MUSICA.setBackground(new java.awt.Color(0, 0, 0));
+        SLIDER_MUSICA.setForeground(new java.awt.Color(153, 0, 0));
+        SLIDER_MUSICA.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                SLIDER_MUSICAMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                SLIDER_MUSICAMouseReleased(evt);
             }
         });
 
@@ -367,65 +484,96 @@ public MUSICA buscarCancionEnBiblioteca(String nombre, String artista) {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(36, 36, 36)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(LBL_PORTADA, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(LBL_CANCION_ACTUAL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(LBL_ARTISTA_ACTUAL, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE))
+                                .addGap(43, 43, 43)
+                                .addComponent(BTN_ATRAS, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(BTN_PLAY, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(12, 12, 12)
+                                .addComponent(BTN_SIGUIENTE, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(SLIDER_MUSICA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(BTN_CIRUCLAR)
+                        .addGap(30, 30, 30)
+                        .addComponent(BTN_STOP, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(37, 37, 37)
+                        .addComponent(BTN_ALETARIO)
+                        .addGap(32, 32, 32)
+                        .addComponent(BTN_ELIMINAR, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(BTN_GUARDAR, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
+                        .addGap(18, 18, 18)
                         .addComponent(BTN_CARGAR)
-                        .addGap(31, 31, 31)
-                        .addComponent(BTN_ENCRIPATR)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(COMBOXENCRIP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(BTN_ENCRIPATR, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(COMBOXENCRIP, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(BTN_DESEMCRIPTAR)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cmbPlaylists, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(BTN_ATRAS)
-                        .addGap(31, 31, 31)
-                        .addComponent(BTN_PLAY)
                         .addGap(37, 37, 37)
-                        .addComponent(BTN_SIGUIENTE)
-                        .addGap(63, 63, 63)
-                        .addComponent(BTN_CIRUCLAR)
-                        .addGap(18, 18, 18)
-                        .addComponent(BTN_STOP)
-                        .addGap(18, 18, 18)
-                        .addComponent(BTN_ALETARIO)
+                        .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(BTN_ELIMINAR)
-                        .addGap(44, 44, 44)
-                        .addComponent(LBL_PORTADA, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 987, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(55, Short.MAX_VALUE))
+                        .addComponent(cmbPlaylists, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(60, 60, 60))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbPlaylists, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(BTN_ENCRIPATR, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(COMBOXENCRIP, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BTN_CARGAR, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BTN_DESEMCRIPTAR, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BTN_GUARDAR, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BTN_CARGAR)
-                    .addComponent(BTN_ENCRIPATR)
-                    .addComponent(BTN_DESEMCRIPTAR)
-                    .addComponent(COMBOXENCRIP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cmbPlaylists, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(BTN_ATRAS)
-                            .addComponent(BTN_PLAY)
-                            .addComponent(BTN_SIGUIENTE)
-                            .addComponent(BTN_CIRUCLAR)
-                            .addComponent(BTN_STOP)
-                            .addComponent(BTN_ALETARIO)
-                            .addComponent(BTN_ELIMINAR))
-                        .addGap(0, 82, Short.MAX_VALUE))
-                    .addComponent(LBL_PORTADA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addGap(21, 21, 21)
+                        .addComponent(BTN_ELIMINAR)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(LBL_PORTADA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(BTN_SIGUIENTE, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(BTN_PLAY, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(BTN_ATRAS, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(11, 11, 11)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(BTN_CIRUCLAR, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(BTN_STOP, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(BTN_ALETARIO, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(SLIDER_MUSICA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 13, Short.MAX_VALUE)))
+                                .addContainerGap())
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(LBL_CANCION_ACTUAL, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(LBL_ARTISTA_ACTUAL, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -450,9 +598,9 @@ public MUSICA buscarCancionEnBiblioteca(String nombre, String artista) {
          actualizarPortada(rutaSeleccionada);
 
         if (principal.mp3.estaSonando()) {
-            BTN_PLAY.setText("Pausa");
+            BTN_PLAY.setText("");
         } else {
-            BTN_PLAY.setText("Play");
+            BTN_PLAY.setText("");
         }
 
     } else {
@@ -487,7 +635,7 @@ public MUSICA buscarCancionEnBiblioteca(String nombre, String artista) {
         } else {
             indiceActual = totalFilas - 1;
             principal.mp3.detener();
-            BTN_PLAY.setText("Play");
+            BTN_PLAY.setText("");
             javax.swing.JOptionPane.showMessageDialog(this, "Fin de la playlist");
             return;
         }
@@ -524,7 +672,7 @@ public MUSICA buscarCancionEnBiblioteca(String nombre, String artista) {
         } else {
             indiceActual = 0;
             principal.mp3.detener();
-            BTN_PLAY.setText("Play");
+            BTN_PLAY.setText("");
             javax.swing.JOptionPane.showMessageDialog(this, "Inicio de la playlist");
             return;
         }
@@ -591,7 +739,7 @@ public MUSICA buscarCancionEnBiblioteca(String nombre, String artista) {
     private void BTN_STOPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_STOPActionPerformed
         // TODO add your handling code here:
          principal.mp3.detener();
-         BTN_PLAY.setText("Play");
+         BTN_PLAY.setText("");
     }//GEN-LAST:event_BTN_STOPActionPerformed
 
     private void BTN_GUARDARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_GUARDARActionPerformed
@@ -1011,6 +1159,20 @@ public MUSICA buscarCancionEnBiblioteca(String nombre, String artista) {
     }
     }//GEN-LAST:event_cmbPlaylistsActionPerformed
 
+    private void SLIDER_MUSICAMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SLIDER_MUSICAMousePressed
+        // TODO add your handling code here:
+        moviendoSlider = true;
+    }//GEN-LAST:event_SLIDER_MUSICAMousePressed
+
+    private void SLIDER_MUSICAMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SLIDER_MUSICAMouseReleased
+        // TODO add your handling code here:
+        int segundos = SLIDER_MUSICA.getValue();
+
+        principal.mp3.irA(segundos);
+
+        moviendoSlider = false;
+    }//GEN-LAST:event_SLIDER_MUSICAMouseReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BTN_ALETARIO;
@@ -1025,8 +1187,12 @@ public MUSICA buscarCancionEnBiblioteca(String nombre, String artista) {
     private javax.swing.JButton BTN_SIGUIENTE;
     private javax.swing.JButton BTN_STOP;
     private javax.swing.JComboBox<String> COMBOXENCRIP;
+    private javax.swing.JLabel LBL_ARTISTA_ACTUAL;
+    private javax.swing.JLabel LBL_CANCION_ACTUAL;
     private javax.swing.JLabel LBL_PORTADA;
+    private javax.swing.JSlider SLIDER_MUSICA;
     private javax.swing.JComboBox<String> cmbPlaylists;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaPlay;
     // End of variables declaration//GEN-END:variables
